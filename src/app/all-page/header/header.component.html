@@ -1,0 +1,24 @@
+<header>
+    <nav class="wrap-navbar">
+        <section class="logo-search width-33">
+            <div class="logo">
+                <a href="" [routerLink]="['/']"><img src="/assets/images/logo.png" alt=""></a>
+            </div>
+            <form action="" class="search-form-nav">
+                <input class="abc" type="search" placeholder="Search" aria-label="Search">
+            </form>
+        </section>
+        <section class="menu-nav width-33">
+            <div class="menu-nav-item" [routerLink]="['/']"><i class="fa-solid fa-house"></i></div>
+            <!-- <div class="menu-nav-item"><i class="fa-solid fa-user-group"></i></div> -->
+            <div class="menu-nav-item" [routerLink]="['/notifications']"><i class="fa-solid fa-bell"></i></div>
+            <div class="menu-nav-item" [routerLink]="['/message']"> <i class="fa-solid fa-comment"></i></div>
+            <div class="menu-nav-item" [routerLink]="['/search']"> <i class="fa fa-search" aria-hidden="true"></i></div>
+        </section>
+        <section class="info-nav width-33">
+            <div class="avatar-user-nav">
+                <a href="" [routerLink]="['/user']"><img src="/assets/images/no-image.jpg" alt=""></a>
+            </div>
+        </section>
+    </nav>
+</header>

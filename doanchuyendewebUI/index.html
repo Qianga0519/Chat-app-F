@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/public/bootstrap-5.0.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="public/fontawesome-free-6.6.0-web/css/all.min.css">
+    <link rel="stylesheet" href="public/css/style-index.css">
+    <link rel="stylesheet" href="public/css/style-login.css">
+    <link rel="stylesheet" href="public/css/style-forgot.css">
+    <link rel="stylesheet" href="public/css/style-register.css">
+    <link rel="stylesheet" href="public/css/style-profile.css">
+</head>
+
+<body>
+    <div class="notification-sys" id="notification-sys">
+        <span class="closebtn" onclick="closeNotification()">&times;</span>
+        <span> Thêm dữ liệu thành công!</span>
+    </div>
+
+    <!--  Forgot password  -->
+    <section style="display:flex; display: none;" class="out-range-forgot">
+        <section class="forgot-form-layout">
+            <h1>Forgot</h1>
+            <form class="forgot-form">
+                <div class="logo">
+                    <a href=""><img src="public/images/logo.png" alt=""></a>
+                </div>
+                <div class="range-input">
+                    <div class="input-user">
+                        <input type="email" name="email" placeholder="Your email" required>
+
+                    </div>
+                    <div class="button-log-range">
+                        <button type="button" class="btn-send-forgot">Send</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </section>
+    <!--  End password  -->
+
+    <!-- PAGE LOGIN  -->
+    <section style="display: flex;display:none; " class="out-range-login">
+        <section class="login-form-layout">
+            <h1>Login</h1>
+            <form class="login-form">
+                <div class="logo">
+                    <a href=""><img src="public/images/logo.png" alt=""></a>
+                </div>
+                <div class="range-input">
+                    <div class="input-user">
+                        <input type="email" name="email" placeholder="Your email" required>
+                        <input type="password" name="password" placeholder="Your password" required>
+                    </div>
+                    <div class="button-log-range">
+                        <button type="submit" class="btn-login">Login</button>
+                        <button type="button" class="btn-register">Register</button>
+                    </div>
+                    <div class="forgot">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">Remember</label>
+                        </div>
+                        <a href="">Forgot password?</a>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </section>
+    <!-- END PAGE LOGIN  -->
+    <!-- PAGE REGISTER  -->
+    <section style="display: flex;display:none;" class="out-range-register">
+        <section class="register-form-layout">
+            <h1>Register</h1>
+            <form class="register-form">
+                <div class="logo">
+                    <a href=""><img src="public/images/logo.png" alt=""></a>
+                </div>
+                <div class="range-input">
+                    <div class="input-user">
+
+                        <input type="name" name="name" placeholder="Your Name" required>
+
+                        <input type="email" name="email" placeholder="Your email" required>
+
+                        <input type="password" name="password" placeholder="Your password" required>
+                    </div>
+                    <div class="button-log-range">
+                        <a href="" class="have-acc">Already have an account</a>
+                        <button type="button" class="btn-register">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </section>
+    <!-- END PAGE REGISTER  -->
+    <section class="all-content-page" style="display: block;">
+        <!-- HEADER  -->
+        <header>
+            <nav class="wrap-navbar">
+                <section class="logo-search width-33">
+                    <div class="logo">
+                        <a href=""><img src="public/images/logo.png" alt=""></a>
+                    </div>
+                    <form action="" class="search-form-nav">
+                        <input class="abc" type="search" placeholder="Search" aria-label="Search">
+                    </form>
+                </section>
+                <section class="menu-nav width-33">
+                    <div class="menu-nav-item"><i class="fa-solid fa-house"></i></div>
+                    <!-- <div class="menu-nav-item"><i class="fa-solid fa-user-group"></i></div> -->
+                    <div class="menu-nav-item"><i class="fa-solid fa-bell"></i></div>
+                    <!-- <div class="menu-nav-item"> <i class="fa-solid fa-comment"></i></div> -->
+
+                </section>
+                <section class="info-nav width-33">
+                    <div class="avatar-user-nav">
+                        <a href=""><img src="public/images/no-image.jpg" alt=""></a>
+                    </div>
+                </section>
+            </nav>
+        </header>
+        <!-- END HEADER  -->
+        <!-- ALL TABS  -->
+        <main style="display: none;">
+            <div class="wrapper-posts tab-menu">
+                <!-- TAB LEFT CONTENT  -->
+                <div class="left-content">
+                    <section class="left-space">
+                    </section>
+                    <section class="content-left-space">
+                        <div class="list-hint-user">
+                            <article>Goi y ban be</article>
+                            <div class="item-hint">
+                                <img class="item-hint-image" src="/public/images/no-image.jpg" alt="">
+                                <div class="item-hint-info">
+                                    <span class="item-hint-info-name">
+                                        Tran Thanh Quang
+                                    </span>
+                                </div>
+                                <div class="item-respon-hint">
+                                    <button class="item-add-user"><i class="fa-solid fa-user-plus"></i></button>
+                                    <button class="item-block-user"><i class="fa-solid fa-ban"></i></button>
+                                </div>
+
+                            </div> <div class="item-hint">
+                                <img class="item-hint-image" src="/public/images/no-image.jpg" alt="">
+                                <div class="item-hint-info">
+                                    <span class="item-hint-info-name">
+                                        Tran Thanh Quang
+                                    </span>
+                                </div>
+                                <div class="item-respon-hint">
+                                    <button class="item-add-user"><i class="fa-solid fa-user-plus"></i></button>
+                                    <button class="item-block-user"><i class="fa-solid fa-ban"></i></button>
+                                </div>
+
+                            </div> <div class="item-hint">
+                                <img class="item-hint-image" src="/public/images/no-image.jpg" alt="">
+                                <div class="item-hint-info">
+                                    <span class="item-hint-info-name">
+                                        Tran Thanh Quang
+                                    </span>
+                                </div>
+                                <div class="item-respon-hint">
+                                    <button class="item-add-user"><i class="fa-solid fa-user-plus"></i></button>
+                                    <button class="item-block-user"><i class="fa-solid fa-ban"></i></button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <!-- END TAB LEFT CONTENT -->
+                <!-- TAB LIST POST  -->
+                <div class="main-content   wrapper-list-post">
+                    <div class="user-up-post">
+                        <div class="user-avatat-up-post" href="">
+                            <a href=""> <img class="user-up-post-image-link" src="./public/images/no-image.jpg" alt="">
+                            </a>
+                            <div class="you-think-new-post" data-bs-target="#modal-created-post" data-bs-toggle="modal">
+                                Bạn đang
+                                nghĩ gì?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-post">
+                        <div class="item-post">
+                            <div class="user-post-info">
+                                <section class="user-post-info-1">
+                                    <a class="user-avatat-post" href="">
+                                        <img class="user-post-image-link" src="./public/images/no-image.jpg" alt="">
+                                    </a>
+                                    <div class="user-info-detait-post">
+                                        <a href="" class="user-name-post">Tran Thanh Quang</a>
+                                        <a href="" class="time-name-post">20:00h today</a>
+                                    </div>
+                                </section>
+                                <section class="user-post-info-2">
+                                    <button class="btn-block-post"><i class="fa-solid fa-x"></i></button>
+                                </section>
+                            </div>
+                            <div class="user-post-content">
+                                <div class="user-post-all-content">
+                                    <span>
+                                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa autem debitis
+                                        praesentium et, sint totam, incidunt harum minus vitae temporibus veritatis sit
+                                        ad.
+                                        Enim rem asperiores nam obcaecati minima repudiandae.</span>
+                                    <span class="user-post-see-more">...See more</span>
+                                </div>
+                            </div>
+
+                            <div class="user-post-image">
+                                <div class="user-post-single-image">
+                                    <a href=""><img src="./public/images/no-image.jpg" alt=""></a>
+                                </div>
+                                <!-- <div class="user-post-multi-image">
+                            <div class="item-image-multi"><img src="./public/images/no-image.jpg" alt=""></div>
+                        </div> -->
+                            </div>
+                            <div class="qty-interact-post">
+                                <div class="qty-interact qty-likes">
+                                    <span>999</span>
+                                    <div class="list-interact-icon">
+                                        <i style="z-index: 3;" class="icon-post-like fa-solid fa-thumbs-up"></i>
+                                        <!-- <i style="z-index: 2; left: 10px;"
+                                    class="icon-post-smile fa-solid fa-face-laugh-beam"></i>
+                                <i style="z-index: 1; left: 20px;"
+                                    class="icon-post-hate fa-solid fa-hand-middle-finger"></i> -->
+                                    </div>
+                                </div>
+                                <div class="qty-interact qty-cmt">
+                                    <span>999</span>
+                                    <div class="list-interact-icon">
+                                        <span>binh luan</span>
+
+                                    </div>
+                                </div>
+                                <div class="qty-interact qty-share">
+                                    <span>999</span>
+                                    <div class="list-interact-icon">
+                                        <span>chia se</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="range-interact-post">
+                                <button class="btn-interact-post-like">
+                                    <i class="icon-post-like active  fa-solid fa-thumbs-up"></i>
+                                    <i class="icon-post-like  fa-regular fa-thumbs-up"></i>
+                                    <span>like</span>
+                                </button>
+                                <button class="btn-interact-post-comment">
+                                    <i class="fa-regular fa-comment"></i>
+                                    <span>binh luan</span>
+                                </button>
+                                <button class="btn-interact-post-share">
+                                    <i class="fa-regular fa-share-from-square"></i>
+                                    <span>chia se</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END TAB LIST POST  -->
+                <!-- TAB DETAIL POST  -->
+                <div class="main-content   wrapper-detail-post">
+                    <div class="view-post-detail">
+                        <div class="user-post-info">
+                            <section class="user-post-info-1">
+                                <a class="user-avatat-post" href="">
+                                    <img class="user-post-image-link" src="./public/images/no-image.jpg" alt="">
+                                </a>
+                                <div class="user-info-detait-post">
+                                    <a href="" class="user-name-post">Tran Thanh Quang</a>
+                                    <a href="" class="time-name-post">20:00h today</a>
+                                </div>
+                            </section>
+                            <section class="user-post-info-2">
+                                <button class="btn-close-post-detail"><i class="fa-solid fa-x"></i></button>
+                            </section>
+                        </div>
+                        <div class="user-post-content">
+                            <div class="user-post-all-content">
+                                <span>
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa autem debitis
+                                    praesentium et, sint totam, incidunt harum minus vitae temporibus veritatis sit
+                                    ad.
+                                    Enim rem asperiores nam obcaecati minima repudiandae.</span>
+                                <span class="user-post-see-more">...See more</span>
+                            </div>
+                        </div>
+                        <div class="user-post-image">
+                            <div class="user-post-single-image">
+                                <a href=""><img src="./public/images/no-image.jpg" alt=""></a>
+                            </div>
+                            <!-- <div class="user-post-multi-image">
+                            <div class="item-image-multi"><img src="./public/images/no-image.jpg" alt=""></div>
+                        </div> -->
+                        </div>
+                        <div class="qty-interact-post">
+                            <div class="qty-interact qty-likes">
+                                <span>999</span>
+                                <div class="list-interact-icon">
+                                    <i style="z-index: 3;" class="icon-post-like fa-solid fa-thumbs-up"></i>
+                                    <!-- <i style="z-index: 2; left: 10px;"
+                                    class="icon-post-smile fa-solid fa-face-laugh-beam"></i>
+                                <i style="z-index: 1; left: 20px;"
+                                    class="icon-post-hate fa-solid fa-hand-middle-finger"></i> -->
+                                </div>
+                            </div>
+                            <div class="qty-interact qty-cmt">
+                                <span>999</span>
+                                <div class="list-interact-icon">
+                                    <span>binh luan</span>
+
+                                </div>
+                            </div>
+                            <div class="qty-interact qty-share">
+                                <span>999</span>
+                                <div class="list-interact-icon">
+                                    <span>chia se</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="range-interact-post">
+                            <button class="btn-interact-post-like">
+                                <i class="icon-post-like active  fa-solid fa-thumbs-up"></i>
+                                <i class="icon-post-like  fa-regular fa-thumbs-up"></i>
+                                <span>like</span>
+                            </button>
+                            <button class="btn-interact-post-comment">
+                                <i class="fa-regular fa-comment"></i>
+                                <span>binh luan</span>
+                            </button>
+                            <button class="btn-interact-post-share">
+                                <i class="fa-regular fa-share-from-square"></i>
+                                <span>chia se</span>
+                            </button>
+                        </div>
+                        <div class="range-post-content">
+                            <div class="list-comment-post">
+                                <!-- item comment -->
+                                <div class="item-comment-post">
+                                    <!-- main - comment  -->
+                                    <div class="main-comment-post">
+                                        <div class="content-cmt-user">
+                                            <img src="public/images/no-image.jpg" alt="">
+                                            <article>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero
+                                                impedit
+                                                tempore
+                                                coumque magnam totam eveniet aperiam illum,
+                                                sapitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postam,
+                                                ipsum earum.
+                                            </article>
+
+                                        </div>
+                                        <form action="">
+                                            <input type="text">
+                                            <button><i class="fa-solid fa-paper-plane"></i></button>
+                                            <button><i class="fa fa-trash"></i></button>
+                                        </form>
+                                    </div>
+                                    <!-- all rep -->
+                                    <div class="list-comment-rep">
+                                        <div class="item-rep-comment-post">
+                                            <div class="content-cmt-rep">
+                                                <img src="public/images/no-image.jpg" alt="">
+                                                <article>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero
+                                                    impedit
+                                                    tempore
+                                                    coumque magnam totam eveniet aperiam illum,
+                                                    sapitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postam,
+                                                    ipsum earum.
+                                                </article>
+                                            </div>
+                                            <form action="">
+                                                <input type="text">
+                                                <button><i class="fa-solid fa-paper-plane"></i></button>
+                                                <button><i class="fa-solid fa-trash"></i></button>
+                                            </form>
+                                        </div>
+                                        <div class="item-rep-comment-post">
+                                            <div class="content-cmt-rep">
+                                                <img src="public/images/no-image.jpg" alt="">
+                                                <article>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero
+                                                    impedit
+                                                    tempore
+                                                    coumque magnam totam eveniet aperiam illum,
+                                                    sapitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postam,
+                                                    ipsum earum.
+                                                </article>
+                                            </div>
+                                            <form action="">
+                                                <input type="text">
+                                                <button><i class="fa-solid fa-paper-plane"></i></button>
+                                                <button><i class="fa-solid fa-trash"></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- item comment -->
+                                <div class="item-comment-post">
+                                    <!-- main - comment  -->
+                                    <div class="main-comment-post">
+                                        <div class="content-cmt-user">
+                                            <img src="public/images/no-image.jpg" alt="">
+                                            <article>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero
+                                                impedit
+                                                tempore
+                                                coumque magnam totam eveniet aperiam illum,
+                                                sapitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postam,
+                                                ipsum earum.
+                                            </article>
+                                        </div>
+                                        <form action="">
+                                            <input type="text">
+                                            <button><i class="fa-solid fa-paper-plane"></i></button>
+                                        </form>
+                                    </div>
+                                    <!-- all rep -->
+                                    <div class="list-comment-rep">
+                                        <div class="item-rep-comment-post">
+                                            <div class="content-cmt-rep">
+                                                <img src="public/images/no-image.jpg" alt="">
+                                                <article>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero
+                                                    impedit
+                                                    tempore
+                                                    coumque magnam totam eveniet aperiam illum,
+                                                    sapitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postam,
+                                                    ipsum earum.
+                                                </article>
+                                            </div>
+                                            <form action="">
+                                                <input type="text">
+                                                <button><i class="fa-solid fa-paper-plane"></i></button>
+                                            </form>
+                                        </div>
+                                        <div class="item-rep-comment-post">
+                                            <div class="content-cmt-rep">
+                                                <img src="public/images/no-image.jpg" alt="">
+                                                <article>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero
+                                                    impedit
+                                                    tempore
+                                                    coumque magnam totam eveniet aperiam illum,
+                                                    sapitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postam,
+                                                    ipsum earum.
+                                                </article>
+                                            </div>
+                                            <form action="">
+                                                <input type="text">
+                                                <button><i class="fa-solid fa-paper-plane"></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END TAB DETAIL POST  -->
+                <!-- TAB CHAT  -->
+                <div class="main-content   wrapper-chat">
+                    <div class="info-friend-chat">
+                        <div class="item-info-friend-chat">
+                            <div class="item-friend-image-chat">
+                                <img src="/public/images/no-image.jpg" alt="">
+                            </div>
+                            <div class="item-friend-info-chat">
+                                <span>Tran Thanh Quang</span>
+                                <span>Dang hoat dong</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="range-chat-content">
+                        <div class="content-user-chat">
+                            <img src="/public/images/no-image.jpg" alt="">
+                            <article>fkashfkjshdj</article>
+                        </div>
+                        <div class="content-friend-chat">
+                            <img src="/public/images/no-image.jpg" alt="">
+                            <article>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus perspiciatis
+                                accusantium
+                                accusantium vitae voluptates cupiditate, quo delectus est quibusdam reiciendis eaque
+                                tempore
+                                sint architecto illo quam suscipit. Ipsa expedita sit mai quibusdam reiciendis eaque
+                                tempore
+                                sint architecto illo quam suscipit. Ipsa expedita sit maiores!
+                            </article>
+                        </div>
+                        <div class="content-user-chat">
+                            <img src="/public/images/no-image.jpg" alt="">
+                            <article>fkashfkjshdj</article>
+                        </div>
+                        <div class="content-friend-chat">
+                            <img src="/public/images/no-image.jpg" alt="">
+                            <article>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus perspiciatis
+                                accusantium vitae voluptates cupiditate, quo delectus estlor sit amet consectetur
+                                adibusdam reiciendis eaque tempore
+                                sint architecto illo quam suscipit. Ipsa expedita sit maiores!
+                            </article>
+                        </div>
+                        <div class="content-user-chat">
+                            <img src="/public/images/no-image.jpg" alt="">
+                            <article>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus perspiciatis
+                                accusantium vitae voluptates cupiditate, quo delectus estlor sit amet consectetur
+                                a
+                                sint architecto illo quam suscipit. Ipsa expedita sit mai quibusdam reiciendis eaque
+                                tempore
+                                sint architecto illo quam suscipit. Ipsa expedita sit maiores!
+                            </article>
+                        </div>
+
+                    </div>
+                    <div class="range-user-chat-input">
+                        <form action="">
+                            <textarea name="" id=""></textarea>
+                            <button class=""><i class="fa-regular fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+                <!-- END TAB CHAT  -->
+                <!-- TAB NOTIFICATIONS -->
+                <div class="main-content  wrapper-notification">
+                    <article>Danh sach thong bao ban be</article>
+                    <div class="notification-friend">
+                        <div class="item-notification-friend">
+                            <div class="notification-image-friend">
+                                <img src="/public/images/no-image.jpg" alt="">
+                            </div>
+                            <div class="notification-content">
+                                <a href="">Tran Thanh Quang</a><span> Lorem ipsum dolor sit amet consectetur adipisicing
+                                    elit.
+                                    Illum fugit quibusdam, id neque corporis esse voluptates aliquam? Delectus, eveniet
+                                    itaque minus ratione quas accusantium architecto! Porro delectus ex accusamus
+                                    architecto.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="item-notification-friend">
+                            <div class="notification-image-friend">
+                                <img src="/public/images/no-image.jpg" alt="">
+                            </div>
+                            <div class="notification-content">
+                                <a href="">Tran Thanh Quang</a><span> Lorem ipsum dolor sit amet consectetur adipisicing
+                                    elit.
+                                    Illum fugit quibusdam, id neque corporis esse voluptates aliquam? Delectus, eveniet
+                                    itaque minus ratione quas accusantium architecto! Porro delectus ex accusamus
+                                    architecto.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="item-notification-friend">
+                            <div class="notification-image-friend">
+                                <img src="/public/images/no-image.jpg" alt="">
+                            </div>
+                            <div class="notification-content">
+                                <a href="">Tran Thanh Quang</a><span> Lorem ipsum dolor sit amet consectetur adipisicing
+                                    elit.
+                                    Illum fugit quibusdam, id neque corporis esse voluptates aliquam? Delectus, eveniet
+                                    itaque minus ratione quas accusantium architectione quas accusantium architecto!
+                                    Poione
+                                    quas accusantium architecto! Poo! Porro delectus ex accusamus
+                                    architecto.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END TAB NOTIFICATIONS -->
+                <!-- TAB RESULT SEARCH -->
+                <div class="main-content active  wrapper-search">
+                    <div class="range-search-input filter-result">
+                        <div class="search-input">
+                            <div class="range-input-key">
+                                <input type="text">
+                                <button class="btn-search-input-filter"><i class="fa fa-search"
+                                        aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                        <div class="tab-filter">
+                            <button class="fl-user">
+                                nguoi dung
+                            </button>
+                            <button class="fl-post">
+                                bai viet
+                            </button>
+                        </div>
+                        <div class="search-advance">
+                            <div class="item-advance">
+                                <label for="">Ngay dang</label>
+                                <select name="" id="">
+                                    <option value="1">Moi nhat</option>
+                                    <option value="2">Cu nhat</option>
+                                </select>
+                            </div>
+                            <div class="item-advance">
+                                <label for="">Bai viet tu</label>
+                                <select name="" id="">
+                                    <option value="1">Ban be</option>
+                                    <option value="2">Nguoi khac</option>
+                                    <option value="3">Tat ca</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <section class="result-content">
+                        <div class="result-search-list-user">
+                            <div class="result-list-user">
+                                <a href="" class="item-result-user">
+                                    <img src="/public/images/no-image.jpg" alt="">
+                                    <article>Tran Thanh Quang</article>
+                                </a>
+                                <a href="" class="item-result-user">
+                                    <img src="/public/images/no-image.jpg" alt="">
+                                    <article>Tran Thanh Quang</article>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="result-search-list-post">
+                            <title></title>
+                            <div class="result-list-post">
+                                <div class="item-post">
+                                    <div class="user-post-info">
+                                        <section class="user-post-info-1">
+                                            <a class="user-avatat-post" href="">
+                                                <img class="user-post-image-link" src="./public/images/no-image.jpg"
+                                                    alt="">
+                                            </a>
+                                            <div class="user-info-detait-post">
+                                                <a href="" class="user-name-post">Tran Thanh Quang</a>
+                                                <a href="" class="time-name-post">20:00h today</a>
+                                            </div>
+                                        </section>
+                                        <section class="user-post-info-2">
+                                            <button class="btn-block-post"><i class="fa-solid fa-x"></i></button>
+                                        </section>
+                                    </div>
+                                    <div class="user-post-content">
+                                        <div class="user-post-all-content">
+                                            <span>
+                                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa autem
+                                                debitis
+                                                praesentium et, sint totam, incidunt harum minus vitae temporibus
+                                                veritatis
+                                                sit
+                                                ad.
+                                                Enim rem asperiores nam obcaecati minima repudiandae.</span>
+                                            <span class="user-post-see-more">...See more</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="user-post-image">
+                                        <div class="user-post-single-image">
+                                            <a href=""><img src="./public/images/no-image.jpg" alt=""></a>
+                                        </div>
+                                        <!-- <div class="user-post-multi-image">
+                            <div class="item-image-multi"><img src="./public/images/no-image.jpg" alt=""></div>
+                        </div> -->
+                                    </div>
+                                    <div class="qty-interact-post">
+                                        <div class="qty-interact qty-likes">
+                                            <span>999</span>
+                                            <div class="list-interact-icon">
+                                                <i style="z-index: 3;" class="icon-post-like fa-solid fa-thumbs-up"></i>
+                                                <!-- <i style="z-index: 2; left: 10px;"
+                                    class="icon-post-smile fa-solid fa-face-laugh-beam"></i>
+                                <i style="z-index: 1; left: 20px;"
+                                    class="icon-post-hate fa-solid fa-hand-middle-finger"></i> -->
+                                            </div>
+                                        </div>
+                                        <div class="qty-interact qty-cmt">
+                                            <span>999</span>
+                                            <div class="list-interact-icon">
+                                                <span>binh luan</span>
+
+                                            </div>
+                                        </div>
+                                        <div class="qty-interact qty-share">
+                                            <span>999</span>
+                                            <div class="list-interact-icon">
+                                                <span>chia se</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="range-interact-post">
+                                        <button class="btn-interact-post-like">
+                                            <i class="icon-post-like active  fa-solid fa-thumbs-up"></i>
+                                            <i class="icon-post-like  fa-regular fa-thumbs-up"></i>
+                                            <span>like</span>
+                                        </button>
+                                        <button class="btn-interact-post-comment">
+                                            <i class="fa-regular fa-comment"></i>
+                                            <span>binh luan</span>
+                                        </button>
+                                        <button class="btn-interact-post-share">
+                                            <i class="fa-regular fa-share-from-square"></i>
+                                            <span>chia se</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <!-- END TAB RESULT SEARCH -->
+                <div class="right-content">
+                    <section class="right-space">
+                    </section>
+                    <section class="content-right-space">
+                        <article>Danh sach dang hoat dong</article>
+                        <div class="list-friend-active">
+                            <div class="item-friend">
+                                <div class="item-friend-image">
+                                    <img src="/public/images/no-image.jpg" alt="">
+                                </div>
+                                <div class="item-friend-info">
+                                    <span>Tran Thanh Quang</span>
+                                    <span>Dang hoat dong</span>
+                                </div>
+                                <button class="btn-ban-user"><i class="fa-solid fa-ban"></i></button>
+                            </div>
+                            <div class="item-friend">
+                                <div class="item-friend-image">
+                                    <img src="/public/images/no-image.jpg" alt="">
+                                </div>
+                                <div class="item-friend-info">
+                                    <span>Tran Thanh Quang</span>
+                                    <span>Dang hoat dong</span>
+                                </div>
+                                <button class="btn-ban-user"><i class="fa-solid fa-ban"></i></button>
+                            </div>
+                            <div class="item-friend">
+                                <div class="item-friend-image">
+                                    <img src="/public/images/no-image.jpg" alt="">
+                                </div>
+                                <div class="item-friend-info">
+                                    <span>Tran Thanh Quang</span>
+                                    <span>Dang hoat dong</span>
+                                </div>
+                                <button class="btn-ban-user"><i class="fa-solid fa-ban"></i></button>
+                            </div>
+
+                        </div>
+                        <div class="wrapper-request">
+                            <article>Request</article>
+                            <div class="item-request">
+                                <img class="item-request-image" src="/public/images/no-image.jpg" alt="">
+                                <div class="item-request-info">
+                                    <span class="item-request-info-name">
+                                        Tran Thanh Quang
+                                    </span>
+                                </div>
+                                <div class="item-respon-request">
+                                    <button class="item-respon-confirm"><i class="fa-solid fa-check"></i></button>
+                                    <button class="item-respon-delete"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+                </div>
+            </div>
+        </main>
+        <!-- END ALL TABS  -->
+        <!-- PAGE INFO USER  -->
+        <main style="display: block;" id="main-profile-user">
+            <div class="background-profile">
+                <div class="profile-image">
+                    <img src="public/images/no-image.jpg" alt="">
+                </div>
+                <div class="profile-name">
+                    <article>Tran Thanh Quang</article>
+                </div>
+                <div class="feature-user-range">
+                    <button><i class="fa-regular fa-comments"></i></button>
+                    <button><i class="fa-solid fa-user-plus"></i></button>
+                    <button><i class="fa-solid fa-user-minus"></i></button>
+                    <button><i class="fa-solid fa-ban"></i></button>
+                </div>
+            </div>
+            <div class="main-content-profile">
+                <!-- USER INFO  -->
+                <div class="profile-detail">
+                    <article>About you</article>
+                    <form action="">
+                        <div class="profile-detail-range">
+                            <div class="input-profile-range">
+                                <label for="">Name</label>
+                                <input type="text" value="Tran Thanh Quang">
+                            </div>
+                            <div class="input-profile-range">
+                                <label for="">Age</label>
+                                <input type="number" value="1">
+                            </div>
+                            <div class="input-profile-range">
+                                <label for="">Gender</label>
+                                <select name="" id="">
+                                    <option value="male">Male</option>
+                                    <option value="male">Female</option>
+                                    <option value="male">Orhter</option>
+                                    <option value="male">None</option>
+                                </select>
+                            </div>
+                            <div class="input-profile-range">
+                                <label for="">Phone</label>
+                                <input type="text" value="090000000">
+                            </div>
+                        </div>
+                        <button>Update</button>
+                    </form>
+                    <form action="">
+                        <h5>Change password</h5>
+                        <div class="profile-detail-range">
+                            <div class="input-profile-range">
+                                <label for="">Old password</label>
+                                <input type="email" value="old password">
+                            </div>
+                            <div class="input-profile-range">
+                                <label for="">New password</label>
+                                <input type="text" value="new password">
+                            </div>
+                            <div class="input-profile-range">
+                                <label for="">Repeat new password</label>
+                                <input type="text" value="repeat new password">
+                            </div>
+                        </div>
+                        <button>Change</button>
+                    </form>
+                    <button class="btn-user-logout">Logout</button>
+                </div>
+                <!--END USER INFO  -->
+                <div class="profile-list-post">
+                    <!-- ITEM POST -->
+                    <div class="item-post">
+                        <div class="user-post-info">
+                            <section class="user-post-info-1">
+                                <a class="user-avatat-post" href="">
+                                    <img class="user-post-image-link" src="./public/images/no-image.jpg" alt="">
+                                </a>
+                                <div class="user-info-detait-post">
+                                    <a href="" class="user-name-post">Tran Thanh Quang</a>
+                                    <a href="" class="time-name-post">20:00h today</a>
+                                </div>
+                            </section>
+                            <section class="user-post-info-2">
+                                <button class="btn-close-post-detail" data-bs-target="#modal-edit-post"
+                                    data-bs-toggle="modal">Edit</button>
+                                <button class="btn-close-post-detail">Delete</button>
+                            </section>
+
+                        </div>
+                        <div class="user-post-content">
+                            <div class="user-post-all-content">
+                                <span>
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa autem debitis
+                                    praesentium et, sint totam, incidunt harum minus vitae temporibus veritatis sit ad.
+                                    Enim rem asperiores nam obcaecati minima repudiandae.</span>
+                                <span class="user-post-see-more">...See more</span>
+                            </div>
+                        </div>
+
+                        <div class="user-post-image">
+                            <div class="user-post-single-image">
+                                <a href=""><img src="./public/images/no-image.jpg" alt=""></a>
+                            </div>
+                            <!-- <div class="user-post-multi-image">
+                                <div class="item-image-multi"><img src="./public/images/no-image.jpg" alt=""></div>
+                            </div> -->
+                        </div>
+                        <div class="qty-interact-post">
+                            <div class="qty-interact qty-likes">
+                                <span>999</span>
+                                <div class="list-interact-icon">
+                                    <i style="z-index: 3;" class="icon-post-like fa-solid fa-thumbs-up"></i>
+                                    <!-- <i style="z-index: 2; left: 10px;"
+                                        class="icon-post-smile fa-solid fa-face-laugh-beam"></i>
+                                    <i style="z-index: 1; left: 20px;"
+                                        class="icon-post-hate fa-solid fa-hand-middle-finger"></i> -->
+                                </div>
+                            </div>
+                            <div class="qty-interact qty-cmt">
+                                <span>999</span>
+                                <div class="list-interact-icon">
+                                    <span>binh luan</span>
+
+                                </div>
+                            </div>
+                            <div class="qty-interact qty-share">
+                                <span>999</span>
+                                <div class="list-interact-icon">
+                                    <span>chia se</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="range-interact-post">
+                            <button class="btn-interact-post-like">
+                                <i class="icon-post-like active  fa-solid fa-thumbs-up"></i>
+                                <i class="icon-post-like  fa-regular fa-thumbs-up"></i>
+                                <span>like</span>
+                            </button>
+                            <button class="btn-interact-post-comment">
+                                <i class="fa-regular fa-comment"></i>
+                                <span>binh luan</span>
+                            </button>
+                            <button class="btn-interact-post-share">
+                                <i class="fa-regular fa-share-from-square"></i>
+                                <span>chia se</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- END ITEM POST  -->
+                </div>
+            </div>
+        </main>
+        <!-- END PAGE INFO USER  -->
+        <FOOTER class="footer-page" style=" text-align: center;
+        max-width: 1535px;
+        margin: 0 auto;
+        padding: 20px 0;
+        color: red;">
+            <p>created by Qiangtt03 11102024</p>
+        </FOOTER>
+        <!-- Modal created-post -->
+        <div class="modal fade" s id="modal-created-post" tabindex="-1" aria-hidden="true">
+            <form action="" method="get" class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Create post</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-user-post-info">
+                            <section class="modal-user-post-info-1">
+                                <a class="modal-user-avatat-post" href="">
+                                    <img class="modal-user-post-image-link" src="./public/images/no-image.jpg" alt="">
+                                </a>
+                                <div class="modal-user-info-detait-post">
+                                    <article class="modal-user-name-post">Tran Thanh Quang</article>
+                                    <select>
+                                        <option value="public">public</option>
+                                        <option value="private">private</option>
+                                    </select>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="modal-input-post">
+                            <div class="input-post-image-review">
+                                <div class="btn-delete-image-review"><i class="fa-solid fa-xmark"></i></div>
+                                <img id="imagePreview" src="">
+                            </div>
+                            <div class="modal-input-custom-file-upload">
+                                <label for="name-image-post">
+                                    <i class="fa-regular fa-image"></i>
+                                </label>
+                                <input id="name-image-post" class="modal-input-post-image" type="file" accept="image/*">
+                            </div>
+                            <textarea class="modal-input-post-content" placeholder="Nhập nội dung ở đây..."></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Modal edit-post -->
+        <div class="modal fade" s id="modal-edit-post" tabindex="-1" aria-hidden="true">
+            <form action="" method="get" class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit post</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-user-post-info">
+                            <section class="modal-user-post-info-1">
+                                <a class="modal-user-avatat-post" href="">
+                                    <img class="modal-user-post-image-link" src="./public/images/no-image.jpg" alt="">
+                                </a>
+                                <div class="modal-user-info-detait-post">
+                                    <article class="modal-user-name-post">Tran Thanh Quang</article>
+                                    <select>
+                                        <option value="public">public</option>
+                                        <option value="private">private</option>
+                                    </select>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="modal-input-post">
+                            <div class="input-post-image-review">
+                                <div class="btn-delete-image-review"><i class="fa-solid fa-xmark"></i></div>
+                                <img id="imagePreview" src="">
+                            </div>
+                            <div class="modal-input-custom-file-upload">
+                                <label for="name-image-post">
+                                    <i class="fa-regular fa-image"></i>
+                                </label>
+                                <input id="name-image-post" class="modal-input-post-image" type="file" accept="image/*">
+                            </div>
+                            <textarea class="modal-input-post-content" placeholder="Nhập nội dung ở đây..."></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- end modal -->
+    <script>
+        // tu dong tang giam chieu cao textarea khi them bai viet
+        const textarea = document.querySelector('.modal-input-post-content');
+        textarea.addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        });
+        //su kien nhan nut them bai viet va modal hien thi
+        const modalCreatePost = document.querySelector('#modal-created-post');
+        const btnSubmitCreat = modalCreatePost.querySelector('.btn-primary');
+        const formCreatePost = modalCreatePost.querySelector('form');
+        const modalInputPostContent = formCreatePost.querySelector('.modal-input-post-content')
+        modalCreatePost.addEventListener('shown.bs.modal', function () {
+            modalInputPostContent.focus()
+        })
+        //su kien submit form them bai viet
+        // formCreatePost.addEventListener('submit', (event) => {
+        // });
+        window.onload = function () {
+            const chatContent = document.querySelector('.range-chat-content');
+            chatContent.scrollTop = chatContent.scrollHeight;
+        };
+
+        // sys notification 
+        function showNotification() {
+            const notification = document.getElementById('notification-sys');
+            notification.style.display = 'block'; // Hiện thông báo
+
+            // Tự động ẩn thông báo sau 3 giây
+            setTimeout(() => {
+                notification.style.display = 'none'; // Ẩn thông báo
+            }, 3000);
+        }
+    </script>
+    <script src="/public/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

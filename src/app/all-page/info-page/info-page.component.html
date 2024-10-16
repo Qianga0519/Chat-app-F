@@ -1,0 +1,151 @@
+<app-header></app-header>
+<main style="display: block;" id="main-profile-user">
+    <div class="background-profile">
+        <div class="profile-image">
+            <img src="assets/images/no-image.jpg" alt="">
+        </div>
+        <div class="profile-name">
+            <article>Tran Thanh Quang</article>
+        </div>
+        <div class="feature-user-range">
+            <button><i class="fa-regular fa-comments"></i></button>
+            <button><i class="fa-solid fa-user-plus"></i></button>
+            <button><i class="fa-solid fa-user-minus"></i></button>
+            <button><i class="fa-solid fa-ban"></i></button>
+        </div>
+    </div>
+    <div class="main-content-profile">
+        <!-- USER INFO  -->
+        <div class="profile-detail">
+            <article>About you</article>
+            <form action="">
+                <div class="profile-detail-range">
+                    <div class="input-profile-range">
+                        <label for="">Name</label>
+                        <input type="text" value="Tran Thanh Quang">
+                    </div>
+                    <div class="input-profile-range">
+                        <label for="">Age</label>
+                        <input type="number" value="1">
+                    </div>
+                    <div class="input-profile-range">
+                        <label for="">Email</label>
+                        <input type="email" value="thanhquangtran11@gmail.com">
+                    </div>
+                    <div class="input-profile-range">
+                        <label for="">Phone</label>
+                        <input type="text" value="090000000">
+                    </div>
+                </div>
+                <button>Update</button>
+            </form>
+            <form action="">
+                <h5>Change password</h5>
+                <div class="profile-detail-range">
+                    <div class="input-profile-range">
+                        <label for="">Old password</label>
+                        <input type="email" value="old password">
+                    </div>
+                    <div class="input-profile-range">
+                        <label for="">New password</label>
+                        <input type="text" value="new password">
+                    </div>
+                    <div class="input-profile-range">
+                        <label for="">Repeat new password</label>
+                        <input type="text" value="repeat new password">
+                    </div>
+                </div>
+                <button>Change</button>
+            </form>
+            <button class="btn-user-logout">Logout</button>
+        </div>
+        <!--END USER INFO  -->
+        <div class="profile-list-post">
+            <!-- ITEM POST -->
+            <div class="item-post">
+                <div class="user-post-info">
+                    <section class="user-post-info-1">
+                        <a class="user-avatat-post" href="">
+                            <img class="user-post-image-link" src="./assets/images/no-image.jpg" alt="">
+                        </a>
+                        <div class="user-info-detait-post">
+                            <a href="" class="user-name-post">Tran Thanh Quang</a>
+                            <a href="" class="time-name-post">20:00h today</a>
+                        </div>
+                    </section>
+                    <section class="user-post-info-2">
+                        <button class="btn-close-post-detail" data-bs-target="#modal-edit-post"
+                            data-bs-toggle="modal">Edit</button>
+                        <button class="btn-close-post-detail">Delete</button>
+                    </section>
+
+                </div>
+                <div class="user-post-content">
+                    <div class="user-post-all-content">
+                        <span>
+                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa autem debitis
+                            praesentium et, sint totam, incidunt harum minus vitae temporibus veritatis sit ad.
+                            Enim rem asperiores nam obcaecati minima repudiandae.</span>
+                        <span class="user-post-see-more">...See more</span>
+                    </div>
+                </div>
+
+                <div class="user-post-image">
+                    <div class="user-post-single-image">
+                        <a href=""><img src="./assets/images/no-image.jpg" alt=""></a>
+                    </div>
+                    <!-- <div class="user-post-multi-image">
+                            <div class="item-image-multi"><img src="./assets/images/no-image.jpg" alt=""></div>
+                        </div> -->
+                </div>
+                <div class="qty-interact-post">
+                    <div class="qty-interact qty-likes">
+                        <span>999</span>
+                        <div class="list-interact-icon">
+                            <i style="z-index: 3;" class="icon-post-like fa-solid fa-thumbs-up"></i>
+                            <!-- <i style="z-index: 2; left: 10px;"
+                                    class="icon-post-smile fa-solid fa-face-laugh-beam"></i>
+                                <i style="z-index: 1; left: 20px;"
+                                    class="icon-post-hate fa-solid fa-hand-middle-finger"></i> -->
+                        </div>
+                    </div>
+                    <div class="qty-interact qty-cmt">
+                        <span>999</span>
+                        <div class="list-interact-icon">
+                            <span>binh luan</span>
+
+                        </div>
+                    </div>
+                    <div class="qty-interact qty-share">
+                        <span>999</span>
+                        <div class="list-interact-icon">
+                            <span>chia se</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="range-interact-post">
+                    <button class="btn-interact-post-like">
+                        <i class="icon-post-like active  fa-solid fa-thumbs-up"></i>
+                        <i class="icon-post-like  fa-regular fa-thumbs-up"></i>
+                        <span>like</span>
+                    </button>
+                    <button class="btn-interact-post-comment">
+                        <i class="fa-regular fa-comment"></i>
+                        <span>binh luan</span>
+                    </button>
+                    <button class="btn-interact-post-share">
+                        <i class="fa-regular fa-share-from-square"></i>
+                        <span>chia se</span>
+                    </button>
+                </div>
+            </div>
+            <!-- END ITEM POST  -->
+        </div>
+    </div>
+</main>
+<app-modal-edit-post></app-modal-edit-post>
+<app-modal-create-post></app-modal-create-post>
+
+
+

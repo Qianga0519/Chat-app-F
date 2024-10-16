@@ -1,0 +1,159 @@
+@import url('root.css');
+.out-range-register {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+
+    .register-form-layout {
+        background-color: var(--primary-color-white);
+        padding: 20px;
+        border-radius: 12px;
+        width: 600px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: var(--text-color-back);
+            text-transform: capitalize;
+            color: var(--primary-color-blue);
+        }
+
+        .register-form {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+
+            .logo {
+                align-self: flex-start;
+
+
+                img {
+                    width: 220px;
+                    height: 220px;
+                    margin-bottom: 20px;
+                    border: 3px solid var(--primary-color-blue);
+                    border-radius: 8px;
+                }
+            }
+
+
+            .range-input {
+                input {
+                    position: relative;
+                    display: block;
+                    width: 100%;
+                    padding: 12px;
+                    margin-bottom: 15px;
+                    border: 1px solid var(--boder-input-gray);
+                    border-radius: 6px;
+                    font-size: 1rem;
+                    transition: border 0.3s ease, box-shadow 0.3s ease;
+                    background: var(--primary-color-white-light);
+
+                    &:focus {
+                        border-color: #0066ff;
+                        box-shadow: 0 0 6px rgba(0, 102, 255, 0.3);
+                        outline: none;
+                    }
+                }
+            }
+            .button-log-range {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 20px;
+
+                .have-acc {
+                    font-size: .75rem;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-decoration: none;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+
+                button {
+                    width: 48%;
+                    padding: 12px;
+                    font-size: .75rem;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease, transform 0.2s ease;
+                }
+
+                .btn-register {
+                    background-color: white;
+                    color: #0066ff;
+                    border: 2px solid #0066ff;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    &:hover {
+                        background-color: #f0f2f5;
+                        transform: translateY(-2px);
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Breakpoint	Class infix	Dimensions
+X-Small	None	<576px
+Small	sm	≥576px
+Medium	md	≥768px
+Large	lg	≥992px
+Extra large	xl	≥1200px
+Extra extra large	xxl	≥1400px */
+/* X-Small */
+@media only screen and (min-width: 320px) and (max-width: 566px) {
+    .register-form-layout {
+
+        .register-form {
+            .logo {
+
+                /* justify-content: space-between; */
+                img {
+                    width: 120px;
+                    height: 120px;
+                }
+            }
+
+            .range-input {
+                margin-left: 2.5%;
+            }
+        }
+    }
+}
+
+/* Small	sm   ≥576px*/
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+    .register-form-layout {
+        transform: scale(.9);
+    }
+}
+
+/* Medium	md	≥768px */
+@media only screen and (min-width: 768px) and (max-width: 991px) {}
+
+/* Large	lg	≥992px */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {}
+
+/* Extra large	xl	≥1200px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Extra extra large	xxl	≥1400px */
+@media only screen and (min-width: 1400px) {}

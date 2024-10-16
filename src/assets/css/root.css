@@ -1,0 +1,52 @@
+/* 
+html(16px)
+1rem = 16px
+14px = 0.75rem
+28px = 1.5rem 
+40px = 2.5rem
+*/
+
+
+
+:root {
+
+    --primary-color-blue: #0066ff;
+    --primary-color-blue-rgb: 0, 102, 255;
+    --primary-color-white-light: #f0f2f5;
+    --primary-color-white-light-rgb: 240, 242, 245;
+    --primary-color-black: #333;
+    --primary-color-black-rgb: 51, 51, 51;
+    --primary-color-yellow: #eab12e;
+    --primary-color-yellow-rgb: 234, 177, 46;
+    --primary-color-gray: #66686c;
+    --primary-color-gray-rgb: 102, 104, 108;
+    --primary-color-white: #fff;
+    --primary-color-white-rgb: 255, 255, 255;
+    --primary-color-text-white: #fff;
+    --primary-color-text-white-rgb: 255, 255, 255;
+    --primary-color-text-yellow: #eab12e;
+    --primary-color-text-yellow-rgb: 234, 177, 46;
+    --text-color-black: #333;
+    --text-color-gray: #66686c;
+    --color-hover-black: #333;
+    --boder-input-white-light: #ccc;
+    --primary-color-warning: #DC3545;
+    --message-user-blue: linear-gradient(186deg, rgba(0, 102, 255, 0.6643907563025211) 0%, rgba(0, 102, 255, 0.8212535014005602) 51%, rgba(0, 102, 255, 1) 100%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--primary-color-white-light);
+
+}
+
+
+.width-33 {
+    width: 33.33333%;
+}

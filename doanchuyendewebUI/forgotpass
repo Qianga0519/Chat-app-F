@@ -1,0 +1,21 @@
+<!--  Forgot password  -->
+<section style="display:flex; display: none;" class="out-range-forgot">
+    <section class="forgot-form-layout">
+        <h1>Forgot</h1>
+        <form class="forgot-form">
+            <div class="logo">
+                <a href=""><img src="assets/images/logo.png" alt=""></a>
+            </div>
+            <div class="range-input">
+                <div class="input-user">
+                    <input type="email" name="email" placeholder="Your email" required>
+
+                </div>
+                <div class="button-log-range">
+                    <button type="button" class="btn-send-forgot">Send</button>
+                </div>
+            </div>
+        </form>
+    </section>
+</section>
+<!--  End password  -->
