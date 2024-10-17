@@ -7,6 +7,7 @@ import { WrapperMessageComponent } from './wrapper-message/wrapper-message.compo
 import { WrapperNotificationsComponent } from './wrapper-notifications/wrapper-notifications.component';
 
 
+
 export const routesPageContent: Routes = [
   { 
     path: '',
@@ -15,7 +16,7 @@ export const routesPageContent: Routes = [
       {path: 'detail', component: WrapperDetailPostComponent},
       {path: 'message', component: WrapperMessageComponent},
       {path: 'search', component: WrapperSearchComponent},
-      {path: 'notifications', component: WrapperNotificationsComponent}
+      {path: 'notifications', component: WrapperNotificationsComponent}, // Bảo vệ route này với AuthGuard}
     ]
   }
 ];

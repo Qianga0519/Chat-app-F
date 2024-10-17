@@ -20,8 +20,10 @@ import { AllPageComponent } from './all-page/all-page.component';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { 
+
+  {
     path: '',
-    loadChildren: () => import('./all-page/app-all-page.route').then((r) => r.routesAllPage)
-  }
+    loadChildren: () =>
+      import('./all-page/app-all-page.route').then((r) => r.routesAllPage),
+  },
 ];
