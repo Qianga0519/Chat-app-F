@@ -1,4 +1,5 @@
 @import url('root.css');
+
 .out-range-register {
     z-index: 1000;
     position: fixed;
@@ -53,7 +54,7 @@
                     display: block;
                     width: 100%;
                     padding: 12px;
-                    margin-bottom: 15px;
+                    margin-top: 5px;
                     border: 1px solid var(--boder-input-gray);
                     border-radius: 6px;
                     font-size: 1rem;
@@ -67,6 +68,18 @@
                     }
                 }
             }
+
+            .range-input {
+                .input-user {
+                   div{
+                    small {
+                        text-align: left;
+                    }
+                   }
+
+                }
+            }
+
             .button-log-range {
                 display: flex;
                 justify-content: space-between;
