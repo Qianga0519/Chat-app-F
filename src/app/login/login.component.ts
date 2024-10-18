@@ -47,24 +47,32 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   login(event: Event) {
-    event.preventDefault();
+    event.preventDefault(); // Ngăn chặn hành vi mặc định của form
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe(
         (response) => {
-          if (response.success == true) {
-            console.log(response.token);
-            this.isLogin = true;
+          if (response.success) {
+            // Kiểm tra phản hồi
+            console.log('Token:', response.token);
+            this.isLogin = true; // Đặt trạng thái đăng nhập
+            // Điều hướng đến trang chính (nếu cần)
+            this.showNotification("Đăng nhập thành công!");
+
+            setInterval(() => {
+              this.router.navigate(['/']); // Thay đổi đường dẫn nếu cần
+            }, 2000);
           } else {
-            this.showNotification(response.message);
+            this.showNotification(response.message); // Hiển thị thông báo từ server
           }
         },
         (error) => {
           console.error('Lỗi đăng nhập:', error);
+          this.showNotification('Đã xảy ra lỗi, vui lòng thử lại!'); // Thông báo cho người dùng
         }
       );
     } else {
-      this.showNotification('Nhập thông tin!');
+      this.showNotification('Vui lòng nhập đầy đủ thông tin!'); // Thông báo nếu form không hợp lệ
     }
   }
   showNotification(message: any) {
