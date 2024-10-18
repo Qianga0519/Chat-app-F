@@ -59,7 +59,9 @@ export class RegisterComponent implements OnInit {
       : { mismatch: true };
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    
+  }
 
   register(event: Event) {
     event.preventDefault();
