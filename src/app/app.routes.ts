@@ -12,7 +12,7 @@ import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent},
+  { path: 'register', component: RegisterComponent },
   {
     path: '',
     canActivate: [AuthGuard],
@@ -22,7 +22,18 @@ export const routes: Routes = [
       { path: 'message', component: WrapperMessageComponent },
       { path: 'search', component: WrapperSearchComponent },
       { path: 'notifications', component: WrapperNotificationsComponent },
-      { path: 'user', component: InfoPageComponent },
+      {
+        path: 'user',
+        children: [
+          {
+            path: ':id',
+            loadComponent: () =>
+              import('./all-page/info-page/info-page.component').then(
+                (m) => m.InfoPageComponent
+              ),
+          },
+        ],
+      },
     ],
   },
 ];

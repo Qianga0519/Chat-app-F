@@ -11,8 +11,6 @@ export const routesAllPage: Routes = [
         path: '',
         loadChildren: () => import('./content-page/page-content.route').then((r) => r.routesPageContent)
       },
-      {path: 'user/:id', component: InfoPageComponent},
-      {path: 'user/', component: InfoPageComponent}
     ]
   }
 ];
