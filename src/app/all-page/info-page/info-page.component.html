@@ -4,8 +4,8 @@
         <div class="profile-image">
             <img src="assets/images/no-image.jpg" alt="">
         </div>
-        <div class="profile-name">
-            <article>Tran Thanh Quang</article>
+        <div class="profile-name" *ngIf="user">
+            <article>{{user.name}}</article>
         </div>
         <div class="feature-user-range">
             <button><i class="fa-regular fa-comments"></i></button>
@@ -18,26 +18,26 @@
         <!-- USER INFO  -->
         <div class="profile-detail">
             <article>About you</article>
-            <form action="">
-                <div class="profile-detail-range">
+            <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+                <div class="profile-detail-range" *ngIf="user">
                     <div class="input-profile-range">
                         <label for="">Name</label>
-                        <input type="text" value="Tran Thanh Quang">
+                        <input type="text" formControlName="name"> <!-- Sử dụng formControlName -->
                     </div>
                     <div class="input-profile-range">
                         <label for="">Age</label>
-                        <input type="number" value="1">
+                        <input type="number" formControlName="age"> <!-- Sử dụng formControlName -->
                     </div>
                     <div class="input-profile-range">
                         <label for="">Email</label>
-                        <input type="email" value="thanhquangtran11@gmail.com">
+                        <input type="email" value="{{user.email}}" disabled> <!-- Email không cần update, tạm thời không sử dụng formControlName -->
                     </div>
                     <div class="input-profile-range">
                         <label for="">Phone</label>
-                        <input type="text" value="090000000">
+                        <input type="text" formControlName="phone"> <!-- Sử dụng formControlName -->
                     </div>
                 </div>
-                <button>Update</button>
+                <button type="submit">Update</button>
             </form>
             <form action="">
                 <h5>Change password</h5>

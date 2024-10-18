@@ -17,7 +17,8 @@
         </section>
         <section class="info-nav width-33">
             <div class="avatar-user-nav">
-                <a href="" [routerLink]="['/user']"><img src="/assets/images/no-image.jpg" alt=""></a>
+                <a href="" (click)="goToUserDetail()"><img src="/assets/images/no-image.jpg" alt=""></a>
+                <button (click)="goToUserDetail()">Xem chi tiết người dùng</button>
             </div>
         </section>
     </nav>
