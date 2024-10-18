@@ -3,38 +3,17 @@
     </section>
     <section class="content-right-space">
         <article>Danh sach dang hoat dong</article>
-        <div class="list-friend-active">
+        <div class="list-friend-active"  *ngFor="let friend of friends">
             <div class="item-friend">
                 <div class="item-friend-image">
                     <img src="/assets/images/no-image.jpg" alt="">
                 </div>
-                <div class="item-friend-info">
-                    <span>Tran Thanh Quang</span>
+                <div class="item-friend-info" >
+                    <span>{{ friend.name }}</span>
                     <span>Dang hoat dong</span>
                 </div>
                 <button class="btn-ban-user"><i class="fa-solid fa-ban"></i></button>
             </div>
-            <div class="item-friend">
-                <div class="item-friend-image">
-                    <img src="/assets/images/no-image.jpg" alt="">
-                </div>
-                <div class="item-friend-info">
-                    <span>Tran Thanh Quang</span>
-                    <span>Dang hoat dong</span>
-                </div>
-                <button class="btn-ban-user"><i class="fa-solid fa-ban"></i></button>
-            </div>
-            <div class="item-friend">
-                <div class="item-friend-image">
-                    <img src="/assets/images/no-image.jpg" alt="">
-                </div>
-                <div class="item-friend-info">
-                    <span>Tran Thanh Quang</span>
-                    <span>Dang hoat dong</span>
-                </div>
-                <button class="btn-ban-user"><i class="fa-solid fa-ban"></i></button>
-            </div>
-
         </div>
         <div class="wrapper-request">
             <article>Request</article>
