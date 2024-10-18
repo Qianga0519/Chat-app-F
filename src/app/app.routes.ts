@@ -11,8 +11,8 @@ import { WrapperNotificationsComponent } from './all-page/content-page/wrapper-n
 import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent,canActivate: [AuthGuard] },
-  { path: 'register', component: RegisterComponent,canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent},
   {
     path: '',
     canActivate: [AuthGuard],
