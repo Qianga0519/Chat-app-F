@@ -9,11 +9,69 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
+
+  login(email: string, password: string): Observable<any> {
+    const data = { email: email, password: password };
+    return this.http
+      .post(
+        `http://localhost:8080/chat_api/quangApi/auth/login.php`,
+        JSON.stringify(data),
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      )
+      .pipe(
+        tap((response: any) => {
+          if (response.success && response.token) {
+            localStorage.setItem('authToken', response.token);
+            localStorage.setItem('userId', JSON.stringify(response.user.id));
+          }
+        }),
+        catchError((error) => {
+          console.error('Login error', error);
+          throw error;
+        })
+      );
+  }
+
+  logout(): void {
+    // Gửi yêu cầu đến API để xóa token (nếu cần)
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      this.http
+        .post(
+          `http://localhost:8080/chat_api/api_dat/auth/logout.php`,
+          { token },
+          {
+            headers: { 'Content-Type': 'application/json' },
+          }
+        )
+        .subscribe(
+          () => {
+            // Xóa token và thông tin người dùng
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userId');
+            // Điều hướng người dùng về trang đăng nhập
+            this.router.navigate(['/login']);
+          },
+          (error) => {
+            console.error('Logout error', error);
+          }
+        );
+    } else {
+      // Nếu không có token, chỉ cần điều hướng về trang đăng nhập
+      this.router.navigate(['/login']);
+    }
+  }
+  private apiUrl = 'http://localhost:8080/chat_api/api_dat/auth/verifyToken.php';
+
+
+
   verifyToken(): Observable<any> {
     const token = { token: localStorage.getItem('authToken') || null };
     return this.http
       .post(
-        `http://localhost:8080/chat_api/quangApi/auth/verifyToken.php`,
+        `http://localhost:8080/chat_api/api_dat/auth/verifyToken.php`,
         token,
         {
           headers: { 'Content-Type': 'application/json' },
