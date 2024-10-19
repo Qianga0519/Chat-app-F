@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -63,7 +63,24 @@ export class UsersService {
         headers: { 'Content-Type': 'application/json' }
       }
     );
-}
+  }
+  verifyToken(): Observable<any> {
+    const token = { token: localStorage.getItem('authToken') || null };
+    return this.http
+      .post(
+        `http://localhost:8080/chat_api/api_dat/auth/verifyToken.php`,
+        token,
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      )
+      .pipe(
+        catchError((error) => {
+          console.error('Token verification error', error);
+          throw error; // Hoặc xử lý lỗi ở đây
+        })
+      );
+  }
 }
 
 

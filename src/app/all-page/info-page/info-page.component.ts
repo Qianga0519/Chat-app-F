@@ -35,7 +35,7 @@ export class InfoPageComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.profileForm = this.formBuilder.group({
-      name: ['', Validators.required], // Thêm validators nếu cần
+      name: ['', Validators.required],
       age: [''],
       gender: [''],
       phone: ['']
@@ -44,20 +44,41 @@ export class InfoPageComponent implements OnInit {
 
   ngOnInit(): void {
     const userId = this.route.snapshot.params['id'];
-    this.usersService.getUserInfoByUserIdtest(userId).subscribe(
-      (data) => {
-        this.user = data;
-        this.initProfileForm(); // Khởi tạo form với dữ liệu người dùng
+    this.checkTokenAndFetchUserInfo(userId);
+  }
+
+  // Kiểm tra token và lấy thông tin người dùng
+  checkTokenAndFetchUserInfo(userId: number) {
+    this.usersService.verifyToken().subscribe(
+      (tokenResponse) => {
+        if (tokenResponse.success) {
+          const tokenUserId = tokenResponse.userId; // Giả sử server trả về userId từ token
+          if (tokenUserId === userId) { // Kiểm tra xem userId từ token có khớp không
+            this.usersService.getUserInfoByUserIdtest(userId).subscribe(
+              (data) => {
+                this.user = data;
+                this.initProfileForm();
+              },
+              (error) => {
+                console.error('Error fetching user info:', error);
+              }
+            );
+          } else {
+            alert('Bạn không có quyền truy cập vào thông tin này.');
+          }
+        } else {
+          alert('Token không hợp lệ. Bạn không thể cập nhật thông tin.');
+        }
       },
       (error) => {
-        console.error('Error fetching user info:', error);
+        console.error('Error verifying token:', error);
+        alert('Có lỗi xảy ra khi xác thực token.');
       }
     );
   }
 
   initProfileForm() {
     if (this.user) {
-      // Điền dữ liệu vào form từ thông tin người dùng
       this.profileForm.patchValue({
         name: this.user.name,
         age: this.user.age,
@@ -71,25 +92,40 @@ export class InfoPageComponent implements OnInit {
     const userData = this.profileForm.value;
     const userId = this.user.id;
 
-    this.usersService.updateUserInfo(userId, userData).subscribe(
-      (response) => {
-        if (response.error) {
-          alert(response.message);
+    this.usersService.verifyToken().subscribe(
+      (tokenResponse) => {
+        if (tokenResponse.success) {
+          const tokenUserId = tokenResponse.userId; // Giả sử server trả về userId từ token
+          if (tokenUserId === userId) { // Kiểm tra ID
+            this.usersService.updateUserInfo(userId, userData).subscribe(
+              (response) => {
+                if (response.error) {
+                  alert(response.message);
+                } else {
+                  alert(response.message);
+                  this.user.name = userData.name;
+                  this.user.age = userData.age;
+                  this.user.gender = userData.gender;
+                  this.user.phone = userData.phone;
+                  this.initProfileForm();
+                }
+              },
+              (error) => {
+                console.error('Cập nhật thất bại', error);
+                alert('Có lỗi xảy ra. Vui lòng thử lại!');
+              }
+            );
+          } else {
+            alert('Bạn không có quyền cập nhật thông tin này.');
+          }
         } else {
-          alert(response.message);
-          // Cập nhật thông tin người dùng với dữ liệu mới
-          this.user.name = userData.name;
-          this.user.age = userData.age;
-          this.user.gender = userData.gender;
-          this.user.phone = userData.phone;
-
-          // Cập nhật form với dữ liệu mới
-          this.initProfileForm(); 
+          alert('Token không hợp lệ. Bạn không thể cập nhật thông tin.');
         }
       },
       (error) => {
-        console.error('Cập nhật thất bại', error);
-        alert('Có lỗi xảy ra. Vui lòng thử lại!');
+        console.error('Error verifying token:', error);
+        alert('Có lỗi xảy ra khi xác thực token.');
       }
     );
-}}
+  }
+}
