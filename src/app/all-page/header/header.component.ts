@@ -8,7 +8,6 @@ import { AuthService } from '../../service/dat/auth.service';
   standalone: true,
   imports: [RouterLink],
   templateUrl: './header.component.html',
-
 })
 export class HeaderComponent {
   userId: any = null; // Để lưu trữ userId
