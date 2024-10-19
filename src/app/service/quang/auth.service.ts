@@ -40,7 +40,7 @@ export class AuthService {
     if (token) {
       this.http
         .post(
-          `http://localhost:8080/chat_api/api_dat/auth/logout.php`,
+          `http://localhost:8080/chat_api/quangApi/auth/logout.php`,
           { token },
           {
             headers: { 'Content-Type': 'application/json' },
@@ -63,15 +63,11 @@ export class AuthService {
       this.router.navigate(['/login']);
     }
   }
-  private apiUrl = 'http://localhost:8080/chat_api/api_dat/auth/verifyToken.php';
-
-
-
   verifyToken(): Observable<any> {
     const token = { token: localStorage.getItem('authToken') || null };
     return this.http
       .post(
-        `http://localhost:8080/chat_api/api_dat/auth/verifyToken.php`,
+        `http://localhost:8080/chat_api/quangApi/auth/verifyToken.php`,
         token,
         {
           headers: { 'Content-Type': 'application/json' },
