@@ -59,32 +59,24 @@ export class RegisterComponent implements OnInit {
       : { mismatch: true };
   }
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
   register(event: Event) {
     event.preventDefault();
     if (this.registerForm.valid) {
       const userData = this.registerForm.value; // Lấy dữ liệu từ form
-      this.userService.createUser(userData).subscribe(
-        (response) => {
-          if (response.success == true) {
-            this.showNotification();
-            this.regis_message = response.message;
-            setTimeout(() => {
-              this.router.navigate(['/login']);
-            }, 3000); // 3000ms = 3s
-          } else {
-            this.showNotification();
-            this.regis_message = response.message;
-          }
-        },
-        (error) => {
+      this.userService.createUser(userData).subscribe((response) => {
+        if (response.success == true) {
           this.showNotification();
-          this.regis_message = 'Đăng ký thất bại!';
+          this.regis_message = response.message;
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 3000); // 3000ms = 3s
+        } else {
+          this.showNotification();
+          this.regis_message = response.message;
         }
-      );
+      });
     } else {
       this.showNotification();
       this.regis_message = 'Nhập thông tin!';
