@@ -2,6 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
 
+export interface ApiResponse {
+  error?: boolean;
+  message: string;
+  // Thêm các trường khác nếu cần
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -81,6 +88,19 @@ export class UsersService {
         })
       );
   }
+  IsAvatarByUser(userId: number): Observable<any> {
+    return this.http.get(`http://localhost:8080/chat_api/api_dat/users/GetAvataUserByMedia.php?id=${userId}`,
+      {
+        headers: { 'Content-Type': 'application/json' }
+      }
+    )
+  };
+
+  changePassword(payload: { user_id: number, old_password: string, new_password: string }): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`http://localhost:8080/chat_api/api_dat/users/changepassword.php`, payload, 
+      {
+        headers: { 'Content-Type': 'application/json' }
+      }
+    );
+  }
 }
-
-
