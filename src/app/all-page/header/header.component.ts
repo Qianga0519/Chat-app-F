@@ -19,10 +19,8 @@ export class HeaderComponent {
   getUserIdFromToken() {
     this.authService.verifyToken().subscribe(
       (response) => {
-        console.log('Phản hồi từ API:', response); // Kiểm tra phản hồi từ API
         if (response && response.success) {
           this.userId = response.userId; // Đảm bảo rằng userId từ API được gán đúng
-          console.log('User ID lấy được:', this.userId); // In ra userId để kiểm tra
         } else {
           console.error('Lỗi: ', response.message); // In ra lỗi nếu có
         }

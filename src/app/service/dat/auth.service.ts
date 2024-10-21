@@ -4,6 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap, catchError } from 'rxjs';
 import { Router } from '@angular/router';
 
+
+
 @Injectable({
   providedIn: 'root',
 })
@@ -63,8 +65,6 @@ export class AuthService {
       this.router.navigate(['/login']);
     }
   }
-  private apiUrl = 'http://localhost:8080/chat_api/api_dat/auth/verifyToken.php';
-
 
 
   verifyToken(): Observable<any> {
