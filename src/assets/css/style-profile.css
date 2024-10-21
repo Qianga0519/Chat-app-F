@@ -55,18 +55,19 @@ main#main-profile-user {
 .main-content-profile {
 
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-around;
-
+    overflow-y: auto;
 
     article {
         font-size: 1.5rem;
     }
+
     .profile-detail {
         width: 500px;
         padding: 20px;
         max-width: 100%;
-  
+
         form {
             display: flex;
             flex-direction: column;
@@ -142,7 +143,7 @@ main#main-profile-user {
         flex-grow: 1;
         overflow-y: auto;
         padding: 20px 50px;
-        
+
         display: flex;
         flex-direction: column;
         justify-content: center;
