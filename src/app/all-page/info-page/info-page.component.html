@@ -64,6 +64,10 @@
                             <option value="">Chọn giới tính</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
+                        <select formControlName="gender">
+                            <option value="">Chọn giới tính</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
                             <option value="other">Other</option>
                         </select>
                         <div *ngIf="profileForm.get('gender')?.invalid && 
@@ -94,7 +98,7 @@
                 <div class="profile-detail-range">
                   <div class="input-profile-range">
                     <label for="oldPassword">Old Password</label>
-                    <input id="oldPassword" [(ngModel)]="oldPassword" name="oldPassword" type="password" required>
+                    <input id="oldPassword" [(ngModel)]="oldPassword" name="oldPassword" type="text" required>
 
                   </div>
                   <div class="input-profile-range">
@@ -145,7 +149,11 @@
                         <label for="">Gender</label>
                         <input type="text" value="{{user.gender}}" disabled> <!-- Sử dụng formControlName -->
                     </div>
-                    
+                    <div class="input-profile-range">
+                        <label for="">Email</label>
+                        <input type="email" value="{{user.email}}" disabled>
+                        <!-- Email không cần update, tạm thời không sử dụng formControlName -->
+                    </div>
                     <div class="input-profile-range">
                         <label for="">Phone</label>
                         <input type="text" value="{{user.phone}}" disabled> <!-- Sử dụng formControlName -->
@@ -193,13 +201,13 @@
                     </div>
                 </div>
 
-                <div class="user-post-image" *ngIf="posts.url; else no1Image">
-                    <div class="user-post-single-image" >
-                        <a href=""><img src="./assets/images/{{posts.url}}" alt=""></a>
+                <div class="user-post-image">
+                    <div class="user-post-single-image">
+                        <a href=""><img src="./assets/images/no-image.jpg" alt=""></a>
                     </div>
                     <!-- <div class="user-post-multi-image">
                             <div class="item-image-multi"><img src="./assets/images/no-image.jpg" alt=""></div>
-                        </div> -->                   
+                        </div> -->
                 </div>
                 <ng-template #no1Image>
                     <div class="user-post-image">
