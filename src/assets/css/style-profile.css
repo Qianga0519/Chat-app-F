@@ -73,7 +73,7 @@ main#main-profile-user {
             flex-direction: column;
             justify-content: center;
             align-items: center;
-
+            gap: 10px;
             border-radius: 10px;
             margin: 20px 0px;
 
@@ -103,6 +103,7 @@ main#main-profile-user {
                 padding: 5px 20px;
                 color: var(--text-color-gray);
                 background: rgba(var(var(--primary-color-black-rgb), .5));
+                width: 100%;
 
                 &:focus {
                     border: none;
