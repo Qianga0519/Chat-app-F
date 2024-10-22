@@ -4,27 +4,34 @@
     text-align: center;
     padding: 20px;
     font-size: 18px;
-    color: #007bff; /* Màu xanh của Bootstrap */
+    color: #007bff;
+    /* Màu xanh của Bootstrap */
     font-weight: bold;
-  }
-  
-  /* Hoặc bạn có thể thêm hiệu ứng loading bằng hình ảnh */
-  .loading-indicator:before {
+}
+
+/* Hoặc bạn có thể thêm hiệu ứng loading bằng hình ảnh */
+.loading-indicator:before {
     content: '';
     display: inline-block;
-    width: 24px; /* Kích thước của biểu tượng loading */
+    width: 24px;
+    /* Kích thước của biểu tượng loading */
     height: 24px;
     border: 3px solid #007bff;
     border-top: 3px solid transparent;
     border-radius: 50%;
     animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 
 
 .notification-sys {
@@ -39,6 +46,7 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 2000;
     animation: fadeIn 0.5s, fadeOut 0.5s 2s;
+
     button {
         border: none;
         outline: none;
@@ -1225,15 +1233,17 @@ main {
 *********************************/
 main {
     .wrapper-posts.tab-menu {
-        .main-content.wrapper-chat {
-            z-index: 1;
+        .main-content.list-friend-chat {
+            position: relative;
             width: 100%;
-            padding: 0 10px;
 
+            h3 {
+                padding: 5px;
+            }
 
             .info-friend-chat {
-                position: fixed;
                 width: 100%;
+                border: 1px solid red;
 
                 .item-info-friend-chat {
                     height: 50px;
@@ -1243,7 +1253,6 @@ main {
                     align-items: center;
                     box-sizing: unset;
                     padding: 10px 0;
-                    background: red;
                     background: var(--primary-color-white-light);
 
                     .item-friend-image-chat {
@@ -1262,11 +1271,62 @@ main {
                     }
                 }
             }
+        }
+
+        .main-content.wrapper-chat {
+            z-index: 1;
+            width: 100%;
+            padding: 0 10px;
+            .info-friend-chat {
+                position: fixed;
+                max-width: 100%;
+                padding: 0 50px;
+                display: flex;
+                gap: 10px;
+                width: 100%;
+                align-items: center;
+                background: var(--primary-color-white-light);
+
+                button {
+                    border: none;
+                    outline: none;
+                    color: var(--primary-color-blue);
+                    font-size: 1.5rem;
+                }
+
+                .item-info-friend-chat {
+                    height: 50px;
+                    padding: 20px;
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+                    box-sizing: unset;
+                    padding: 10px 0;
+                    background: var(--primary-color-white-light);
+
+                    .item-friend-image-chat {
+                        img {
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 50%;
+                            margin-left: 5px;
+                        }
+                    }
+
+
+                    .item-friend-info-chat {
+                        font-size: .8rem;
+                        display: flex;
+                        flex-direction: column;
+                    }
+                }
+            }
 
             .range-chat-content {
-                margin-top: 10px;
+                margin-top: 80px;
                 overflow-y: auto;
                 height: 100vh;
+
 
 
                 .content-friend-chat,
