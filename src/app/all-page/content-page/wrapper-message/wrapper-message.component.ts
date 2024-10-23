@@ -24,7 +24,6 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
   ],
   templateUrl: './wrapper-message.component.html',
-  styleUrl: 'message.css',
   providers: [NhantinService],
 })
 export class WrapperMessageComponent implements OnInit {
@@ -108,11 +107,7 @@ export class WrapperMessageComponent implements OnInit {
 
     // Tải thông tin người dùng
     this.nhantinService.getUserById(room.user_id_2).subscribe((response) => {
-      if (response.success) {
-        this.name_user2 = response.data.name; // Cập nhật tên người dùng
-      } else {
-        console.log(response);
-      }
+      this.name_user2 = response.name;
     });
   }
 
@@ -122,7 +117,7 @@ export class WrapperMessageComponent implements OnInit {
       (response) => {
         if (response.success) {
           this.selectedRoom.messages = response.data; // Cập nhật tin nhắn của phòng
-          console.log('Loaded messages:', response.data); // Log danh sách tin nhắn đã tải
+          // console.log('Loaded messages:', response.data); // Log danh sách tin nhắn đã tải
           this.scrollToBottom();
         } else {
           this.errorMessage = response.error; // Lưu thông báo lỗi
