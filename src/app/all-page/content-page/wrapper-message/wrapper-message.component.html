@@ -19,8 +19,18 @@
             (click)="openChat(room)"
           >
             <div class="item-friend-image-chat">
-              <img src="/assets/images/no-image.jpg" alt="" />
+              <img
+                *ngIf="room.user2_avatar; else noAvatar"
+                src="/assets/images/{{ room.user2_avatar }}"
+                alt="User Avatar"
+              />
             </div>
+            <ng-template #noAvatar>
+              <div class="item-friend-image-chat">
+                <img src="/assets/images/no-image.jpg" alt="No Avatar" />
+              </div>
+            </ng-template>
+
             <div class="item-friend-info-chat">
               <span>{{ room.name }}</span>
               <span>{{
@@ -34,7 +44,6 @@
         </ng-template>
         <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
       </div>
-
       <!-- Nội dung chat -->
       <div class="main-content active wrapper-chat" *ngIf="selectedRoom">
         <div class="info-friend-chat">
@@ -43,19 +52,22 @@
           </button>
           <div class="item-info-friend-chat">
             <div class="item-friend-image-chat">
-              <img src="/assets/images/no-image.jpg" alt="Friend Image" />
+              <img src="/assets/images/{{ avatar_user2 }}" alt="Friend Image" />
             </div>
             <div class="item-friend-info-chat">
-              <span>{{ selectedRoom?.name }}</span>
+              <span>{{ name_user2 }}</span>
               <span>{{
                 selectedRoom?.status === "1" ? "Đang hoạt động" : "Ngủ"
               }}</span>
             </div>
           </div>
         </div>
-
-        <div class="range-chat-content">
-          <ng-container *ngIf="selectedRoom?.messages?.length; else noMessages">
+        <div class="range-chat-content messages-container" #messagesContainer >
+          <ng-container
+            *ngIf="selectedRoom?.messages?.length; else noMessages"
+            #chatContainer
+            class="chat-container"
+          >
             <div
               *ngFor="let message of selectedRoom.messages"
               [ngClass]="{
@@ -63,33 +75,55 @@
                 'content-friend-chat': message.user_id != userId
               }"
             >
-              <img src="/assets/images/no-image.jpg" alt="User Image" />
+              <div class="item-friend-image-chat">
+                <img
+                  *ngIf="message.user_avatar; else noAvatarMes"
+                  src="/assets/images/{{ message.user_avatar }}"
+                  alt="User Avatar"
+                />
+              </div>
+              <ng-template #noAvatarMes>
+                <div class="item-friend-image-chat">
+                  <img src="/assets/images/no-image.jpg" alt="No Avatar" />
+                </div>
+              </ng-template>
               <article>{{ message.content }}</article>
             </div>
+            <div #scrollToEnd></div>
           </ng-container>
           <ng-template #noMessages>
             <div class="no-messages">Không có tin nhắn nào.</div>
           </ng-template>
-        </div>
-        <div class="range-user-chat-input">
-          <form>
-            <textarea
-              name="message"
-              placeholder="Nhập tin nhắn..."
-              required
-            ></textarea>
-            <button type="submit" class="">
-              <i class="fa-regular fa-paper-plane"></i>
-            </button>
-          </form>
+
+          <div class="range-user-chat-input">
+            <form
+              (ngSubmit)="sendMessage()"
+              #messageForm="ngForm"
+              class="message-form"
+            >
+              <textarea
+                name="message"
+                placeholder="Nhập tin nhắn..."
+                required
+                [(ngModel)]="newMessage"
+                class="message-input"
+              ></textarea>
+              <button
+                type="submit"
+                [disabled]="!newMessage"
+                class="send-button"
+              >
+                <i class="fa-regular fa-paper-plane"></i>
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-
       <!-- END TAB RESULT SEARCH -->
       <app-wrapper-right></app-wrapper-right>
     </div>
   </main>
-  <app-footer></app-footer>
+  <!-- <app-footer></app-footer> -->
   <div
     class="modal fade"
     s
