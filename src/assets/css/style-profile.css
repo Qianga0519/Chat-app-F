@@ -55,24 +55,32 @@ main#main-profile-user {
 .main-content-profile {
 
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-around;
 
 
     article {
         font-size: 1.5rem;
+        font-weight: bold;
     }
+
+
     .profile-detail {
         width: 500px;
         padding: 20px;
         max-width: 100%;
-  
+
         form {
+            h5 {
+                width: 100%;
+                font-weight: bold;
+
+            }
+
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-
             border-radius: 10px;
             margin: 20px 0px;
 
@@ -83,22 +91,37 @@ main#main-profile-user {
                 gap: 10px;
                 width: 100%;
 
+                label {
+                    font-size: .8rem;
+                    color: var(--text-color-gray);
+                }
+
                 .input-profile-range {
                     display: flex;
                     flex-direction: column;
                     justify-content: space-between;
-
-                    input {
+                    input, select {
                         padding: 5px 10px;
+                        border: none;
+                        outline: none;
+                        border-radius: 5px;
+
+
+                        &:focus {
+                            border: 1px solid var(--primary-color-blue);
+                        }
                     }
+                    
                 }
 
             }
 
             button {
+                width: 100%;
                 border: 1px solid var(--text-color-gray);
                 border-radius: 5px;
                 outline: none;
+                margin: 10px 0;
                 padding: 5px 20px;
                 color: var(--text-color-gray);
                 background: rgba(var(var(--primary-color-black-rgb), .5));
@@ -142,7 +165,6 @@ main#main-profile-user {
         flex-grow: 1;
         overflow-y: auto;
         padding: 20px 50px;
-        
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -382,10 +404,6 @@ main#main-profile-user {
                         color: var(--primary-color-blue);
                     }
                 }
-
-                .btn-interact-post-comment {}
-
-                .btn-interact-post-share {}
             }
         }
     }

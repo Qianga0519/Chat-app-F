@@ -10,20 +10,21 @@
                 <div class="range-search-input filter-result">
                     <div class="search-input">
                         <div class="range-input-key">
-                            <input type="text">
-                            <button class="btn-search-input-filter"><i class="fa fa-search"
-                                    aria-hidden="true"></i></button>
+                            <input type="text" [(ngModel)]="searchKeyword" placeholder="Nhập từ khóa tìm kiếm">
+                            <button class="btn-search-input-filter" (click)="searchUsers(searchKeyword)">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="tab-filter">
-                        <button class="fl-user">
+                        <button class="fl-user"  (click)="showUsers = true; showPosts = false">
                             nguoi dung
                         </button>
-                        <button class="fl-post">
+                        <button class="fl-post" (click)="showUsers = false; showPosts = true">
                             bai viet
                         </button>
                     </div>
-                    <div class="search-advance">
+                    <div class="search-advance" *ngIf="showPosts">
                         <div class="item-advance">
                             <label for="">Ngay dang</label>
                             <select name="" id="">
@@ -43,19 +44,18 @@
                     </div>
                 </div>
                 <section class="result-content">
-                    <div class="result-search-list-user">
-                        <div class="result-list-user">
+                    <div class="result-search-list-user"  *ngIf="showUsers">
+                        <div class="result-list-user" *ngFor="let user of users">
                             <a href="" class="item-result-user">
                                 <img src="/assets/images/no-image.jpg" alt="">
-                                <article>Tran Thanh Quang</article>
-                            </a>
-                            <a href="" class="item-result-user">
-                                <img src="/assets/images/no-image.jpg" alt="">
-                                <article>Tran Thanh Quang</article>
+                                <article>{{ user.name }}</article>
                             </a>
                         </div>
                     </div>
-                    <div class="result-search-list-post">
+                    <div *ngIf="noUsersFound" class="no-users-message">
+                        Không tìm thấy người dùng nào.
+                    </div>
+                    <div class="result-search-list-post" *ngIf="showPosts">
                         <title></title>
                         <div class="result-list-post">
                             <div class="item-post">

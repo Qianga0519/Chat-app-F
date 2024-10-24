@@ -1,110 +1,142 @@
 <!-- 3 -->
 <section class="all-content-page">
-    <app-header></app-header>
-    <main>
-        <div class="wrapper-posts tab-menu">
-            <!-- TAB LEFT CONTENT  -->
-        <app-wrapper-left></app-wrapper-left>
-       
-         
-            <!-- END TAB LEFT CONTENT -->
-
-            <div class="main-content active wrapper-list-post">
-                <div class="user-up-post">
-                    <div class="user-avatat-up-post" href="">
-                        <a href=""> <img class="user-up-post-image-link" src="./assets/images/no-image.jpg" alt="">
-                        </a>
-                        <div class="you-think-new-post" data-bs-target="#modal-created-post" data-bs-toggle="modal">
-                            Bạn đang
-                            nghĩ gì?
-                        </div>
-                    </div>
+  <app-header></app-header>
+  <main>
+    <div class="wrapper-posts tab-menu">
+      <!-- TAB LEFT CONTENT  -->
+      <app-wrapper-left></app-wrapper-left>
+      <!-- END TAB LEFT CONTENT -->
+      <div class="main-content active wrapper-list-post" (scroll)="onScroll()">
+        <div class="user-up-post">
+          <div class="user-avatat-up-post" href="">
+            <a href="">
+              <img
+                class="user-up-post-image-link"
+                src="./assets/images/no-image.jpg"
+                alt=""
+              />
+            </a>
+            <div
+              class="you-think-new-post"
+              data-bs-target="#modal-created-post"
+              data-bs-toggle="modal"
+            >
+              Bạn đang nghĩ gì?
+            </div>
+          </div>
+        </div>
+        <div *ngIf="isLoading" class="loading-indicator">
+          Đang tải...
+          <!-- Hoặc có thể thay thế bằng biểu tượng loading -->
+        </div>
+        <div class="list-post">
+          <div *ngIf="posts.length === 0" class="no-posts-message">
+            Không có bài viết nào.
+          </div>
+          <div class="item-post" *ngFor="let post of posts">
+            <div class="user-post-info">
+              <section class="user-post-info-1">
+                <a class="user-avatat-post" href="">
+                  <img
+                    class="user-post-image-link"
+                    src="./assets/images/no-image.jpg"
+                    alt=""
+                  />
+                </a>
+                <div class="user-info-detait-post">
+                  <a href="" class="user-name-post">{{ post.name }}</a>
+                  <a href="" class="time-name-post">
+                    {{ formatDate(post.created_at) }}
+                  </a>
                 </div>
-                <div class="list-post">
-                    <div class="item-post">
-                        <div class="user-post-info">
-                            <section class="user-post-info-1">
-                                <a class="user-avatat-post" href="">
-                                    <img class="user-post-image-link" src="./assets/images/no-image.jpg" alt="">
-                                </a>
-                                <div class="user-info-detait-post">
-                                    <a href="" class="user-name-post">Tran Thanh Quang</a>
-                                    <a href="" class="time-name-post">20:00h today</a>
-                                </div>
-                            </section>
-                            <section class="user-post-info-2">
-                                <button class="btn-block-post"><i class="fa-solid fa-x"></i></button>
-                            </section>
-                        </div>
-                        <div class="user-post-content">
-                            <div class="user-post-all-content">
-                                <span>
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa autem debitis
-                                    praesentium et, sint totam, incidunt harum minus vitae temporibus veritatis sit
-                                    ad.
-                                    Enim rem asperiores nam obcaecati minima repudiandae.</span>
-                                <span class="user-post-see-more">...See more</span>
-                            </div>
-                        </div>
+              </section>
+              <section class="user-post-info-2">
+                <button class="btn-block-post">
+                  <i class="fa-solid fa-x"></i>
+                </button>
+              </section>
+            </div>
+            <div class="user-post-content">
+              <div class="user-post-all-content">
+                <span *ngIf="post.content.length <= 100">{{
+                  post.content
+                }}</span>
+                <span *ngIf="post.content.length > 100">
+                  {{
+                    post.showFullContent
+                      ? post.content
+                      : post.content.substring(0, 100) + "..."
+                  }}
+                  <span
+                    *ngIf="!post.showFullContent"
+                    class="user-post-see-more"
+                    (click)="toggleSeeMore(post)"
+                  >
+                    See more
+                  </span>
+                </span>
+              </div>
+            </div>
 
-                        <div class="user-post-image">
-                            <div class="user-post-single-image">
-                                <a href=""><img src="./assets/images/no-image.jpg" alt=""></a>
-                            </div>
-                            <!-- <div class="user-post-multi-image">
-                    <div class="item-image-multi"><img src="./assets/images/no-image.jpg" alt=""></div>
-                </div> -->
-                        </div>
-                        <div class="qty-interact-post">
-                            <div class="qty-interact qty-likes">
-                                <span>999</span>
-                                <div class="list-interact-icon">
-                                    <i style="z-index: 3;" class="icon-post-like fa-solid fa-thumbs-up"></i>
-                                    <!-- <i style="z-index: 2; left: 10px;"
+            <div class="user-post-image">
+              <div class="user-post-single-image">
+                <a href="" *ngIf="post.media_url; else noImage">
+                  <img src="./assets/images/{{ post.media_url }}" alt="" />
+                </a>
+                <ng-template #noImage></ng-template>
+              </div>
+            </div>
+            <div class="qty-interact-post">
+              <div class="qty-interact qty-likes">
+                <span>{{ post.total_likes }}</span>
+                <div class="list-interact-icon">
+                  <i
+                    style="z-index: 3"
+                    class="icon-post-like fa-solid fa-thumbs-up"
+                  ></i>
+                  <!-- <i style="z-index: 2; left: 10px;"
                             class="icon-post-smile fa-solid fa-face-laugh-beam"></i>
                         <i style="z-index: 1; left: 20px;"
                             class="icon-post-hate fa-solid fa-hand-middle-finger"></i> -->
-                                </div>
-                            </div>
-                            <div class="qty-interact qty-cmt">
-                                <span>999</span>
-                                <div class="list-interact-icon">
-                                    <span>binh luan</span>
-
-                                </div>
-                            </div>
-                            <div class="qty-interact qty-share">
-                                <span>999</span>
-                                <div class="list-interact-icon">
-                                    <span>chia se</span>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="range-interact-post">
-                            <button class="btn-interact-post-like">
-                                <i class="icon-post-like active  fa-solid fa-thumbs-up"></i>
-                                <i class="icon-post-like  fa-regular fa-thumbs-up"></i>
-                                <span>like</span>
-                            </button>
-                            <button class="btn-interact-post-comment">
-                                <i class="fa-regular fa-comment"></i>
-                                <span>binh luan</span>
-                            </button>
-                            <button class="btn-interact-post-share">
-                                <i class="fa-regular fa-share-from-square"></i>
-                                <span>chia se</span>
-                            </button>
-                        </div>
-                    </div>
                 </div>
+              </div>
+              <div class="qty-interact qty-cmt">
+                <span>{{ post.total_comments }}</span>
+                <div class="list-interact-icon">
+                  <span>binh luan</span>
+                </div>
+              </div>
+              <div class="qty-interact qty-share">
+                <span>{{ post.total_shares }}</span>
+                <div class="list-interact-icon">
+                  <span>chia se</span>
+                </div>
+              </div>
             </div>
-
-            <!-- END TAB RESULT SEARCH -->
-           <app-wrapper-right></app-wrapper-right>
+            <div class="range-interact-post">
+              <button class="btn-interact-post-like">
+                <i class="icon-post-like active fa-solid fa-thumbs-up"></i>
+                <i class="icon-post-like fa-regular fa-thumbs-up"></i>
+                <span>like</span>
+              </button>
+              <button class="btn-interact-post-comment">
+                <i class="fa-regular fa-comment"></i>
+                <span>binh luan</span>
+              </button>
+              <button class="btn-interact-post-share">
+                <i class="fa-regular fa-share-from-square"></i>
+                <span>chia se</span>
+              </button>
+            </div>
+          </div>
         </div>
-    </main>
+      </div>
+
+      <!-- END TAB RESULT SEARCH -->
+      <app-wrapper-right></app-wrapper-right>
+    </div>
+  </main>
   <app-footer></app-footer>
-    <app-modal-edit-post></app-modal-edit-post>
-    <app-modal-create-post></app-modal-create-post>
+  <app-modal-edit-post></app-modal-edit-post>
+  <app-modal-create-post></app-modal-create-post>
 </section>

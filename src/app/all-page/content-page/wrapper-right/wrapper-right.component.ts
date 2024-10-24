@@ -76,7 +76,7 @@ export class WrapperRightComponent implements OnInit {
           if (Array.isArray(data)) {
             this.makeFriend = data;
           } else {
-            console.error('Dữ liệu trả về không phải là một mảng:', data);
+            // console.error('Dữ liệu trả về không phải là một mảng:', data);
             this.makeFriend = []; // Gán giá trị rỗng để tránh lỗi *ngFor
           }
         },
@@ -126,7 +126,49 @@ export class WrapperRightComponent implements OnInit {
       }
     );
   }
+  
+  declineFriend(friendId: number) {
+    // Lấy token từ localStorage
+    const token = localStorage.getItem('authToken');
 
+    if (!token) {
+      console.error('Không có token. Vui lòng đăng nhập lại.');
+      return; // Dừng lại nếu không có token
+    }
+
+    // Xác thực token để lấy userId
+    this.userService.verifyToken().subscribe(
+      (response) => {
+        if (response.success) {
+          const userId1 = response.userId; // Lấy userId từ phản hồi
+
+          this.userService.declineFriendRequest(userId1, friendId).subscribe(
+            (response) => {
+              if (!response.error) {
+                this.message = response.message;
+                this.updateFriendRequestUI(friendId); // Cập nhật UI sau khi từ chối  
+              } else {
+                this.message = response.message;
+              }
+            },
+            (error) => {
+              console.error('Error declining friend request', error);
+            }
+          );
+        } else {
+          console.error('Lỗi xác thực token:', response.message);
+        }
+      },
+      (error) => {
+        console.error('Lỗi khi xác thực token:', error);
+      }
+    );
+  }
+
+  updateFriendRequestUI(friendId: number) {
+    // Xóa yêu cầu kết bạn khỏi danh sách hiển thị mà không cần F5
+    this.makeFriend = this.makeFriend.filter(friend => friend.id !== friendId);
+  }
   ngOnInit(): void {
     this.getUserIdFromToken(); // Lấy userId khi khởi tạo component
   }
