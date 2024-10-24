@@ -6,8 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
-
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../service/quang/auth.service';
@@ -17,14 +16,13 @@ import { AuthService } from '../service/quang/auth.service';
   standalone: true,
   imports: [FormsModule, CommonModule, ReactiveFormsModule, HttpClientModule],
   templateUrl: './login.component.html',
-  providers: [AuthService],
+  providers: [AuthService, RouterLink],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   login_success = false;
   login_message = '';
   isLogin = false;
-
   constructor(private authService: AuthService, private router: Router) {
     // Đảm bảo tiêm Router đúng cách
     this.loginForm = new FormGroup({
@@ -44,7 +42,9 @@ export class LoginComponent implements OnInit {
       ]),
     });
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.checkAuth();
+  }
 
   login(event: Event) {
     event.preventDefault(); // Ngăn chặn hành vi mặc định của form
@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
             console.log('Token:', response.token);
             this.isLogin = true; // Đặt trạng thái đăng nhập
             // Điều hướng đến trang chính (nếu cần)
-            this.showNotification("Đăng nhập thành công!");
+            this.showNotification('Đăng nhập thành công!');
 
             setInterval(() => {
               this.router.navigate(['/']); // Thay đổi đường dẫn nếu cần
@@ -84,5 +84,15 @@ export class LoginComponent implements OnInit {
   }
   closeNotification() {
     this.login_success = false;
+  }
+  navigateToLogin() {
+    this.router.navigate(['/register']);
+  }
+  checkAuth() {
+    this.authService.verifyToken().subscribe((response) => {
+      if (response.success == true) {
+        this.router.navigate(['/']);
+      }
+    });
   }
 }
