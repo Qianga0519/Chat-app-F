@@ -96,10 +96,29 @@ export class UsersService {
     )
   };
 
-  changePassword(payload: { user_id: number, old_password: string, new_password: string }): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(`http://localhost:8080/chat_api/api_dat/users/changepassword.php`, payload, 
+  changePassword(payload: {
+    user_id: number;
+    old_password: string;
+    new_password: string;
+  }): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `http://localhost:8080/chat_api/api_dat/users/changepassword.php`,
+      payload,
       {
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  }
+
+  acceptFriendRequest(userId: number, friendId: number): Observable<any> {
+    return this.http.post<any>(`http://localhost:8080/chat_api/api_dat/users/acceptFriendRequest.php`, { user_id: userId, friend_id: friendId });
+  }
+
+  makeFriend(userId: number): Observable<any> {
+    return this.http.get(
+      `http://localhost:8080/chat_api/api_dat/users/make_friend.php?user_id=${userId}`,
+      {
+        headers: { 'Content-Type': 'application/json' },
       }
     );
   }

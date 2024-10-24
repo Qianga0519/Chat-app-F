@@ -72,10 +72,10 @@ export class WrapperMessageComponent implements OnInit {
       }
     );
   }
-
   getChatRooms(): void {
     this.nhantinService.getChatRoomByUserId().subscribe(
       (response) => {
+        console.log(response);
         if (response.success) {
           this.chatRooms = response.data;
           console.log('list room', this.chatRooms);
@@ -92,32 +92,29 @@ export class WrapperMessageComponent implements OnInit {
 
   openChat(room: any): void {
     this.selectedRoom = room; // Lưu phòng chat đã chọn
-    this.loadMessages(room); // Gọi hàm tải tin nhắn ngay khi mở phòng chat
-    this.startMessageUpdate();
-    // Tải avatar người dùng
+    this.loadMessages(room); // Tải tin nhắn của phòng đã chọn ngay khi mở phòng chat
+    this.startMessageUpdate(); // Bắt đầu cập nhật tin nhắn định kỳ
+
+    // Lấy avatar của người dùng trong phòng chat
     this.nhantinService
       .getChatRoomAvatarUser(this.selectedRoom.id)
       .subscribe((response) => {
         if (response.success) {
           this.avatar_user2 = response.data.avatar_user_2;
         } else {
-          console.log(response);
+          console.log('Error fetching avatar:', response.error); // Thông báo lỗi nếu có
         }
       });
-
-    // Tải thông tin người dùng
-    this.nhantinService.getUserById(room.user_id_2).subscribe((response) => {
-      this.name_user2 = response.name;
-    });
   }
 
   loadMessages(room: any): void {
     this.nhantinService.getMessagesByRoomId(room.id).subscribe(
       // Sửa lại để sử dụng ID phòng
       (response) => {
+        console.log(response);
         if (response.success) {
           this.selectedRoom.messages = response.data; // Cập nhật tin nhắn của phòng
-          // console.log('Loaded messages:', response.data); // Log danh sách tin nhắn đã tải
+          console.log('Loaded messages:', response.data); // Log danh sách tin nhắn đã tải
           this.scrollToBottom();
         } else {
           this.errorMessage = response.error; // Lưu thông báo lỗi
