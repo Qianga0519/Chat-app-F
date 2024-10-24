@@ -4,11 +4,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap, catchError } from 'rxjs';
 import { Router } from '@angular/router';
 
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(email: string, password: string): Observable<any> {
     const data = { email: email, password: password };
@@ -38,46 +39,53 @@ export class AuthService {
     // Gửi yêu cầu đến API để xóa token (nếu cần)
     const token = localStorage.getItem('authToken');
     if (token) {
-      this.http
-        .post(
-          `http://localhost:8080/chat_api/quangApi/auth/logout.php`,
-          { token },
-          {
-            headers: { 'Content-Type': 'application/json' },
-          }
-        )
-        .subscribe(
-          () => {
-            // Xóa token và thông tin người dùng
-            localStorage.removeItem('authToken');
-            localStorage.removeItem('userId');
-            // Điều hướng người dùng về trang đăng nhập
-            this.router.navigate(['/login']);
-          },
-          (error) => {
-            console.error('Logout error', error);
-          }
-        );
+        this.http
+            .post(
+                `http://localhost:8080/chat_api/quangApi/auth/logout.php`,
+                { token },
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                }
+            )
+            .subscribe(
+                (response: any) => {
+                    if (response.success) {
+                        // Xóa token và thông tin người dùng
+                        localStorage.removeItem('authToken');
+                        localStorage.removeItem('userId');
+                        // Điều hướng người dùng về trang đăng nhập
+                        this.router.navigate(['/login']);
+                    } else {
+                        console.error('Logout error', response.message);
+                    }
+                },
+                (error) => {
+                    console.error('Logout error', error);
+                }
+            );
     } else {
-      // Nếu không có token, chỉ cần điều hướng về trang đăng nhập
-      this.router.navigate(['/login']);
+        // Nếu không có token, chỉ cần điều hướng về trang đăng nhập
+        this.router.navigate(['/login']);
     }
-  }
-  verifyToken(): Observable<any> {
-    const token = { token: localStorage.getItem('authToken') || null };
-    return this.http
-      .post(
-        `http://localhost:8080/chat_api/quangApi/auth/verifyToken.php`,
-        token,
-        {
-          headers: { 'Content-Type': 'application/json' },
-        }
-      )
-      .pipe(
-        catchError((error) => {
-          console.error('Token verification error', error);
-          throw error; // Hoặc xử lý lỗi ở đây
-        })
-      );
-  }
+}
+
+
+
+verifyToken(): Observable<any> {
+  const token = { token: localStorage.getItem('authToken') || null };
+  return this.http
+    .post(
+      `http://localhost:8080/chat_api/quangApi/auth/verifyToken.php`,
+      token,
+      {
+        headers: { 'Content-Type': 'application/json' },
+      }
+    )
+    .pipe(
+      catchError((error) => {
+        console.error('Token verification error', error);
+        throw error; // Hoặc xử lý lỗi ở đây
+      })
+    );
+}
 }

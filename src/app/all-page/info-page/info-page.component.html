@@ -124,7 +124,7 @@
         <button type="submit">Change</button>
       </form>
 
-      <button class="btn-user-logout">Logout</button>
+      <button (click)="onLogout()" class="btn-user-logout">Logout</button>
     </div>
     <div class="profile-detail" *ngIf="!isOwner">
       <article>About you</article>
@@ -215,15 +215,15 @@
             </div>
           </div>
           <div class="qty-interact qty-cmt">
-            <span>999</span>
+            <span>{{ posts.cmt_count || 0 }}</span>
             <div class="list-interact-icon">
-              <span>binh luan</span>
+              <span>Comment</span>
             </div>
           </div>
           <div class="qty-interact qty-share">
-            <span>999</span>
+            <span>{{ posts.share_count || 0 }}</span>
             <div class="list-interact-icon">
-              <span>chia se</span>
+              <span>Share</span>
             </div>
           </div>
         </div>
