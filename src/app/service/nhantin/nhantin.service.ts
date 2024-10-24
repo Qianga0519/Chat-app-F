@@ -9,7 +9,7 @@ export class NhantinService {
   constructor(private http: HttpClient) {}
 
   getChatRoomByUserId(): Observable<any> {
-    const userId = localStorage.getItem('userId')!;
+    const userId = localStorage.getItem('id_user')!;
     const token = localStorage.getItem('authToken');
     const data = { user_id: userId, token: token };
     return this.http.post(
