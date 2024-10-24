@@ -10,6 +10,8 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { ReactiveFormsModule } from '@angular/forms';
 import { PostService } from '../../service/dat/post.service';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { AuthService } from '../../service/quang/auth.service';
+
 
 
 @Component({
@@ -27,7 +29,7 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule
   ],
   templateUrl: './info-page.component.html',
   styleUrls: ['./info-page.component.css'],
-  providers: [UsersService]
+  providers: [UsersService , AuthService]
 })
 export class InfoPageComponent implements OnInit {
 
@@ -49,7 +51,8 @@ export class InfoPageComponent implements OnInit {
     private route: ActivatedRoute,
     private usersService: UsersService,
     private formBuilder: FormBuilder,
-    private postService: PostService
+    private postService: PostService,
+    private auth: AuthService,
   ) {
     this.profileForm = this.formBuilder.group({
       name: ['', [Validators.required, nameValidator()]],
@@ -68,8 +71,11 @@ export class InfoPageComponent implements OnInit {
     const id = this.route.snapshot.params['id']; // Lấy ID từ route
     this.getPostsByUserId(id);
     this.AvatarByUser(id);
+    
   }
-
+  onLogout() {
+    this.auth.logout();
+  }
   getPostsByUserId(idPost: number): void {
     this.postService.postbyid(idPost).subscribe(data => {
       this.post = data;
@@ -264,8 +270,7 @@ export class InfoPageComponent implements OnInit {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
     return regex.test(password);
   }
-  
-  
+
 }
 
 
