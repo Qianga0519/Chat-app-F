@@ -1,4 +1,10 @@
 <!-- 3 -->
+<div class="notification-sys" *ngIf="error" id="notification-sys">
+  <button (click)="closeNotification()">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+  <span>{{ notify_message }}</span>
+</div>
 <section class="all-content-page">
   <app-header></app-header>
   <main>
@@ -30,7 +36,6 @@
                 <img src="/assets/images/no-image.jpg" alt="No Avatar" />
               </div>
             </ng-template>
-
             <div class="item-friend-info-chat">
               <span>{{ room.name }}</span>
               <span>{{
@@ -57,7 +62,9 @@
             <div class="item-friend-info-chat">
               <span>{{ name_user2 }}</span>
               <span>{{
-                selectedRoom?.status === "1" ? "Đang hoạt động" : "Ngủ"
+                selectedRoom?.status === "1"
+                  ? "Đang hoạt động"
+                  : "Không hoạt động"
               }}</span>
             </div>
           </div>

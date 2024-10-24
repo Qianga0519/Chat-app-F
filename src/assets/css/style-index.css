@@ -1245,7 +1245,6 @@ main {
 
             .info-friend-chat {
                 width: 100%;
-                border: 1px solid red;
 
                 .item-info-friend-chat {
                     height: 50px;
@@ -1255,7 +1254,9 @@ main {
                     align-items: center;
                     box-sizing: unset;
                     padding: 10px 0;
+                    cursor: pointer;
                     background: var(--primary-color-white-light);
+                    transition: .2s linear;
 
                     .item-friend-image-chat {
                         img {
@@ -1264,6 +1265,10 @@ main {
                             border-radius: 50%;
                             margin-left: 5px;
                         }
+                    }
+
+                    &:hover {
+                        background-color: rgba(var(--primary-color-black-rgb), .1);
                     }
 
                     .item-friend-info-chat {
@@ -1330,9 +1335,9 @@ main {
                 padding-top: 10px;
                 overflow-y: auto;
                 height: 500px;
-                background: red;
+             
                 margin-top: 70px;
-              
+
                 .content-friend-chat,
                 .content-user-chat {
                     display: flex;
@@ -1350,16 +1355,16 @@ main {
                     }
 
                     article {
-                        
+
                         background: rgba(var(--primary-color-gray-rgb), .1);
                         padding: 5px;
                         border-radius: 5px;
                         text-align: start;
                         color: var(--text-color-black);
-                       
+
                         max-width: 500px;
                         word-wrap: break-word;
-                  
+
 
                     }
 

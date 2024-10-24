@@ -8,12 +8,11 @@ export interface ApiResponse {
   // Thêm các trường khác nếu cần
 }
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsersService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAllUser(): Observable<any> {
     return this.http.get(
@@ -25,24 +24,24 @@ export class UsersService {
     return this.http.get(
       `http://localhost:8080/chat_api/api_dat/users/getUserById.php?id=${id}`,
       {
-        headers: { 'Content-Type': 'application/json' } // Thiết lập header nếu cần				
+        headers: { 'Content-Type': 'application/json' }, // Thiết lập header nếu cần
       }
-    )
+    );
   }
   getUserInfoByUserId(id: number): Observable<any> {
     return this.http.get(
       `http://localhost:8080/chat_api/api_dat/users/info.php?id=${id}`,
       {
-        headers: { 'Content-Type': 'application/json' } // Thiết lập header nếu cần				
+        headers: { 'Content-Type': 'application/json' }, // Thiết lập header nếu cần
       }
-    )
+    );
   }
 
   getFriendship(userId: number, friendId: number): Observable<any> {
     return this.http.get(
       `http://localhost:8080/chat_api/api_dat/users/Friendship.php?user_id=${userId}&friend_id=${friendId}`,
       {
-        headers: { 'Content-Type': 'application/json' } // Thiết lập header nếu cần
+        headers: { 'Content-Type': 'application/json' }, // Thiết lập header nếu cần
       }
     );
   }
@@ -50,7 +49,7 @@ export class UsersService {
     return this.http.get(
       `http://localhost:8080/chat_api/api_dat/users/Friendship.php?user_id=${userId}`,
       {
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       }
     );
   }
@@ -58,7 +57,7 @@ export class UsersService {
     return this.http.get(
       `http://localhost:8080/chat_api/api_dat/users/info_test.php?user_id=${userId}`,
       {
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       }
     );
   }
@@ -67,7 +66,7 @@ export class UsersService {
       `http://localhost:8080/chat_api/api_dat/users/updateProfile.php`,
       { user_id: userId, ...userData }, // Gửi name cùng với các trường khác
       {
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       }
     );
   }
@@ -89,12 +88,13 @@ export class UsersService {
       );
   }
   IsAvatarByUser(userId: number): Observable<any> {
-    return this.http.get(`http://localhost:8080/chat_api/api_dat/users/GetAvataUserByMedia.php?id=${userId}`,
+    return this.http.get(
+      `http://localhost:8080/chat_api/api_dat/users/GetAvataUserByMedia.php?id=${userId}`,
       {
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       }
-    )
-  };
+    );
+  }
 
   changePassword(payload: {
     user_id: number;
@@ -111,7 +111,10 @@ export class UsersService {
   }
 
   acceptFriendRequest(userId: number, friendId: number): Observable<any> {
-    return this.http.post<any>(`http://localhost:8080/chat_api/api_dat/users/acceptFriendRequest.php`, { user_id: userId, friend_id: friendId });
+    return this.http.post<any>(
+      `http://localhost:8080/chat_api/api_dat/users/acceptFriendRequest.php`,
+      { user_id: userId, friend_id: friendId }
+    );
   }
 
   makeFriend(userId: number): Observable<any> {
