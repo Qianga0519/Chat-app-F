@@ -127,7 +127,10 @@
                 <span>{{ post.likesCount }} Likes</span>
               </button>
 
-              <button class="btn-interact-post-comment">
+              <button
+                class="btn-interact-post-comment"
+                (click)="navigateToPostDetail(post.id)"
+              >
                 <i class="fa-regular fa-comment"></i>
                 <span>binh luan</span>
               </button>
