@@ -69,6 +69,8 @@ export class WrapperListPostComponent implements OnInit {
     this.checkAuth();
     if (!this.isLoading) {
       this.isLoading = true;
+
+      // Lấy danh sách các bài viết đã được like bởi người dùng
       this.thichbaivietService
         .getUserLikePost(this.userId)
         .subscribe((response) => {
@@ -76,19 +78,24 @@ export class WrapperListPostComponent implements OnInit {
             this.userLikePosts = response.data;
           }
         });
+
+      // Lấy danh sách bài viết
       this.listPostService.getPosts(this.lastPostId, this.limit).subscribe(
         (data: any[]) => {
           // Cập nhật bài viết với trạng thái liked
           const dataLike = this.userLikePosts.map((like) => like.post_id);
           console.log(dataLike);
 
-          this.posts = data.map((post) => {
+          const updatedPosts = data.map((post) => {
             post.liked = dataLike.includes(post.id);
             return post;
           });
 
-          console.log(this.posts);
-          this.posts = [...this.posts, ...data];
+          console.log(updatedPosts);
+
+          // Cập nhật danh sách bài viết với các bài viết mới
+          this.posts = [...this.posts, ...updatedPosts];
+
           if (data.length > 0) {
             this.lastPostId = data[data.length - 1].id;
             this.noPosts = false;
@@ -153,6 +160,10 @@ export class WrapperListPostComponent implements OnInit {
         }
       }
     });
+  }
+  navigateToPostDetail(postId: number) {
+
+    this.router.navigate(['/detail', postId]);
   }
 
   onScroll() {
