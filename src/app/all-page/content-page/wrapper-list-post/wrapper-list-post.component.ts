@@ -64,6 +64,15 @@ export class WrapperListPostComponent implements OnInit {
   }
   ngOnDestroy() {
     window.removeEventListener('scroll', this.onScroll.bind(this));
+    this.clearData;
+  }
+  clearData() {
+    this.posts = [];
+    this.lastPostId = 0;
+    this.isLoading = false;
+    this.noPosts = false;
+    this.userLikePosts = [];
+    // Reset các biến dữ liệu khác nếu cần
   }
   loadPosts() {
     this.checkAuth();
@@ -84,14 +93,14 @@ export class WrapperListPostComponent implements OnInit {
         (data: any[]) => {
           // Cập nhật bài viết với trạng thái liked
           const dataLike = this.userLikePosts.map((like) => like.post_id);
-          console.log(dataLike);
+          // console.log(dataLike);
 
           const updatedPosts = data.map((post) => {
             post.liked = dataLike.includes(post.id);
             return post;
           });
 
-          console.log(updatedPosts);
+          // console.log(updatedPosts);
 
           // Cập nhật danh sách bài viết với các bài viết mới
           this.posts = [...this.posts, ...updatedPosts];
@@ -136,7 +145,7 @@ export class WrapperListPostComponent implements OnInit {
           }
           this.updateLikesCount(post_id);
         }
-        console.log(response);
+        // console.log(response);
       },
       (error) => {
         console.error('Error liking post:', error);
@@ -162,7 +171,6 @@ export class WrapperListPostComponent implements OnInit {
     });
   }
   navigateToPostDetail(postId: number) {
-
     this.router.navigate(['/detail', postId]);
   }
 
