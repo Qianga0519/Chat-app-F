@@ -1,18 +1,26 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { HeaderComponent } from "../header/header.component";
-import { ModalEditPostComponent } from "../modal-edit-post/modal-edit-post.component";
-import { ModalCreatePostComponent } from "../modal-create-post/modal-create-post.component";
+import { HeaderComponent } from '../header/header.component';
+import { ModalEditPostComponent } from '../modal-edit-post/modal-edit-post.component';
+import { ModalCreatePostComponent } from '../modal-create-post/modal-create-post.component';
 import { ApiResponse, UsersService } from '../../service/dat/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PostService } from '../../service/dat/post.service';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { AuthService } from '../../service/quang/auth.service';
-
-
+import { ThichbaivietService } from '../../service/thichbaiviet/thichbaiviet.service';
 
 @Component({
   selector: 'app-info-page',
@@ -24,20 +32,20 @@ import { AuthService } from '../../service/quang/auth.service';
     ModalCreatePostComponent,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
-    
+    FormsModule,
   ],
   templateUrl: './info-page.component.html',
   styleUrls: ['./info-page.component.css'],
-  providers: [UsersService , AuthService]
+  providers: [UsersService, AuthService],
 })
 export class InfoPageComponent implements OnInit {
-
   user: any;
   profileForm: FormGroup;
   isOwner: boolean = false; // Biến để kiểm tra xem đây có phải trang cá nhân của chính người dùng không
-  post: any;
+
+  posts: any[] = [];
   idpost: any;
+  posta:any;
   avatar: any;
   oldPassword: string = '';
   newPassword: string = '';
@@ -45,23 +53,36 @@ export class InfoPageComponent implements OnInit {
   oldPasswordError: string = '';
   newPasswordError: string = '';
   repeatPasswordError: string = '';
-
-
+  userId:any;
+  authToken: string;
+  userLikePosts: any[] = [];
+  isLoading = false;
+  noPosts = false;
+  lastPostId = 0;
+  userIdRouu:any;
   constructor(
     private route: ActivatedRoute,
     private usersService: UsersService,
     private formBuilder: FormBuilder,
     private postService: PostService,
     private auth: AuthService,
+    private router: Router,
+    private authService: AuthService,
+    private thichbaivietService: ThichbaivietService
   ) {
     this.profileForm = this.formBuilder.group({
       name: ['', [Validators.required, nameValidator()]],
       age: ['', [Validators.required, ageValidator()]],
       gender: ['', Validators.required],
-      phone: ['', [Validators.required, phoneValidator([])]]
-     
+      phone: ['', [Validators.required, phoneValidator([])]],
     });
-   
+    this.userId = Number(localStorage.getItem('id_user'));
+    this.authToken = String(localStorage.getItem('authToken'));
+    if (!this.userId) {
+      localStorage.clear();
+      this.router.navigate(['/login']);
+    }
+    this.userIdRouu = this.route.snapshot.params['id'];
   }
 
   ngOnInit(): void {
@@ -69,22 +90,134 @@ export class InfoPageComponent implements OnInit {
     this.checkTokenAndFetchUserInfo(userId);
 
     const id = this.route.snapshot.params['id']; // Lấy ID từ route
-    this.getPostsByUserId(id);
+    // this.getPostsByUserId(id);
     this.AvatarByUser(id);
-    
+    this.checkAuth(); 
+    this.loadPosts();
   }
   onLogout() {
     this.auth.logout();
   }
-  getPostsByUserId(idPost: number): void {
-    this.postService.postbyid(idPost).subscribe(data => {
-      this.post = data;
+  // getPostsByUserId(idPost: number): void {
+  //   this.postService.postbyid(idPost).subscribe(
+  //     (data: any[]) => {
+  //       this.posts = data;
+  //       console.log('User posts:', this.posts);
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching user posts:', error);
+  //     }
+  //   );
+  // }
+
+  loadPosts() {
+    this.checkAuth();
+    if (!this.isLoading) {
+      this.isLoading = true;
+
+      // Lấy danh sách các bài viết đã được like bởi người dùng
+      this.thichbaivietService
+        .getUserLikePost(this.userId)
+        .subscribe((response) => {
+          if (response.success == true) {
+            this.userLikePosts = response.data;
+          }
+        });
+
+      // Lấy danh sách bài viết
+      this.postService.postbyid(this.userIdRouu).subscribe(
+        (data: any[]) => {
+          // Cập nhật bài viết với trạng thái liked
+          const dataLike = this.userLikePosts.map((like) => like.post_id);
+          console.log(dataLike);
+
+          const updatedPosts = data.map((post) => {
+            post.liked = dataLike.includes(post.id);
+            return post;
+          });
+
+          console.log(updatedPosts);
+
+          // Cập nhật danh sách bài viết với các bài viết mới
+          this.posts = [...this.posts, ...updatedPosts];
+
+          if (data.length > 0) {
+            this.lastPostId = data[data.length - 1].id;
+            this.noPosts = false;
+          } else {
+            this.noPosts = true;
+          }
+          this.isLoading = false;
+        },
+        (error) => {
+          console.error('Lỗi khi tải bài viết:', error);
+          this.isLoading = false;
+        }
+      );
+    }
+  }
   
-    }, error => {
-      console.error('Error fetching user posts:', error);
-    });
+  likePostId(post_id: number) {
+    this.checkAuth();
+    const data: any = {
+      post_id: post_id,
+      user_id: this.userId,
+      authToken: this.authToken,
+    };
+    this.thichbaivietService.createPostLikeByPostId(data).subscribe(
+      (response) => {
+        if (response.success) {
+          // Cập nhật số lượng likes trực tiếp
+          const post = this.posts.find((p) => p.id === post_id);
+          if (post) {
+            if (response.like == 1) {
+              post.total_likes = (parseInt(post.total_likes) || 0) + 1;
+              this.updatePostLikedStatus(post_id, true);
+            } else {
+              post.total_likes = (parseInt(post.total_likes) || 0) - 1;
+
+              this.updatePostLikedStatus(post_id, false);
+            }
+          }
+          this.updateLikesCount(post_id);
+        }
+        console.log(response);
+      },
+      (error) => {
+        console.error('Error liking post:', error);
+      }
+    );
   }
 
+  updatePostLikedStatus(postId: number, liked: boolean) {
+    const post = this.posts.find((p) => p.id === postId);
+    if (post) {
+      post.liked = liked; // Cập nhật trạng thái liked
+    }
+  }
+  updateLikesCount(postId: number) {
+    this.thichbaivietService.getLikesCount(postId).subscribe((response) => {
+      if (response.success) {
+        const post = this.posts.find((p) => p.id === postId);
+        if (post) {
+          post.total_likes = response.data.like_count; // Cập nhật số lượng likes
+          // console.log(response)
+        }
+      }
+    });
+  }
+  checkAuth() {
+    this.authService.verifyToken().subscribe((response) => {
+      if (response.success != true) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    });
+  }
+  navigateToPostDetail(postId: number) {
+
+    this.router.navigate(['/detail', postId]);
+  }
   checkTokenAndFetchUserInfo(userId: number) {
     this.usersService.verifyToken().subscribe(
       (tokenResponse) => {
@@ -124,7 +257,7 @@ export class InfoPageComponent implements OnInit {
         name: this.user.name,
         age: this.user.age,
         gender: this.user.gender,
-        phone: this.user.phone
+        phone: this.user.phone,
       });
     }
   }
@@ -178,36 +311,42 @@ export class InfoPageComponent implements OnInit {
       }
     );
   }
-  
+
   AvatarByUser(IdAvatar: number): void {
-    this.usersService.IsAvatarByUser(IdAvatar).subscribe(data => {
-      this.avatar = data;
-    }, error => {
-      console.error('Error fetching user posts:', error);
-    });
+    this.usersService.IsAvatarByUser(IdAvatar).subscribe(
+      (data) => {
+        this.avatar = data;
+      },
+      (error) => {
+        console.error('Error fetching user posts:', error);
+      }
+    );
   }
 
   changePassword() {
     this.oldPasswordError = ''; // Reset thông báo lỗi
-  
+
     // Kiểm tra mật khẩu cũ
-    if (!this.verifyOldPassword(this.oldPassword)) { // Giả sử bạn có hàm verifyOldPassword để kiểm tra
+    if (!this.verifyOldPassword(this.oldPassword)) {
+      // Giả sử bạn có hàm verifyOldPassword để kiểm tra
       this.oldPasswordError = 'Sai mật khẩu cũ.';
       return; // Dừng lại nếu mật khẩu cũ không đúng
     }
-  
+
     // Kiểm tra xem mật khẩu mới và mật khẩu xác nhận có khớp nhau không
     if (this.newPassword !== this.repeatNewPassword) {
-      alert('Mật khẩu xác nhận không khớp với mật khẩu mới. Vui lòng kiểm tra lại!');
+      alert(
+        'Mật khẩu xác nhận không khớp với mật khẩu mới. Vui lòng kiểm tra lại!'
+      );
       return; // Dừng lại nếu mật khẩu không khớp
     }
-  
+
     const payload = {
       user_id: this.user.id,
       old_password: this.oldPassword,
-      new_password: this.newPassword
+      new_password: this.newPassword,
     };
-  
+
     this.usersService.changePassword(payload).subscribe(
       (response: ApiResponse) => {
         if (response.error) {
@@ -226,79 +365,77 @@ export class InfoPageComponent implements OnInit {
       }
     );
   }
-  
+
   // Hàm kiểm tra mật khẩu cũ (cần thực hiện gọi API hoặc kiểm tra giá trị)
   private verifyOldPassword(inputPassword: string): boolean {
     // Kiểm tra mật khẩu cũ với API hoặc từ dữ liệu đã lưu
     return true; // Thay đổi thành logic thực tế của bạn
   }
-  
+
   validateNewPassword() {
     this.newPasswordError = ''; // Reset thông báo lỗi
-  
+
     // Kiểm tra độ dài của mật khẩu mới
     if (this.newPassword.length < 6 || this.newPassword.length > 25) {
       this.newPasswordError = 'Độ dài password phải từ 6 đến 25 ký tự';
       return;
     }
-  
+
     // Kiểm tra mật khẩu mới có chứa ký tự số, chữ hoa và chữ thường không
     if (!this.validatePassword(this.newPassword)) {
       this.newPasswordError = 'Password phải có chữ Hoa và thường và ký tự số';
       return;
     }
-  
+
     // Kiểm tra xem mật khẩu mới có khoảng trống không
     if (this.newPassword.includes(' ')) {
       this.newPasswordError = 'Mật khẩu không được chứa khoảng trống.';
       return;
     }
   }
-  
+
   validateRepeatPassword() {
     this.repeatPasswordError = ''; // Reset thông báo lỗi
-  
+
     // Kiểm tra xem mật khẩu xác nhận có giống với mật khẩu mới không
     if (this.repeatNewPassword !== this.newPassword) {
-      this.repeatPasswordError = 'Mật khẩu xác nhận không khớp với mật khẩu mới. Vui lòng kiểm tra lại!';
+      this.repeatPasswordError =
+        'Mật khẩu xác nhận không khớp với mật khẩu mới. Vui lòng kiểm tra lại!';
       return;
     }
   }
-  
+
   // Phương thức kiểm tra tính hợp lệ của mật khẩu
   private validatePassword(password: string): boolean {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
     return regex.test(password);
   }
-
 }
-
-
-
 
 function nameValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const name = control.value;
-    const regex = /^(?=.*[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂ ưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ])(?! )(?!.* {2})[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂ ưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ0-9]+( [A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂ ưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ0-9]+)*(?<! )$/;
+    const regex =
+      /^(?=.*[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂ ưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ])(?! )(?!.* {2})[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂ ưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ0-9]+( [A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂ ưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ0-9]+)*(?<! )$/;
 
     if (!name || name.trim() === '') {
-      return { invalidInput: true }; 
+      return { invalidInput: true };
     }
 
     if (name.length > 30) {
       return { maxLength: true };
     }
 
-    const specialChars = /[!@#$%^&*(),.?":{}|<>]/; 
+    const specialChars = /[!@#$%^&*(),.?":{}|<>]/;
     if (specialChars.test(name)) {
-      return { specialChars: true }; 
+      return { specialChars: true };
     }
 
     if (!regex.test(name)) {
-      return { invalidFormat: true }; 
+      return { invalidFormat: true };
     }
 
-    return null; 
+    return null;
   };
 }
 
@@ -317,21 +454,21 @@ function ageValidator(): ValidatorFn {
 function phoneValidator(existingPhones: string[]): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const phone = control.value;
-    const regex = /^[0-9]{10}$/; 
+    const regex = /^[0-9]{10}$/;
 
     if (phone === '' || isNaN(phone)) {
-      return { invalidInput: true }; 
+      return { invalidInput: true };
     }
 
     if (!regex.test(phone)) {
-      return { phoneInvalid: true }; 
+      return { phoneInvalid: true };
     }
 
     if (existingPhones.includes(phone)) {
-      return { phoneExists: true }; 
+      return { phoneExists: true };
     }
 
-    return null; 
+    return null;
   };
+  
 }
-
