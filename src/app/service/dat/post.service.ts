@@ -18,12 +18,19 @@ export class PostService {
         }
       )
     }
-    searchPost(keyword: string, offset: number = 0, limit: number = 10): Observable<any> {
-      const params = new HttpParams()
-        .set('keyword', keyword)
-        .set('offset', offset.toString())
-        .set('limit', limit.toString());
+    // searchPost(keyword: string, offset: number = 0, limit: number = 10): Observable<any> {
+    //   const params = new HttpParams()
+    //     .set('keyword', keyword)
+    //     .set('offset', offset.toString())
+    //     .set('limit', limit.toString());
   
-      return this.http.get(`http://localhost:8080/chat_api/api_dat/posts/search.php`, { params });
-    }
+    //   return this.http.get(`http://localhost:8080/chat_api/api_dat/posts/search.php`, { params });
+    // }
+  //   searchPost(keyword: string, orderBy: number, postFrom: number, currentUserId: any, offset: number = 0, limit: number = 10): Observable<any> {
+  //     return this.http.get<any>(`http://localhost:8080/chat_api/api_dat/posts/search.php?keyword=${keyword}&postFrom=${postFrom}&currentUserId=${currentUserId}&offset=${offset}&limit=${limit}&orderBy=${orderBy}`);
+  // }
+  searchPost(keyword: string, orderBy: number, postFrom: number, currentUserId: any, offset: number = 0, limit: number = 10): Observable<any> {
+    return this.http.get<any>(`http://localhost:8080/chat_api/api_dat/posts/search.php?keyword=${keyword}&orderBy=${orderBy}&postFrom=${postFrom}&currentUserId=${currentUserId}&offset=${offset}&limit=${limit}`);
+}
+
 }

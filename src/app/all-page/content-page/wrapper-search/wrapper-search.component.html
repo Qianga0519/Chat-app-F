@@ -1,18 +1,15 @@
-<!-- 3 -->
 <section class="all-content-page">
     <app-header></app-header>
     <main>
         <div class="wrapper-posts tab-menu">
-            <!-- TAB LEFT CONTENT  -->
             <app-wrapper-left></app-wrapper-left>
-            <!-- END TAB LEFT CONTENT -->
             <div class="main-content active wrapper-search">
                 <div class="range-search-input filter-result">
                     <div class="search-input">
                         <div class="range-input-key">
                             <input type="text" [(ngModel)]="searchKeyword" placeholder="Nhập từ khóa tìm kiếm">
                             <button class="btn-search-input-filter"
-                                (click)="showUsers ? searchUsers(searchKeyword) : searchPost(searchKeyword)">
+                                (click)="showUsers ? searchUsers(searchKeyword) : searchPost()">
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </button>
                         </div>
@@ -29,29 +26,27 @@
                     </div>
                     <div class="search-advance" *ngIf="showPosts">
                         <div class="item-advance">
-                            <label for="">Ngay dang</label>
-                            <select name="" id="">
-                                <option value="1">Moi nhat</option>
-                                <option value="2">Cu nhat</option>
+                            <label for="">Ngày đăng</label>
+                            <select [(ngModel)]="selectedOrder" (change)="searchPost()">
+                                <option value="1">Mới nhất</option>
+                                <option value="2">Cũ nhất</option>
                             </select>
                         </div>
                         <div class="item-advance">
-                            <label for="">Bai viet tu</label>
-                            <select name="" id="">
-                                <option value="1">Ban be</option>
-                                <option value="2">Nguoi khac</option>
-                                <option value="3">Tat ca</option>
+                            <label for="">Bài viết từ</label>
+                            <select [(ngModel)]="selectedFrom" (change)="searchPost()">
+                                <option value="1">Bạn bè</option>
+                                <option value="2">Người khác</option>
+                                <option value="3">Tất cả</option>
                             </select>
                         </div>
-
                     </div>
                 </div>
                 <section class="result-content">
                     <div class="result-search-list-user" *ngIf="showUsers">
                         <div class="result-list-user" *ngFor="let user of users">
                             <a [href]="'/user/' + user.iduser" class="item-result-user">
-                                <img [src]="user.url ? '/assets/images/' + user.url : '/assets/images/no-image.jpg'"
-                                    alt="Ảnh đại diện người dùng">
+                                <img [src]="user.url ? '/assets/images/' + user.url : '/assets/images/no-image.jpg'" alt="Ảnh đại diện người dùng">
                                 <article>{{ user.name }}</article>
                             </a>
                         </div>
@@ -61,14 +56,13 @@
                     </div>
 
                     <div class="result-search-list-post" *ngIf="showPosts">
-                        <title></title>
                         <div *ngIf="posts.length > 0" class="result-list-post">
                             <div *ngFor="let post of posts" class="item-post">
                                 <div class="user-post-info">
                                     <section class="user-post-info-1">
                                         <a class="user-avatat-post" href="">
-                                            <img class="user-post-image-link" src="./assets/images/{{post.urluser}}"
-                                                alt="">
+                                   
+                                            <img [src]="post.urluser ? '/assets/images/' + post.urluser : '/assets/images/no-image.jpg'" alt="Ảnh đại diện người dùng">
                                         </a>
                                         <div class="user-info-detait-post">
                                             <a href="" class="user-name-post">{{ post.name }}</a>
@@ -81,9 +75,8 @@
                                 </div>
                                 <div class="user-post-content">
                                     <div class="user-post-all-content">
-                                        <span>
-                                            {{ post.content }}</span>
-                                        <span class="user-post-see-more">...See more</span>
+                                        <span>{{ post.content }}</span>
+                                        <span class="user-post-see-more">...Xem thêm</span>
                                     </div>
                                 </div>
 
@@ -91,49 +84,40 @@
                                     <div class="user-post-single-image">
                                         <a href=""><img src="./assets/images/{{post.urlpost}}" alt=""></a>
                                     </div>
-                                    <!-- <div class="user-post-multi-image">
-                        <div class="item-image-multi"><img src="./assets/images/no-image.jpg" alt=""></div>
-                    </div> -->
                                 </div>
                                 <div class="qty-interact-post">
                                     <div class="qty-interact qty-likes">
                                         <span>999</span>
                                         <div class="list-interact-icon">
                                             <i style="z-index: 3;" class="icon-post-like fa-solid fa-thumbs-up"></i>
-                                            <!-- <i style="z-index: 2; left: 10px;"
-                                class="icon-post-smile fa-solid fa-face-laugh-beam"></i>
-                            <i style="z-index: 1; left: 20px;"
-                                class="icon-post-hate fa-solid fa-hand-middle-finger"></i> -->
                                         </div>
                                     </div>
                                     <div class="qty-interact qty-cmt">
                                         <span>999</span>
                                         <div class="list-interact-icon">
-                                            <span>binh luan</span>
-
+                                            <span>Bình luận</span>
                                         </div>
                                     </div>
                                     <div class="qty-interact qty-share">
                                         <span>999</span>
                                         <div class="list-interact-icon">
-                                            <span>chia se</span>
+                                            <span>Chia sẻ</span>
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="range-interact-post">
                                     <button class="btn-interact-post-like">
-                                        <i class="icon-post-like active  fa-solid fa-thumbs-up"></i>
-                                        <i class="icon-post-like  fa-regular fa-thumbs-up"></i>
-                                        <span>like</span>
+                                        <i class="icon-post-like active fa-solid fa-thumbs-up"></i>
+                                        <i class="icon-post-like fa-regular fa-thumbs-up"></i>
+                                        <span>Thích</span>
                                     </button>
                                     <button class="btn-interact-post-comment">
                                         <i class="fa-regular fa-comment"></i>
-                                        <span>binh luan</span>
+                                        <span>Bình luận</span>
                                     </button>
                                     <button class="btn-interact-post-share">
                                         <i class="fa-regular fa-share-from-square"></i>
-                                        <span>chia se</span>
+                                        <span>Chia sẻ</span>
                                     </button>
                                 </div>
                             </div>
