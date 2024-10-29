@@ -844,15 +844,18 @@ main {
             z-index: 1;
             padding: 0 50px;
             padding-top: 20px;
-
+width: 100%;
             .view-post-detail {
                 border-radius: 10px;
                 overflow: hidden;
                 background: var(--primary-color-white);
                 height: auto;
-                /* width: 500px; */
+              
                 word-wrap: break-word;
                 text-align: justify;
+
+                max-width: 800px;
+                width: 100%;
                 padding: 5px 0;
 
                 .user-post-info {
@@ -1106,6 +1109,44 @@ main {
                         flex-direction: column;
                         gap: 15px;
 
+
+                        .form-put-your-cmt {
+                            display: flex;
+                            align-items: center;
+                            border: 1px solid var(--primary-color-white-light);
+                            border-radius: 18px;
+                            padding: 5px 10px;
+
+                            textarea {
+                                flex: 1;
+                                resize: none;
+                                border: none;
+                                outline: none;
+                                padding: 8px;
+                                border-radius: 10px;
+                                font-size: 14px;
+                                height: 38px;
+                                max-height: 120px;
+                                overflow-y: auto;
+                            }
+
+                            button {
+
+                                padding: 5px;
+                                font-size: 18px;
+                                width: 30px;
+                                height: 30px;
+                                border: none;
+                                outline: none;
+                                background: none;
+
+                                &:hover {
+                                    color: var(--primary-color-blue);
+                                }
+                            }
+                        }
+
+
                         .item-comment-post {
                             .main-comment-post {
                                 .content-cmt-user {
@@ -1127,23 +1168,31 @@ main {
 
                                 form {
                                     padding: 5px 2px;
-                                    width: 100%;
                                     margin-left: 50px;
-
-                                    input {
-                                        padding: 2px 5px;
+                                    border: 1px solid var(--primary-color-white-light);
+                                    display: flex;
+                                    align-items: center;
+                                    border: 1px solid var(--primary-color-white-light);
+                                    border-radius: 18px;
+                                    padding: 5px 10px;
+                                    margin-top: 5px;
+                                    textarea {
+                                        flex: 1;
+                                        resize: none;
                                         border: none;
                                         outline: none;
-                                        background: var(--primary-color-white-light);
-                                        border-radius: 3px;
-
-                                        &:focus {
-                                            border: none;
-                                            outline: none;
-                                        }
+                                        padding: 8px;
+                                        border-radius: 10px;
+                                        font-size: 14px;
+                                        height: 38px;
+                                        max-height: 120px;
+                                        overflow-y: auto;
                                     }
 
                                     button {
+
+                                        padding: 5px;
+                                        font-size: 18px;
                                         width: 30px;
                                         height: 30px;
                                         border: none;
@@ -1185,23 +1234,33 @@ main {
 
                                     form {
                                         padding: 5px 2px;
-                                        width: 100%;
                                         margin-left: 50px;
+                                        border: 1px solid var(--primary-color-white-light);
+                                        display: flex;
+                                        align-items: center;
+                                        border: 1px solid var(--primary-color-white-light);
+                                        border-radius: 18px;
+                                        padding: 5px 10px;
+                                        margin-top: 5px;
 
-                                        input {
-                                            padding: 2px 5px;
+                                        textarea {
+                                            border: 1px solid var(--primary-color-white-light);
+                                            flex: 1;
+                                            resize: none;
                                             border: none;
                                             outline: none;
-                                            background: var(--primary-color-white-light);
-                                            border-radius: 3px;
-
-                                            &:focus {
-                                                border: none;
-                                                outline: none;
-                                            }
+                                            padding: 8px;
+                                            border-radius: 10px;
+                                            font-size: 14px;
+                                            height: 38px;
+                                            max-height: 120px;
+                                            overflow-y: auto;
                                         }
 
                                         button {
+
+                                            padding: 5px;
+                                            font-size: 18px;
                                             width: 30px;
                                             height: 30px;
                                             border: none;
@@ -1335,7 +1394,7 @@ main {
                 padding-top: 10px;
                 overflow-y: auto;
                 height: 500px;
-             
+
                 margin-top: 70px;
 
                 .content-friend-chat,
