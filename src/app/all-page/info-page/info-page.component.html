@@ -201,10 +201,9 @@
     <!--END USER INFO  -->
     <div
       class="profile-list-post"
-      *ngIf="post && post.length > 0; else noPosts"
-    >
+      *ngIf="posts && posts.length > 0; else noPosts">
       <!-- ITEM POST -->
-      <div class="item-post" *ngFor="let posts of post">
+      <div class="item-post" *ngFor="let post of posts">
         <div class="user-post-info">
           <section class="user-post-info-1">
             <a class="user-avatat-post" href="" *ngFor="let avatars of avatar">
@@ -226,8 +225,8 @@
             </ng-template>
 
             <div class="user-info-detait-post">
-              <a href="" class="user-name-post">{{ posts.name }}</a>
-              <a href="" class="time-name-post">{{ posts.created_at }}</a>
+              <a href="" class="user-name-post">{{ post.name }}</a>
+              <a href="" class="time-name-post">{{ post.post_created_at }}</a>
             </div>
           </section>
           <section class="user-post-info-2">
@@ -243,14 +242,14 @@
         </div>
         <div class="user-post-content">
           <div class="user-post-all-content">
-            <span> {{ posts.content }}</span>
+            <span> {{ post.post_content }}</span>
             <span class="user-post-see-more"></span>
           </div>
         </div>
 
-        <div class="user-post-image" *ngIf="posts.url; else noImage1">
+        <div class="user-post-image" *ngIf="post.url; else noImage1">
           <div class="user-post-single-image">
-            <a href=""><img src="./assets/images/{{ posts.url }}" alt="" /></a>
+            <a href=""><img src="./assets/images/{{ post.url }}" alt="" /></a>
           </div>
         </div>
         <ng-template #noImage1>
@@ -261,9 +260,9 @@
           </div>
         </ng-template>
 
-        <div class="qty-interact-post">
+        <div class="qty-interact-post" >
           <div class="qty-interact qty-likes">
-            <span>{{ posts.like_count || 0 }}</span>
+            <span>{{ post.total_likes }}</span>
             <div class="list-interact-icon">
               <i
                 style="z-index: 3"
@@ -272,25 +271,37 @@
             </div>
           </div>
           <div class="qty-interact qty-cmt">
-            <span>{{ posts.cmt_count || 0 }}</span>
+            <span>{{ post.cmt_count || 0 }}</span>
             <div class="list-interact-icon">
               <span>Comment</span>
             </div>
           </div>
           <div class="qty-interact qty-share">
-            <span>{{ posts.share_count || 0 }}</span>
+            <span>{{ post.share_count || 0 }}</span>
             <div class="list-interact-icon">
               <span>Share</span>
             </div>
           </div>
         </div>
         <div class="range-interact-post">
-          <button class="btn-interact-post-like">
-            <i class="icon-post-like active fa-solid fa-thumbs-up"></i>
-            <i class="icon-post-like fa-regular fa-thumbs-up"></i>
-            <span>like</span>
+          <button
+            class="btn-interact-post-like"
+            (click)="likePostId(post.post_id)"
+          >
+            <i
+              [ngClass]="{
+                'fa-solid ': post.liked,
+                'fa-regular ': !post.liked
+              }"
+              class="icon-post-like active fa-thumbs-up"
+            ></i>
+            <span>{{ post.likesCount }} Likes</span>
           </button>
-          <button class="btn-interact-post-comment">
+
+          <button
+            class="btn-interact-post-comment"
+            (click)="navigateToPostDetail(post.id)"
+          >
             <i class="fa-regular fa-comment"></i>
             <span>binh luan</span>
           </button>
