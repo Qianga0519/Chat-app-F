@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class PostService {
   constructor(private http: HttpClient, private router: Router) {}
 
-  postbyid(id: number) : Observable<any[]>{
+  postbyid(id: number): Observable<any[]> {
     return this.http.get<any[]>(
       `http://localhost:8080/chat_api/api_dat/posts/getPostById.php?user_id=${id}`,
       {
@@ -37,5 +37,31 @@ export class PostService {
     return this.http.get<any>(
       `http://localhost:8080/chat_api/api_dat/posts/search.php?keyword=${keyword}&orderBy=${orderBy}&postFrom=${postFrom}&currentUserId=${currentUserId}&offset=${offset}&limit=${limit}`
     );
+  }
+  sharePost(postId: number, userId: number): Observable<any> {
+    return this.http.post<any>(
+      `http://localhost:8080/chat_api/api_dat/posts/postShare.php`,
+      { post_id: postId, user_share_id: userId }, // Sửa lại tên trường JSON
+      {
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  }
+  kiemTraID(id: number): Observable<any> {
+    return this.http.get<any>(
+      `http://localhost:8080/chat_api/api_dat/posts/PostId.php?id=${id}`
+    );
+  }
+  addComment(postId: number, userCmtId: number, content: string, order: number): Observable<any> {
+    const body = {
+      post_id: postId,
+      user_cmt_id: userCmtId,
+      content: content,
+      order: order
+    };
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this.http.post(`http://localhost:8080/chat_api/api_dat/posts/cmt.php`, body, { headers });
   }
 }

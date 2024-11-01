@@ -42,10 +42,9 @@ export class InfoPageComponent implements OnInit {
   user: any;
   profileForm: FormGroup;
   isOwner: boolean = false; // Biến để kiểm tra xem đây có phải trang cá nhân của chính người dùng không
-
   posts: any[] = [];
   idpost: any;
-  posta:any;
+  posta: any;
   avatar: any;
   oldPassword: string = '';
   newPassword: string = '';
@@ -53,13 +52,13 @@ export class InfoPageComponent implements OnInit {
   oldPasswordError: string = '';
   newPasswordError: string = '';
   repeatPasswordError: string = '';
-  userId:any;
+  userId: any;
   authToken: string;
   userLikePosts: any[] = [];
   isLoading = false;
   noPosts = false;
   lastPostId = 0;
-  userIdRouu:any;
+  userIdRouu: any;
   constructor(
     private route: ActivatedRoute,
     private usersService: UsersService,
@@ -90,25 +89,29 @@ export class InfoPageComponent implements OnInit {
     this.checkTokenAndFetchUserInfo(userId);
 
     const id = this.route.snapshot.params['id']; // Lấy ID từ route
-    // this.getPostsByUserId(id);
     this.AvatarByUser(id);
-    this.checkAuth(); 
+    this.checkAuth();
     this.loadPosts();
+
+    const ids = Number(this.route.snapshot.paramMap.get('id'));
+    console.log(ids);
+    this.postService.kiemTraID(ids).subscribe(
+      (response) => {
+        if (response.success) {
+          // Xử lý bài viết
+        } else {
+          this.router.navigate(['/404']); // Chuyển hướng nếu không tìm thấy bài viết
+        }
+      },
+      (error) => {
+        this.router.navigate(['/']); // Chuyển hướng nếu lỗi kết nối
+      }
+    );
   }
+
   onLogout() {
     this.auth.logout();
   }
-  // getPostsByUserId(idPost: number): void {
-  //   this.postService.postbyid(idPost).subscribe(
-  //     (data: any[]) => {
-  //       this.posts = data;
-  //       console.log('User posts:', this.posts);
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching user posts:', error);
-  //     }
-  //   );
-  // }
 
   loadPosts() {
     this.checkAuth();
@@ -156,7 +159,7 @@ export class InfoPageComponent implements OnInit {
       );
     }
   }
-  
+
   likePostId(post_id: number) {
     this.checkAuth();
     const data: any = {
@@ -172,14 +175,15 @@ export class InfoPageComponent implements OnInit {
           if (post) {
             if (response.like == 1) {
               post.total_likes = (parseInt(post.total_likes) || 0) + 1;
+
               this.updatePostLikedStatus(post_id, true);
             } else {
               post.total_likes = (parseInt(post.total_likes) || 0) - 1;
-
               this.updatePostLikedStatus(post_id, false);
             }
           }
           this.updateLikesCount(post_id);
+          console.log(this.updateLikesCount(post_id));
         }
         console.log(response);
       },
@@ -188,7 +192,6 @@ export class InfoPageComponent implements OnInit {
       }
     );
   }
-
   updatePostLikedStatus(postId: number, liked: boolean) {
     const post = this.posts.find((p) => p.id === postId);
     if (post) {
@@ -206,6 +209,7 @@ export class InfoPageComponent implements OnInit {
       }
     });
   }
+
   checkAuth() {
     this.authService.verifyToken().subscribe((response) => {
       if (response.success != true) {
@@ -215,8 +219,11 @@ export class InfoPageComponent implements OnInit {
     });
   }
   navigateToPostDetail(postId: number) {
+    const userIdRouu = this.route.snapshot.params['id'];
 
-    this.router.navigate(['/detail', postId]);
+    this.router
+      .navigate([`/user/${userIdRouu}/detail/${postId}`])
+      .catch((error) => console.error('Lỗi khi điều hướng:', error));
   }
   checkTokenAndFetchUserInfo(userId: number) {
     this.usersService.verifyToken().subscribe(
@@ -228,7 +235,6 @@ export class InfoPageComponent implements OnInit {
           } else {
             this.isOwner = false; // Người dùng đang xem trang của người khác, ẩn chức năng chỉnh sửa
           }
-
           // Lấy thông tin của user để hiển thị
           this.usersService.getUserInfoByUserIdtest(userId).subscribe(
             (data) => {
@@ -249,6 +255,32 @@ export class InfoPageComponent implements OnInit {
         alert('Có lỗi xảy ra khi xác thực token.');
       }
     );
+  }
+
+  sharePost(postId: number) {
+    this.postService.sharePost(postId, this.userId).subscribe(
+      (shareResponse) => {
+        console.log(this.userId);
+        if (shareResponse.success) {
+          console.log('Chia sẻ bài viết thành công!');
+          //alert("Chia sẻ bài viết thành công!");
+          this.loadPosts1();
+        } else {
+          console.error('Lỗi chia sẻ bài viết:', shareResponse.message);
+          alert('Có lỗi xảy ra khi chia sẻ bài viết.');
+        }
+      },
+      (error) => {
+        console.error('Có lỗi xảy ra khi chia sẻ bài viết:', error);
+      }
+    );
+  }
+
+  // Hàm để load lại dữ liệu (tự bạn định nghĩa theo yêu cầu)
+  loadPosts1() {
+    this.postService.postbyid(this.userId).subscribe((posts) => {
+      this.posts = posts;
+    });
   }
 
   initProfileForm() {
@@ -404,7 +436,12 @@ export class InfoPageComponent implements OnInit {
       return;
     }
   }
-
+  formatDate(dateString: string): string {
+    if (dateString === '0000-00-00 00:00:00') {
+      return 'Không có thông tin'; // Hoặc giá trị mặc định khác
+    }
+    return new Date(dateString).toLocaleString(); // Hoặc sử dụng Pipe khác
+  }
   // Phương thức kiểm tra tính hợp lệ của mật khẩu
   private validatePassword(password: string): boolean {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
@@ -470,5 +507,4 @@ function phoneValidator(existingPhones: string[]): ValidatorFn {
 
     return null;
   };
-  
 }
