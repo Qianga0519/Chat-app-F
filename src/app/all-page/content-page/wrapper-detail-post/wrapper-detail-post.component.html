@@ -195,6 +195,12 @@
                                             <input type="text">
                                             <button><i class="fa-solid fa-paper-plane"></i></button>
                                         </form>
+                                        <div class="comment-section">
+                                            <h3>Thêm bình luận</h3>
+                                            <textarea [(ngModel)]="content" placeholder="Nhập bình luận..."></textarea>
+                                            <button (click)="addComment()">Gửi bình luận</button>
+                                            <div *ngIf="message">{{ message }}</div>
+                                          </div>
                                     </div>
                                 </div>
                             </div>
