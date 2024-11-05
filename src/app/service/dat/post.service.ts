@@ -64,4 +64,9 @@ export class PostService {
 
     return this.http.post(`http://localhost:8080/chat_api/api_dat/posts/cmt.php`, body, { headers });
   }
+  addReply(cmtId: number, userId: number, content: string, order: number): Observable<any> {
+    const body = { cmt_id: cmtId, user_id: userId, content: content, order: order };
+    return this.http.post<any>(`http://localhost:8080/chat_api/api_dat/posts/rep_cmt.php`, body);
+  }
+  
 }

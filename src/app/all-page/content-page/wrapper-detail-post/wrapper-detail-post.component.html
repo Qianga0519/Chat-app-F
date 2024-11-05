@@ -1,189 +1,156 @@
 <!-- 3 -->
 <section class="all-content-page" style="display: block">
-  <app-header></app-header>
-  <main>
-    <div class="wrapper-posts tab-menu">
-      <!-- TAB LEFT CONTENT  -->
-      <app-wrapper-left></app-wrapper-left>
-      <!-- END TAB LEFT CONTENT -->
-      <div class="main-content active wrapper-detail-post">
-        <div *ngIf="!post">
-          <!-- Hiển thị loader khi chưa có dữ liệu -->
-          <p>Đang tải...</p>
-        </div>
-        <div *ngIf="post" class="view-post-detail">
-          <div class="user-post-info">
-            <section class="user-post-info-1">
-              <a class="user-avatat-post" href="">
-                <div class="user-post-single-image">
-                  <a href="" *ngIf="avatar_user_post; else noImage">
-                    <img src="./assets/images/{{ avatar_user_post }}" alt="" />
-                  </a>
-                  <ng-template #noImage>
-                    <a href="">
-                      <img src="./assets/images/no-image.jpg" alt="" />
-                    </a>
-                  </ng-template>
+    <app-header></app-header>
+    <main>
+        <div class="wrapper-posts tab-menu">
+            <!-- TAB LEFT CONTENT  -->
+            <app-wrapper-left></app-wrapper-left>
+            <!-- END TAB LEFT CONTENT -->
+            <div class="main-content active wrapper-detail-post">
+                <div *ngIf="!post">
+                    <!-- Hiển thị loader khi chưa có dữ liệu -->
+                    <p>Đang tải...</p>
                 </div>
-              </a>
-              <div class="user-info-detait-post">
-                <a href="" class="user-name-post">{{ post.name }}</a>
-                <a href="" class="time-name-post">{{
-                  formatDate(post.created_at)
-                }}</a>
-              </div>
-            </section>
-            <section class="user-post-info-2">
-              <button class="btn-close-post-detail">
-                <i class="fa-solid fa-x"></i>
-              </button>
-            </section>
-          </div>
-          <div *ngIf="post?.content" class="user-post-content">
-            <div class="user-post-all-content">
-              <span *ngIf="post.content.length <= 100">{{ post.content }}</span>
-              <span *ngIf="post.content.length > 100">
-                {{
-                  post.showFullContent
-                    ? post.content
-                    : post.content.substring(0, 100) + "..."
-                }}
-                <span
-                  *ngIf="!post.showFullContent"
-                  class="user-post-see-more"
-                  (click)="toggleSeeMore(post)"
-                >
-                  See more
-                </span>
-              </span>
-            </div>
-          </div>
+                <div *ngIf="post" class="view-post-detail">
+                    <div class="user-post-info">
+                        <section class="user-post-info-1">
+                            <a class="user-avatat-post" href="">
+                                <div class="user-post-single-image">
+                                    <a href="" *ngIf="avatar_user_post; else noImage">
+                                        <img src="./assets/images/{{ avatar_user_post }}" alt="" />
+                                    </a>
+                                    <ng-template #noImage>
+                                        <a href="">
+                                            <img src="./assets/images/no-image.jpg" alt="" />
+                                        </a>
+                                    </ng-template>
+                                </div>
+                            </a>
+                            <div class="user-info-detait-post">
+                                <a href="" class="user-name-post">{{ post.name }}</a>
+                                <a href="" class="time-name-post">{{
+                                    formatDate(post.created_at)
+                                    }}</a>
+                            </div>
+                        </section>
+                        <section class="user-post-info-2">
+                            <button class="btn-close-post-detail">
+                                <i class="fa-solid fa-x"></i>
+                            </button>
+                        </section>
+                    </div>
+                    <div *ngIf="post?.content" class="user-post-content">
+                        <div class="user-post-all-content">
+                            <span *ngIf="post.content.length <= 100">{{ post.content }}</span>
+                            <span *ngIf="post.content.length > 100">
+                                {{
+                                post.showFullContent
+                                ? post.content
+                                : post.content.substring(0, 100) + "..."
+                                }}
+                                <span *ngIf="!post.showFullContent" class="user-post-see-more"
+                                    (click)="toggleSeeMore(post)">
+                                    See more
+                                </span>
+                            </span>
+                        </div>
+                    </div>
 
-          <div class="user-post-image">
-            <div class="user-post-single-image">
-              <a href="" *ngIf="post.url; else noImagePost">
-                <img src="./assets/images/{{ post.url }}" alt="" />
-              </a>
-              <ng-template #noImagePost></ng-template>
-            </div>
-          </div>
-          <div class="qty-interact-post">
-            <div class="qty-interact qty-likes">
-              <span>{{ post_like }}</span>
-              <div class="list-interact-icon">
-                <i
-                  style="z-index: 3"
-                  class="icon-post-like fa-solid fa-thumbs-up"
-                ></i>
-              </div>
-            </div>
-            <div class="qty-interact qty-cmt">
-              <span>{{ post_comment }}</span>
-              <div class="list-interact-icon">
-                <span>binh luan</span>
-              </div>
-            </div>
-            <div class="qty-interact qty-share">
-              <span>{{ post_share }}</span>
-              <div class="list-interact-icon">
-                <span>chia se</span>
-              </div>
-            </div>
-          </div>
-          <div class="range-interact-post">
-            <button
-              class="btn-interact-post-like"
-              (click)="likePostId(post.id)"
-            >
-              <i
-                class="active fa-thumbs-up icon-post-like"
-                [ngClass]="{
+                    <div class="user-post-image">
+                        <div class="user-post-single-image">
+                            <a href="" *ngIf="post.url; else noImagePost">
+                                <img src="./assets/images/{{ post.url }}" alt="" />
+                            </a>
+                            <ng-template #noImagePost></ng-template>
+                        </div>
+                    </div>
+                    <div class="qty-interact-post">
+                        <div class="qty-interact qty-likes">
+                            <span>{{ post_like }}</span>
+                            <div class="list-interact-icon">
+                                <i style="z-index: 3" class="icon-post-like fa-solid fa-thumbs-up"></i>
+                            </div>
+                        </div>
+                        <div class="qty-interact qty-cmt">
+                            <span>{{ post_comment }}</span>
+                            <div class="list-interact-icon">
+                                <span>binh luan</span>
+                            </div>
+                        </div>
+                        <div class="qty-interact qty-share">
+                            <span>{{ post_share }}</span>
+                            <div class="list-interact-icon">
+                                <span>chia se</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="range-interact-post">
+                        <button class="btn-interact-post-like" (click)="likePostId(post.id)">
+                            <i class="active fa-thumbs-up icon-post-like" [ngClass]="{
                   'fa-solid ': user_is_liked,
                   'fa-regular ': !user_is_liked
-                }"
-              ></i>
-            </button>
+                }"></i>
+                        </button>
 
-            <button class="btn-interact-post-comment">
-              <i class="fa-regular fa-comment"></i>
-              <span>binh luan</span>
-            </button>
-            <button class="btn-interact-post-share">
-              <i class="fa-regular fa-share-from-square"></i>
-              <span>chia se</span>
-            </button>
-          </div>
-          <div class="range-post-content">
-            <div class="list-comment-post">
-              <!-- comment-form.component.html -->
-              <form (ngSubmit)="submitComment()" class="form-put-your-cmt">
-                <textarea
-                  [(ngModel)]="commentText"
-                  name="commentText"
-                  placeholder="Viết bình luận của bạn"
-                  (input)="adjustTextareaHeight($event)"
-                >
-                </textarea>
-                <button type="submit">
-                  <i class="fa-solid fa-paper-plane"></i>
-                </button>
-              </form>
-
-              <!-- item comment -->
-              <div
-                class="item-comment-post"
-                *ngFor="let item of list_comment_post"
-              >
-                <!-- main - comment  -->
-                <div class="main-comment-post">
-                  <div class="content-cmt-user">
-                    <img src="assets/images/no-image.jpg" alt="" />
-                    <article>
-                      {{ item.content }}
-                    </article>
-                  </div>
-                  <form action="">
-                    <textarea
-                      placeholder="Viết trả lời của bạn"
-                      (input)="adjustTextareaHeight($event)"
-                      name=""
-                      id=""
-                    ></textarea>
-                    <button><i class="fa-solid fa-paper-plane"></i></button>
-                    <button><i class="fa fa-trash"></i></button>
-                  </form>
-                </div>
-                <!-- all rep -->
-                <div class="list-comment-rep" *ngFor="let rep of item.replies">
-                  <div class="item-rep-comment-post">
-                    <div class="content-cmt-rep">
-                      <img src="assets/images/no-image.jpg" alt="" />
-                      <article>
-                        {{ rep.content }}
-                      </article>
+                        <button class="btn-interact-post-comment">
+                            <i class="fa-regular fa-comment"></i>
+                            <span>binh luan</span>
+                        </button>
+                        <button class="btn-interact-post-share">
+                            <i class="fa-regular fa-share-from-square"></i>
+                            <span>chia se</span>
+                        </button>
                     </div>
-                    <form action="">
-                      <textarea
-                        placeholder="Viết trả lời của bạn"
-                        (input)="adjustTextareaHeight($event)"
-                        name=""
-                        id=""
-                      ></textarea>
-                      <button><i class="fa-solid fa-paper-plane"></i></button>
-                      <button><i class="fa fa-trash"></i></button>
-                    </form>
-                  </div>
+                    <div class="range-post-content">
+                        <div class="list-comment-post">
+                            <!-- comment-form.component.html -->
+                            <form class="form-put-your-cmt" (submit)="addComment(); $event.preventDefault();">
+                                <textarea [(ngModel)]="content" name="commentContent" placeholder="Viết bình luận của bạn" required></textarea>
+                                <button type="submit">
+                                  <i class="fa-solid fa-paper-plane"></i>
+                                </button>
+                              </form>
+
+                            <!-- item comment -->
+                            <div class="item-comment-post" *ngFor="let item of list_comment_post">
+                                <!-- main - comment  -->
+                                <div class="main-comment-post">
+                                    <div class="content-cmt-user">
+                                        <img src="assets/images/no-image.jpg" alt="" />
+                                        <article>
+                                            {{ item.content }}
+                                        </article>
+                                    </div>
+                               
+                                    <form action="" (ngSubmit)="addReply(item.id)" >
+                                        <textarea placeholder="Viết trả lời của bạn" 
+                                            (input)="adjustTextareaHeight($event)" [(ngModel)]="contentrep[item.id]" name="abc" required></textarea>
+                                        <button><i class="fa-solid fa-paper-plane"></i></button>
+                                        <button><i class="fa fa-trash"></i></button>
+                                    </form>
+                                </div>
+                                <!-- all rep -->
+                                <div class="list-comment-rep" *ngFor="let rep of item.replies">
+                                    <div class="item-rep-comment-post">
+                                        <div class="content-cmt-rep">
+                                            <img src="assets/images/no-image.jpg" alt="" />
+                                            <article>
+                                                {{ rep.content }}
+                                            </article>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
+            <!-- END TAB RESULT SEARCH -->
+            <app-wrapper-right></app-wrapper-right>
         </div>
-      </div>
-      <!-- END TAB RESULT SEARCH -->
-      <app-wrapper-right></app-wrapper-right>
-    </div>
-  </main>
-  <app-footer></app-footer>
-  <app-modal-edit-post></app-modal-edit-post>
-  <app-modal-create-post></app-modal-create-post>
+    </main>
+    <app-footer></app-footer>
+    <app-modal-edit-post></app-modal-edit-post>
+    <app-modal-create-post></app-modal-create-post>
 </section>

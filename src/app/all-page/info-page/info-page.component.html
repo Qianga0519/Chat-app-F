@@ -13,11 +13,12 @@
       <article>{{ user.name }}</article>
     </div>
     <div class="feature-user-range" *ngIf="!isOwner">
-      <button><i class="fa-regular fa-comments"></i></button>
-      <button><i class="fa-solid fa-user-plus"></i></button>
-      <button><i class="fa-solid fa-user-minus"></i></button>
-      <button><i class="fa-solid fa-ban"></i></button>
+      <button *ngIf="!isFriend"><i class="fa-solid fa-user-plus"></i></button> <!-- Kết bạn -->
+      <button *ngIf="isFriend"><i class="fa-solid fa-user-minus"></i></button> <!-- Hủy kết bạn -->
+      <button><i class="fa-regular fa-comments"></i></button> <!-- Nhắn tin -->
+      <button><i class="fa-solid fa-ban"></i></button> <!-- Chặn -->
     </div>
+    
   </div>
   <div class="main-content-profile">
     <!-- USER INFO  -->

@@ -13,7 +13,7 @@ import { WrapperLeftComponent } from '../wrapper-left/wrapper-left.component';
 import { WrapperRightComponent } from '../wrapper-right/wrapper-right.component';
 import { response } from 'express';
 import { ThichbaivietService } from '../../../service/thichbaiviet/thichbaiviet.service';
-
+import { PostService } from '../../../service/dat/post.service';
 @Component({
   selector: 'app-wrapper-detail-post',
   standalone: true,
@@ -43,11 +43,19 @@ export class WrapperDetailPostComponent implements OnInit, OnDestroy {
   userId: any;
   authToken: string;
   list_comment_post: any = [];
+  userCmtId: any;
+  content: string = '';
+  order: number = 1;
+  message: string = '';
+  postId: any;
+
+  contentrep: { [key: number]: string } = {};
   constructor(
     private ativeRoute: ActivatedRoute,
     private router: Router,
     private baivietBinhluanService: BvBlService,
-    private thichbaivietService: ThichbaivietService
+    private thichbaivietService: ThichbaivietService,
+    private commentService: PostService
   ) {
     this.userId = Number(localStorage.getItem('id_user'));
     this.authToken = String(localStorage.getItem('authToken'));
@@ -67,6 +75,7 @@ export class WrapperDetailPostComponent implements OnInit, OnDestroy {
       }
       this.checkUserLike(newPostId);
     });
+    this.postId = this.ativeRoute.snapshot.params['id'];
   }
 
   loadPost(): void {
@@ -155,6 +164,50 @@ export class WrapperDetailPostComponent implements OnInit, OnDestroy {
       }
     );
   }
+  addComment() {
+    if (!this.content) {
+      alert('Vui lòng nhập bình luận.');
+      return;
+    }
+
+    this.commentService
+      .addComment(this.postId, this.userId, this.content, this.order)
+      .subscribe(
+        (response) => {
+          // Xử lý phản hồi từ server
+          console.log('Bình luận đã được gửi!', response);
+          this.content = ''; // Reset textarea sau khi gửi bình luận
+        },
+        (error) => {
+          console.error('Có lỗi xảy ra khi gửi bình luận', error);
+        }
+      );
+  }
+
+  addReply(commentId: number) {
+    if (!this.contentrep[commentId]) {
+      alert('Vui lòng nhập nội dung phản hồi.');
+      return;
+    }
+
+    this.commentService
+      .addReply(commentId, this.userId, this.contentrep[commentId], this.order)
+      .subscribe(
+        (response) => {
+          if (response.success) {
+            alert(response.message);
+            this.contentrep[commentId] = ''; // Xóa nội dung sau khi thêm thành công
+            // Cập nhật lại danh sách phản hồi ở đây nếu cần
+          } else {
+            alert(response.message);
+          }
+        },
+        (error) => {
+          console.error('Lỗi khi thêm phản hồi:', error);
+        }
+      );
+  }
+
   ngOnDestroy(): void {
     this.subscription?.unsubscribe(); // Sử dụng optional chaining
   }
