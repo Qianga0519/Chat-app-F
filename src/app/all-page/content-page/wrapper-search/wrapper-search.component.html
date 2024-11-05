@@ -7,7 +7,7 @@
                 <div class="range-search-input filter-result">
                     <div class="search-input">
                         <div class="range-input-key">
-                            <input type="text" [(ngModel)]="searchKeyword" placeholder="Nhập từ khóa tìm kiếm">
+                            <input type="text" [(ngModel)]="searchKeyword" placeholder="Nhập từ khóa tìm kiếm" pattern="[A-Za-z0-9 ]*">
                             <button class="btn-search-input-filter"
                                 (click)="showUsers ? searchUsers(searchKeyword) : searchPost()">
                                 <i class="fa fa-search" aria-hidden="true"></i>

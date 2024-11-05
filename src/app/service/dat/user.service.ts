@@ -140,4 +140,11 @@ export class UsersService {
 
     return this.http.get(`http://localhost:8080/chat_api/api_dat/users/search.php`, { params });
   }
+  checkFriendshipStatus(userId:number, friendId:number) {
+    return this.http.get<any>(`http://localhost:8080/chat_api/api_dat/users/kttrabanbe.php?user_id=${userId}&friend_id=${friendId}`,
+      {
+        headers: { 'Content-Type': 'application/json' }, // Thiết lập header nếu cần
+      }
+    );
+  }
 }

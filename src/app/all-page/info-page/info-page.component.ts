@@ -59,6 +59,8 @@ export class InfoPageComponent implements OnInit {
   noPosts = false;
   lastPostId = 0;
   userIdRouu: any;
+  isFriend: boolean = false;
+  errorMessage: string = '';
   constructor(
     private route: ActivatedRoute,
     private usersService: UsersService,
@@ -107,11 +109,26 @@ export class InfoPageComponent implements OnInit {
         this.router.navigate(['/']); // Chuyển hướng nếu lỗi kết nối
       }
     );
+    this.checkFriendshipStatus(userId);
   }
 
   onLogout() {
     this.auth.logout();
   }
+
+  checkFriendshipStatus(friendId: number) {
+    const userIds = Number(localStorage.getItem('id_user'));
+    this.usersService.checkFriendshipStatus(userIds, friendId).subscribe(
+      (response: { isFriend: boolean }) => {
+        this.isFriend = response.isFriend; // Cập nhật trạng thái bạn bè
+      },
+      error => {
+        this.errorMessage = 'Có lỗi xảy ra khi kiểm tra tình trạng bạn bè.';
+        console.error('Lỗi khi kiểm tra tình trạng bạn bè', error);
+      }
+    );
+  }
+
 
   loadPosts() {
     this.checkAuth();
