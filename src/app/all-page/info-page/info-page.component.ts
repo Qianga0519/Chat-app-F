@@ -60,11 +60,9 @@ export class InfoPageComponent implements OnInit {
   noPosts = false;
   lastPostId = 0;
   userIdRouu: any;
-<<<<<<< HEAD
   isFriend: boolean = false;
   errorMessage: string = '';
-=======
->>>>>>> login_fix
+
   constructor(
     private route: ActivatedRoute,
     private usersService: UsersService,
@@ -81,8 +79,12 @@ export class InfoPageComponent implements OnInit {
       gender: ['', Validators.required],
       phone: ['', [Validators.required, phoneValidator([])]],
     });
-    this.userId = Number(localStorage.getItem('id_user')|| sessionStorage.getItem('id_user'));
-    this.authToken = String(localStorage.getItem('authToken')|| sessionStorage.getItem('authToken'));
+    this.userId = Number(
+      localStorage.getItem('id_user') || sessionStorage.getItem('id_user')
+    );
+    this.authToken = String(
+      localStorage.getItem('authToken') || sessionStorage.getItem('authToken')
+    );
     if (!this.userId) {
       localStorage.clear();
       this.router.navigate(['/login']);
@@ -117,11 +119,9 @@ export class InfoPageComponent implements OnInit {
   }
 
   onLogout() {
-   this.auth.logout().subscribe(
-    (response)=>{
-      console.log(response)
-    }
-   )
+    this.auth.logout().subscribe((response) => {
+      console.log(response);
+    });
   }
 
   checkFriendshipStatus(friendId: number) {
@@ -130,13 +130,12 @@ export class InfoPageComponent implements OnInit {
       (response: { isFriend: boolean }) => {
         this.isFriend = response.isFriend; // Cập nhật trạng thái bạn bè
       },
-      error => {
+      (error) => {
         this.errorMessage = 'Có lỗi xảy ra khi kiểm tra tình trạng bạn bè.';
         console.error('Lỗi khi kiểm tra tình trạng bạn bè', error);
       }
     );
   }
-
 
   loadPosts() {
     this.checkAuth();
@@ -244,15 +243,11 @@ export class InfoPageComponent implements OnInit {
     });
   }
   navigateToPostDetail(postId: number) {
-<<<<<<< HEAD
     const userIdRouu = this.route.snapshot.params['id'];
 
     this.router
       .navigate([`/user/${userIdRouu}/detail/${postId}`])
       .catch((error) => console.error('Lỗi khi điều hướng:', error));
-=======
-    this.router.navigate(['/detail', postId]);
->>>>>>> login_fix
   }
   checkTokenAndFetchUserInfo(userId: number) {
     this.usersService.verifyToken().subscribe(
@@ -482,7 +477,7 @@ function nameValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const name = control.value;
     const regex =
-      /^(?=.*[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂ ưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ])(?! )(?!.* {2})[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂ ưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ0-9]+( [A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂ ưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ0-9]+)*(?<! )$/;
+      /^(?=.*[A-Za-z])(?! )(?!.* {2})[A-Za-z0-9]+( [A-Za-z0-9]+)*(?<! )$/;
 
     if (!name || name.trim() === '') {
       return { invalidInput: true };

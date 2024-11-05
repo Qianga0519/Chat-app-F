@@ -83,15 +83,12 @@ export class WrapperSearchComponent implements OnInit {
       }
     );
   }
-<<<<<<< HEAD
 
+  // searchPost(): void {
+  // Lấy token từ localStorage
+  // this.searchKeyword = this.cleanInput(this.searchKeyword);
+  // const token = localStorage.getItem('authToken');
 
-  searchPost(): void {
-    // Lấy token từ localStorage
-    this.searchKeyword = this.cleanInput(this.searchKeyword);
-    const token = localStorage.getItem('authToken');
-
-=======
   //   searchPost(): void {
   //     // Lấy token từ localStorage
   //     const token = localStorage.getItem('authToken');
@@ -144,8 +141,6 @@ export class WrapperSearchComponent implements OnInit {
     // Lấy token từ localStorage
     const token =
       localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
-
->>>>>>> login_fix
     if (!token) {
       console.error('Không có token. Vui lòng đăng nhập lại.');
       alert('Vui lòng đăng nhập để tìm kiếm.');
@@ -157,11 +152,9 @@ export class WrapperSearchComponent implements OnInit {
       (response) => {
         if (response.success) {
           this.currentUserId = response.userId; // Lấy userId từ phản hồi
-<<<<<<< HEAD
-=======
+
           console.log('User ID xác thực:', this.currentUserId); // In ra để kiểm tra
 
->>>>>>> login_fix
           if (!this.searchKeyword) {
             alert('Vui lòng nhập từ khóa tìm kiếm.');
             return;
@@ -184,11 +177,8 @@ export class WrapperSearchComponent implements OnInit {
                   this.posts = [];
                   this.noUsersFound = true;
                 }
-<<<<<<< HEAD
-                // console.log('Kết quả tìm kiếm:', this.posts); // Log dữ liệu bài viết
-=======
+
                 console.log('Kết quả tìm kiếm:', this.posts); // Log dữ liệu bài viết
->>>>>>> login_fix
               },
               (error) => {
                 console.error('Có lỗi xảy ra khi tìm kiếm bài viết:', error);
@@ -206,7 +196,7 @@ export class WrapperSearchComponent implements OnInit {
       }
     );
   }
-<<<<<<< HEAD
+
   sharePost(postId: number) {
     this.postService.sharePost(postId, this.userId).subscribe(
       (shareResponse) => {
@@ -343,6 +333,4 @@ export class WrapperSearchComponent implements OnInit {
       .navigate([`/user/${userIdRouu}/detail/${postId}`])
       .catch((error) => console.error('Lỗi khi điều hướng:', error));
   }
-=======
->>>>>>> login_fix
 }
