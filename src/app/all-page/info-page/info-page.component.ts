@@ -21,6 +21,7 @@ import { PostService } from '../../service/dat/post.service';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { AuthService } from '../../service/quang/auth.service';
 import { ThichbaivietService } from '../../service/thichbaiviet/thichbaiviet.service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-info-page',
@@ -59,8 +60,11 @@ export class InfoPageComponent implements OnInit {
   noPosts = false;
   lastPostId = 0;
   userIdRouu: any;
+<<<<<<< HEAD
   isFriend: boolean = false;
   errorMessage: string = '';
+=======
+>>>>>>> login_fix
   constructor(
     private route: ActivatedRoute,
     private usersService: UsersService,
@@ -77,8 +81,8 @@ export class InfoPageComponent implements OnInit {
       gender: ['', Validators.required],
       phone: ['', [Validators.required, phoneValidator([])]],
     });
-    this.userId = Number(localStorage.getItem('id_user'));
-    this.authToken = String(localStorage.getItem('authToken'));
+    this.userId = Number(localStorage.getItem('id_user')|| sessionStorage.getItem('id_user'));
+    this.authToken = String(localStorage.getItem('authToken')|| sessionStorage.getItem('authToken'));
     if (!this.userId) {
       localStorage.clear();
       this.router.navigate(['/login']);
@@ -113,7 +117,11 @@ export class InfoPageComponent implements OnInit {
   }
 
   onLogout() {
-    this.auth.logout();
+   this.auth.logout().subscribe(
+    (response)=>{
+      console.log(response)
+    }
+   )
   }
 
   checkFriendshipStatus(friendId: number) {
@@ -236,11 +244,15 @@ export class InfoPageComponent implements OnInit {
     });
   }
   navigateToPostDetail(postId: number) {
+<<<<<<< HEAD
     const userIdRouu = this.route.snapshot.params['id'];
 
     this.router
       .navigate([`/user/${userIdRouu}/detail/${postId}`])
       .catch((error) => console.error('Lỗi khi điều hướng:', error));
+=======
+    this.router.navigate(['/detail', postId]);
+>>>>>>> login_fix
   }
   checkTokenAndFetchUserInfo(userId: number) {
     this.usersService.verifyToken().subscribe(

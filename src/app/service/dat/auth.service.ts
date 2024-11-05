@@ -4,8 +4,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap, catchError } from 'rxjs';
 import { Router } from '@angular/router';
 
-
-
 @Injectable({
   providedIn: 'root',
 })
@@ -38,7 +36,8 @@ export class AuthService {
 
   logout(): void {
     // Gửi yêu cầu đến API để xóa token (nếu cần)
-    const token = localStorage.getItem('authToken');
+    const token =
+      sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
     if (token) {
       this.http
         .post(
@@ -51,8 +50,10 @@ export class AuthService {
         .subscribe(
           () => {
             // Xóa token và thông tin người dùng
-            localStorage.removeItem('authToken');
-            localStorage.removeItem('userId');
+            // localStorage.removeItem('authToken');
+            // localStorage.removeItem('userId');
+            localStorage.clear();
+            sessionStorage.clear();
             // Điều hướng người dùng về trang đăng nhập
             this.router.navigate(['/login']);
           },
@@ -66,12 +67,15 @@ export class AuthService {
     }
   }
 
-
   verifyToken(): Observable<any> {
-    const token = { token: localStorage.getItem('authToken') || null };
+    const token = {
+      token:
+        sessionStorage.getItem('authToken') ||
+        localStorage.getItem('authToken'),
+    };
     return this.http
       .post(
-        `http://localhost:8080/chat_api/api_dat/auth/verifyToken.php`,
+        `http://localhost:8080/chat_api/quangApi/auth/verifyToken.php`,
         token,
         {
           headers: { 'Content-Type': 'application/json' },
