@@ -25,6 +25,7 @@ export class AuthService {
           if (response.success && response.token) {
             localStorage.setItem('authToken', response.token);
             localStorage.setItem('userId', JSON.stringify(response.user.id));
+            localStorage.setItem('id_user', response.user.id.toString());
           }
         }),
         catchError((error) => {
@@ -47,12 +48,16 @@ export class AuthService {
           }
         )
         .subscribe(
-          () => {
-            // Xóa token và thông tin người dùng
-            localStorage.removeItem('authToken');
-            localStorage.removeItem('userId');
-            // Điều hướng người dùng về trang đăng nhập
-            this.router.navigate(['/login']);
+          (response: any) => {
+            if (response.success) {
+              // Xóa token và thông tin người dùng
+              localStorage.removeItem('authToken');
+              localStorage.removeItem('userId');
+              // Điều hướng người dùng về trang đăng nhập
+              this.router.navigate(['/login']);
+            } else {
+              console.error('Logout error', response.message);
+            }
           },
           (error) => {
             console.error('Logout error', error);
@@ -63,6 +68,7 @@ export class AuthService {
       this.router.navigate(['/login']);
     }
   }
+
   verifyToken(): Observable<any> {
     const token = { token: localStorage.getItem('authToken') || null };
     return this.http

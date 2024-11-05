@@ -6,7 +6,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [HttpClientModule],
   templateUrl: './wrapper-left.component.html',
-  styleUrl: './wrapper-left.component.css'
 })
 export class WrapperLeftComponent {
 

@@ -1,0 +1,115 @@
+ <div class="list-comment-post">
+              <!-- item comment -->
+              <div class="item-comment-post">
+                <!-- main - comment  -->
+                <div class="main-comment-post">
+                  <div class="content-cmt-user">
+                    <img src="assets/images/no-image.jpg" alt="" />
+                    <article>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Vero impedit tempore coumque magnam totam eveniet aperiam
+                      illum,
+                      sapitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postam,
+                      ipsum earum.
+                    </article>
+                  </div>
+                  <form action="">
+                    <input type="text" />
+                    <button><i class="fa-solid fa-paper-plane"></i></button>
+                    <button><i class="fa fa-trash"></i></button>
+                  </form>
+                </div>
+                <!-- all rep -->
+                <div class="list-comment-rep">
+                  <div class="item-rep-comment-post">
+                    <div class="content-cmt-rep">
+                      <img src="assets/images/no-image.jpg" alt="" />
+                      <article>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Vero impedit tempore coumque magnam totam eveniet
+                        aperiam illum,
+                        sapitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postam,
+                        ipsum earum.
+                      </article>
+                    </div>
+                    <form action="">
+                      <input type="text" />
+                      <button><i class="fa-solid fa-paper-plane"></i></button>
+                      <button><i class="fa-solid fa-trash"></i></button>
+                    </form>
+                  </div>
+                  <div class="item-rep-comment-post">
+                    <div class="content-cmt-rep">
+                      <img src="assets/images/no-image.jpg" alt="" />
+                      <article>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Vero impedit tempore coumque magnam totam eveniet
+                        aperiam illum,
+                        sapitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postam,
+                        ipsum earum.
+                      </article>
+                    </div>
+                    <form action="">
+                      <input type="text" />
+                      <button><i class="fa-solid fa-paper-plane"></i></button>
+                      <button><i class="fa-solid fa-trash"></i></button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- item comment -->
+              <div class="item-comment-post">
+                <!-- main - comment  -->
+                <div class="main-comment-post">
+                  <div class="content-cmt-user">
+                    <img src="assets/images/no-image.jpg" alt="" />
+                    <article>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Vero impedit tempore coumque magnam totam eveniet aperiam
+                      illum,
+                      sapitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postam,
+                      ipsum earum.
+                    </article>
+                  </div>
+                  <form action="">
+                    <input type="text" />
+                    <button><i class="fa-solid fa-paper-plane"></i></button>
+                  </form>
+                </div>
+                <!-- all rep -->
+                <div class="list-comment-rep">
+                  <div class="item-rep-comment-post">
+                    <div class="content-cmt-rep">
+                      <img src="assets/images/no-image.jpg" alt="" />
+                      <article>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Vero impedit tempore coumque magnam totam eveniet
+                        aperiam illum,
+                        sapitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postam,
+                        ipsum earum.
+                      </article>
+                    </div>
+                    <form action="">
+                      <input type="text" />
+                      <button><i class="fa-solid fa-paper-plane"></i></button>
+                    </form>
+                  </div>
+                  <div class="item-rep-comment-post">
+                    <div class="content-cmt-rep">
+                      <img src="assets/images/no-image.jpg" alt="" />
+                      <article>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Vero impedit tempore coumque magnam totam eveniet
+                        aperiam illum,
+                        sapitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postitem-comment-postam,
+                        ipsum earum.
+                      </article>
+                    </div>
+                    <form action="">
+                      <input type="text" />
+                      <button><i class="fa-solid fa-paper-plane"></i></button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
