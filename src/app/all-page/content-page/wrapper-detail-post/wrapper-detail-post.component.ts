@@ -49,8 +49,8 @@ export class WrapperDetailPostComponent implements OnInit, OnDestroy {
     private baivietBinhluanService: BvBlService,
     private thichbaivietService: ThichbaivietService
   ) {
-    this.userId = Number(localStorage.getItem('id_user'));
-    this.authToken = String(localStorage.getItem('authToken'));
+    this.userId = Number(sessionStorage.getItem('id_user') || localStorage.getItem('id_user'));
+    this.authToken = String(sessionStorage.getItem('authToken') || localStorage.getItem('authToken'));
     if (!this.userId) {
       localStorage.clear();
       this.router.navigate(['/login']);

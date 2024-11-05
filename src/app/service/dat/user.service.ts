@@ -71,7 +71,7 @@ export class UsersService {
     );
   }
   verifyToken(): Observable<any> {
-    const token = { token: localStorage.getItem('authToken') || null };
+    const token = { token: localStorage.getItem('authToken') || sessionStorage.getItem('authToken') };
     return this.http
       .post(
         `http://localhost:8080/chat_api/api_dat/auth/verifyToken.php`,
@@ -137,7 +137,6 @@ export class UsersService {
       .set('keyword', keyword)
       .set('offset', offset.toString())
       .set('limit', limit.toString());
-
     return this.http.get(`http://localhost:8080/chat_api/api_dat/users/search.php`, { params });
   }
 }

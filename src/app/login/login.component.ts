@@ -15,6 +15,7 @@ import { AuthService } from '../service/quang/auth.service';
   selector: 'app-login',
   standalone: true,
   imports: [FormsModule, CommonModule, ReactiveFormsModule, HttpClientModule],
+
   templateUrl: './login.component.html',
   providers: [AuthService, RouterLink],
 })
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
   login_success = false;
   login_message = '';
   isLogin = false;
+  rememberMe: boolean = false;
   constructor(private authService: AuthService, private router: Router) {
     // Đảm bảo tiêm Router đúng cách
     this.loginForm = new FormGroup({
@@ -40,16 +42,28 @@ export class LoginComponent implements OnInit {
         Validators.maxLength(25),
         Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).+$'), // Regex cho mật khẩu
       ]),
+      rememberMe: new FormControl(),
     });
   }
   ngOnInit(): void {
     this.checkAuth();
   }
+  ngOnDestroy(): void {
 
+  }
+
+  // component.ts
+  logout(): void {
+    this.authService.logout();
+  }
+  clearUserData(): void {
+    localStorage.clear();
+    sessionStorage.clear();
+  }
   login(event: Event) {
     event.preventDefault(); // Ngăn chặn hành vi mặc định của form
     if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
+      const { email, password, rememberMe } = this.loginForm.value;
       this.authService.login(email, password).subscribe(
         (response) => {
           if (response.success) {
@@ -58,7 +72,16 @@ export class LoginComponent implements OnInit {
             this.isLogin = true; // Đặt trạng thái đăng nhập
             // Điều hướng đến trang chính (nếu cần)
             this.showNotification('Đăng nhập thành công!');
-
+            console.log(response.user['email']);
+            if (rememberMe) {
+              localStorage.setItem('authToken', response.token); // Lưu vào localStorage
+              localStorage.setItem('id_user', response.user['id']); // Lưu vào localStorage
+              localStorage.setItem('saveLogin', 'true');
+            } else {
+              sessionStorage.setItem('authToken', response.token); // Lưu vào sessionStorage
+              sessionStorage.setItem('id_user', response.user['id']);
+              localStorage.setItem('saveLogin', 'false');
+            }
             setInterval(() => {
               this.router.navigate(['/']); // Thay đổi đường dẫn nếu cần
             }, 2000);

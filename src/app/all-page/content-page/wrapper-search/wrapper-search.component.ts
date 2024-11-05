@@ -66,108 +66,110 @@ export class WrapperSearchComponent implements OnInit {
       }
     );
   }
-//   searchPost(): void {
-//     // Lấy token từ localStorage
-//     const token = localStorage.getItem('authToken');
+  //   searchPost(): void {
+  //     // Lấy token từ localStorage
+  //     const token = localStorage.getItem('authToken');
 
-//     if (!token) {
-//         console.error('Không có token. Vui lòng đăng nhập lại.');
-//         alert("Vui lòng đăng nhập để tìm kiếm.");
-//         return; // Dừng lại nếu không có token
-//     }
+  //     if (!token) {
+  //         console.error('Không có token. Vui lòng đăng nhập lại.');
+  //         alert("Vui lòng đăng nhập để tìm kiếm.");
+  //         return; // Dừng lại nếu không có token
+  //     }
 
-//     // Xác thực token để lấy userId
-//     this.authService.verifyToken().subscribe(
-//         (response) => {
-//             if (response.success) {
-//                 this.currentUserId = response.userId; // Lấy userId từ phản hồi
-//               console
-//                 if (!this.searchKeyword) {
-//                     alert("Vui lòng nhập từ khóa tìm kiếm.");
-//                     return;
-//                 }
+  //     // Xác thực token để lấy userId
+  //     this.authService.verifyToken().subscribe(
+  //         (response) => {
+  //             if (response.success) {
+  //                 this.currentUserId = response.userId; // Lấy userId từ phản hồi
+  //               console
+  //                 if (!this.searchKeyword) {
+  //                     alert("Vui lòng nhập từ khóa tìm kiếm.");
+  //                     return;
+  //                 }
 
-//                 this.postService.searchPost(this.searchKeyword, this.selectedOrder, this.selectedFrom, this.currentUserId).subscribe(
-//                     (data) => {
-//                         if (Array.isArray(data)) {
-//                             this.posts = data;
-//                             this.noUsersFound = this.posts.length === 0;
-//                         } else {
-//                             this.posts = [];
-//                             this.noUsersFound = true;
-//                         }
-//                     },
-//                     (error) => {
-//                         console.error('Có lỗi xảy ra!', error);
-//                         this.noUsersFound = true;
-//                     }
-//                 );
-//             } else {
-//                 console.error('Lỗi xác thực token:', response.message);
-//                 alert("Lỗi xác thực. Vui lòng đăng nhập lại.");
-//             }
-//         },
-//         (error) => {
-//             console.error('Lỗi khi xác thực token:', error);
-//             alert("Có lỗi xảy ra khi xác thực. Vui lòng thử lại.");
-//         }
-//     );
-// }
+  //                 this.postService.searchPost(this.searchKeyword, this.selectedOrder, this.selectedFrom, this.currentUserId).subscribe(
+  //                     (data) => {
+  //                         if (Array.isArray(data)) {
+  //                             this.posts = data;
+  //                             this.noUsersFound = this.posts.length === 0;
+  //                         } else {
+  //                             this.posts = [];
+  //                             this.noUsersFound = true;
+  //                         }
+  //                     },
+  //                     (error) => {
+  //                         console.error('Có lỗi xảy ra!', error);
+  //                         this.noUsersFound = true;
+  //                     }
+  //                 );
+  //             } else {
+  //                 console.error('Lỗi xác thực token:', response.message);
+  //                 alert("Lỗi xác thực. Vui lòng đăng nhập lại.");
+  //             }
+  //         },
+  //         (error) => {
+  //             console.error('Lỗi khi xác thực token:', error);
+  //             alert("Có lỗi xảy ra khi xác thực. Vui lòng thử lại.");
+  //         }
+  //     );
+  // }
 
-searchPost(): void {
-  // Lấy token từ localStorage
-  const token = localStorage.getItem('authToken');
+  searchPost(): void {
+    // Lấy token từ localStorage
+    const token =
+      localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
 
-  if (!token) {
+    if (!token) {
       console.error('Không có token. Vui lòng đăng nhập lại.');
-      alert("Vui lòng đăng nhập để tìm kiếm.");
+      alert('Vui lòng đăng nhập để tìm kiếm.');
       return; // Dừng lại nếu không có token
-  }
+    }
 
-  // Xác thực token để lấy userId
-  this.authService.verifyToken().subscribe(
+    // Xác thực token để lấy userId
+    this.authService.verifyToken().subscribe(
       (response) => {
-          if (response.success) {
-              this.currentUserId = response.userId; // Lấy userId từ phản hồi
-              console.log('User ID xác thực:', this.currentUserId); // In ra để kiểm tra
+        if (response.success) {
+          this.currentUserId = response.userId; // Lấy userId từ phản hồi
+          console.log('User ID xác thực:', this.currentUserId); // In ra để kiểm tra
 
-              if (!this.searchKeyword) {
-                  alert("Vui lòng nhập từ khóa tìm kiếm.");
-                  return;
-              }
-
-              // Gọi searchPost từ service
-              this.postService.searchPost(
-                  this.searchKeyword, 
-                  this.selectedOrder, 
-                  this.selectedFrom, 
-                  this.currentUserId
-              ).subscribe(
-                  (data) => {
-                      if (Array.isArray(data)) {
-                          this.posts = data;
-                          this.noUsersFound = this.posts.length === 0;
-                      } else {
-                          this.posts = [];
-                          this.noUsersFound = true;
-                      }
-                      console.log('Kết quả tìm kiếm:', this.posts); // Log dữ liệu bài viết
-                  },
-                  (error) => {
-                      console.error('Có lỗi xảy ra khi tìm kiếm bài viết:', error);
-                      this.noUsersFound = true;
-                  }
-              );
-          } else {
-              console.error('Lỗi xác thực token:', response.message);
-              alert("Lỗi xác thực. Vui lòng đăng nhập lại.");
+          if (!this.searchKeyword) {
+            alert('Vui lòng nhập từ khóa tìm kiếm.');
+            return;
           }
+
+          // Gọi searchPost từ service
+          this.postService
+            .searchPost(
+              this.searchKeyword,
+              this.selectedOrder,
+              this.selectedFrom,
+              this.currentUserId
+            )
+            .subscribe(
+              (data) => {
+                if (Array.isArray(data)) {
+                  this.posts = data;
+                  this.noUsersFound = this.posts.length === 0;
+                } else {
+                  this.posts = [];
+                  this.noUsersFound = true;
+                }
+                console.log('Kết quả tìm kiếm:', this.posts); // Log dữ liệu bài viết
+              },
+              (error) => {
+                console.error('Có lỗi xảy ra khi tìm kiếm bài viết:', error);
+                this.noUsersFound = true;
+              }
+            );
+        } else {
+          console.error('Lỗi xác thực token:', response.message);
+          alert('Lỗi xác thực. Vui lòng đăng nhập lại.');
+        }
       },
       (error) => {
-          console.error('Lỗi khi xác thực token:', error);
-          alert("Có lỗi xảy ra khi xác thực. Vui lòng thử lại.");
+        console.error('Lỗi khi xác thực token:', error);
+        alert('Có lỗi xảy ra khi xác thực. Vui lòng thử lại.');
       }
-  );
-}
-
+    );
+  }
 }

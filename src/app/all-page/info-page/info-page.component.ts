@@ -21,6 +21,7 @@ import { PostService } from '../../service/dat/post.service';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { AuthService } from '../../service/quang/auth.service';
 import { ThichbaivietService } from '../../service/thichbaiviet/thichbaiviet.service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-info-page',
@@ -45,7 +46,7 @@ export class InfoPageComponent implements OnInit {
 
   posts: any[] = [];
   idpost: any;
-  posta:any;
+  posta: any;
   avatar: any;
   oldPassword: string = '';
   newPassword: string = '';
@@ -53,13 +54,13 @@ export class InfoPageComponent implements OnInit {
   oldPasswordError: string = '';
   newPasswordError: string = '';
   repeatPasswordError: string = '';
-  userId:any;
+  userId: any;
   authToken: string;
   userLikePosts: any[] = [];
   isLoading = false;
   noPosts = false;
   lastPostId = 0;
-  userIdRouu:any;
+  userIdRouu: any;
   constructor(
     private route: ActivatedRoute,
     private usersService: UsersService,
@@ -76,8 +77,8 @@ export class InfoPageComponent implements OnInit {
       gender: ['', Validators.required],
       phone: ['', [Validators.required, phoneValidator([])]],
     });
-    this.userId = Number(localStorage.getItem('id_user'));
-    this.authToken = String(localStorage.getItem('authToken'));
+    this.userId = Number(localStorage.getItem('id_user')|| sessionStorage.getItem('id_user'));
+    this.authToken = String(localStorage.getItem('authToken')|| sessionStorage.getItem('authToken'));
     if (!this.userId) {
       localStorage.clear();
       this.router.navigate(['/login']);
@@ -92,11 +93,15 @@ export class InfoPageComponent implements OnInit {
     const id = this.route.snapshot.params['id']; // Lấy ID từ route
     // this.getPostsByUserId(id);
     this.AvatarByUser(id);
-    this.checkAuth(); 
+    this.checkAuth();
     this.loadPosts();
   }
   onLogout() {
-    this.auth.logout();
+   this.auth.logout().subscribe(
+    (response)=>{
+      console.log(response)
+    }
+   )
   }
   // getPostsByUserId(idPost: number): void {
   //   this.postService.postbyid(idPost).subscribe(
@@ -156,7 +161,7 @@ export class InfoPageComponent implements OnInit {
       );
     }
   }
-  
+
   likePostId(post_id: number) {
     this.checkAuth();
     const data: any = {
@@ -215,7 +220,6 @@ export class InfoPageComponent implements OnInit {
     });
   }
   navigateToPostDetail(postId: number) {
-
     this.router.navigate(['/detail', postId]);
   }
   checkTokenAndFetchUserInfo(userId: number) {
@@ -470,5 +474,4 @@ function phoneValidator(existingPhones: string[]): ValidatorFn {
 
     return null;
   };
-  
 }
