@@ -164,6 +164,11 @@
     <div class="profile-list-post" *ngIf="posts && posts.length > 0; else noPosts">
       <!-- ITEM POST -->
       <div class="item-post" *ngFor="let post of posts">
+        <div class="user-post-image" *ngIf="post.post_type === 'shared'">
+          <div class="user-sharer-info">
+              <span>Được chia sẻ bởi: {{ post.sharer_name }}</span> <!-- Hiển thị tên người đã chia sẻ -->
+          </div>
+      </div>
         <div class="user-post-info">
           <section class="user-post-info-1">
             <a class="user-avatat-post" href="" *ngFor="let avatars of avatar">
@@ -237,7 +242,7 @@
             <span>{{ post.likesCount}} Likes</span>
           </button>
 
-          <button class="btn-interact-post-comment" (click)="navigateToPostDetail(post.post_id)">
+          <button class="btn-interact-post-comment" (click)="navigateToPostDetail(post.id)">
             <i class="fa-regular fa-comment"></i>
             <span>binh luan</span>
           </button>

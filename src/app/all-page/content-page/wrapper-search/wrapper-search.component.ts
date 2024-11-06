@@ -274,7 +274,7 @@ export class WrapperSearchComponent implements OnInit {
     const userIdRouu = this.route.snapshot.params['id'];
 
     this.router
-      .navigate([`/user/${userIdRouu}/detail/${postId}`])
+      .navigate([`/detail/${postId}`])
       .catch((error) => console.error('Lỗi khi điều hướng:', error));
   }
 }
