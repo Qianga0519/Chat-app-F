@@ -101,7 +101,7 @@
                                         </div>
                                     </div>
                                     <div class="qty-interact qty-cmt">
-                                        <span>999</span>
+                                        <span>{{ post.total_cmt ||0}}</span>
                                         <div class="list-interact-icon">
                                             <span>Bình luận</span>
                                         </div>
@@ -122,7 +122,7 @@
                                       <span>{{ post.likesCount }} Likes</span>
                                     </button>
                           
-                                    <button class="btn-interact-post-comment" (click)="navigateToPostDetail(post.post_id)">
+                                    <button class="btn-interact-post-comment" (click)="navigateToPostDetail(post.id)">
                                       <i class="fa-regular fa-comment"></i>
                                       <span>binh luan</span>
                                     </button>
