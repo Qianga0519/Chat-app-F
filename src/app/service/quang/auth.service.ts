@@ -68,7 +68,6 @@ export class AuthService {
   logout(): Observable<any> {
     const token =
       sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
-
     return this.http
       .post(
         `http://localhost:8080/chat_api/quangApi/auth/logout.php`,
@@ -91,11 +90,6 @@ export class AuthService {
       );
   }
 
-  isSessionActive(): Observable<any> {
-    return this.http.get(
-      'http://localhost:8080/chat_api/quangApi/auth/checkSession.php'
-    );
-  }
   verifyToken(): Observable<any> {
     const token = {
       token:
@@ -116,5 +110,14 @@ export class AuthService {
           throw error; // Hoặc xử lý lỗi ở đây
         })
       );
+  }
+  updateStatusOffline(): Observable<any> {
+    const token =
+      sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
+    return this.http.post(
+      `http://localhost:8080/chat_api/quangApi/auth/updateStatus.php`,
+      { token },
+      { headers: { 'Content-Type': 'application/json' } }
+    );
   }
 }

@@ -1,14 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { AllPageComponent } from './all-page/all-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './service/quang/auth.service';
-
-import { response } from 'express';
 import { UserService } from './service/quang/user.service';
-import { error } from 'console';
 import { AuthGuard } from './auth.guard';
 
 @Component({
@@ -27,27 +24,43 @@ import { AuthGuard } from './auth.guard';
 })
 export class AppComponent implements OnInit {
   title = 'chat-app';
-  $is_login = false;
-  constructor(private authService: AuthService, private user: UserService) {}
-  ngOnInit(): void {
-    // this.authService.verifyToken().subscribe({
-    //   next: (response) => {
-    //     // Xử lý phản hồi thành công
-    //     if (response.success == true) {
-    //       console.log('Token hợp lệ:', response);      
-    //     } else {
-    //       console.log('Token không hợp lệ');
-    //       // Xử lý khi token không hợp lệ
-    //     }
-    //   },
-    //   error: (error) => {
-    //     // Xử lý lỗi từ server
-    //     console.error('Lỗi kiểm tra token:', error);
-    //     // Có thể hiển thị thông báo lỗi cho người dùng
-    //   },
-    // });
-  }
+
+  constructor(
+    private authService: AuthService,
+    private user: UserService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {}
+
   logout() {
-    this.authService.logout();
+    this.authService.logout().subscribe((response) => {
+      if (response.success) {
+        this.router.navigate(['/login']);
+      }
+    });
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  handleBeforeUnload(event: BeforeUnloadEvent) {
+    const token =
+      sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
+
+    if (token) {
+      const data = JSON.stringify({ token });
+      const blob = new Blob([data], { type: 'application/json' });
+
+      console.log('Gửi yêu cầu đến server với token:', token);
+
+      const isSent = navigator.sendBeacon(
+        'http://localhost:8080/chat_api/quangApi/auth/updateStatus.php',
+        blob
+      );
+
+      console.log('Yêu cầu gửi thành công:', isSent);
+
+      // Thiết lập returnValue để trình duyệt biết rằng có một hành động đang xảy ra
+      event.returnValue = 'Are you sure you want to leave?';
+    }
   }
 }

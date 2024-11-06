@@ -48,9 +48,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.checkAuth();
   }
-  ngOnDestroy(): void {
-
-  }
+  ngOnDestroy(): void {}
 
   // component.ts
   logout(): void {
