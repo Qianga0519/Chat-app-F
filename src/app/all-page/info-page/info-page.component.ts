@@ -122,7 +122,7 @@ export class InfoPageComponent implements OnInit {
     this.auth.logout().subscribe((response) => {
       console.log(response);
     });
-<<<<<<< HEAD
+
   }
 
   checkFriendshipStatus(friendId: number) {
@@ -137,22 +137,8 @@ export class InfoPageComponent implements OnInit {
       }
     );
   }
-=======
-  }
 
-  // checkFriendshipStatus(friendId: number) {
-  //   const userIds = Number(localStorage.getItem('id_user'));
-  //   this.usersService.checkFriendshipStatus(userIds, friendId).subscribe(
-  //     (response: { isFriend: boolean }) => {
-  //       this.isFriend = response.isFriend; // Cập nhật trạng thái bạn bè
-  //     },
-  //     (error) => {
-  //       this.errorMessage = 'Có lỗi xảy ra khi kiểm tra tình trạng bạn bè.';
-  //       console.error('Lỗi khi kiểm tra tình trạng bạn bè', error);
-  //     }
-  //   );
-  // }
->>>>>>> login_fix
+
 
   loadPosts() {
     this.checkAuth();
@@ -494,12 +480,7 @@ function nameValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const name = control.value;
     const regex =
-<<<<<<< HEAD
       /^(?=.*[A-Za-z])(?! )(?!.* {2})[A-Za-z0-9]+( [A-Za-z0-9]+)*(?<! )$/;
-=======
-      /^(?=.*[A-Za-zổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ])(?! )(?!.* {2})[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂ ưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ0-9]+( [A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂ ưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ0-9]+)*(?<! )$/;
->>>>>>> login_fix
-
     if (!name || name.trim() === '') {
       return { invalidInput: true };
     }
