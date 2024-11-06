@@ -20,6 +20,7 @@ export class HeaderComponent {
       (response) => {
         if (response && response.success) {
           this.userId = response.userId; // Đảm bảo rằng userId từ API được gán đúng
+          
         } else {
           console.error('Lỗi: ', response.message); // In ra lỗi nếu có
         }

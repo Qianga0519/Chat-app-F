@@ -90,7 +90,8 @@ export class WrapperRightComponent implements OnInit {
 
   acceptFriend(friendId: number) {
     // Lấy token từ localStorage
-    const token = localStorage.getItem('authToken');
+    const token =
+      localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
 
     if (!token) {
       console.error('Không có token. Vui lòng đăng nhập lại.');
@@ -107,8 +108,7 @@ export class WrapperRightComponent implements OnInit {
             (response) => {
               if (!response.error) {
                 this.message = response.message;
-                this. reloadFriendsList();
-                
+                this.reloadFriendsList();
               } else {
                 this.message = response.message;
               }
@@ -126,10 +126,11 @@ export class WrapperRightComponent implements OnInit {
       }
     );
   }
-  
+
   declineFriend(friendId: number) {
     // Lấy token từ localStorage
-    const token = localStorage.getItem('authToken');
+    const token =
+      localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
 
     if (!token) {
       console.error('Không có token. Vui lòng đăng nhập lại.');
@@ -146,7 +147,7 @@ export class WrapperRightComponent implements OnInit {
             (response) => {
               if (!response.error) {
                 this.message = response.message;
-                this.updateFriendRequestUI(friendId); // Cập nhật UI sau khi từ chối  
+                this.updateFriendRequestUI(friendId); // Cập nhật UI sau khi từ chối
               } else {
                 this.message = response.message;
               }
@@ -167,7 +168,9 @@ export class WrapperRightComponent implements OnInit {
 
   updateFriendRequestUI(friendId: number) {
     // Xóa yêu cầu kết bạn khỏi danh sách hiển thị mà không cần F5
-    this.makeFriend = this.makeFriend.filter(friend => friend.id !== friendId);
+    this.makeFriend = this.makeFriend.filter(
+      (friend) => friend.id !== friendId
+    );
   }
   ngOnInit(): void {
     this.getUserIdFromToken(); // Lấy userId khi khởi tạo component

@@ -7,7 +7,7 @@
                 <div class="range-search-input filter-result">
                     <div class="search-input">
                         <div class="range-input-key">
-                            <input type="text" [(ngModel)]="searchKeyword" placeholder="Nhập từ khóa tìm kiếm">
+                            <input type="text" [(ngModel)]="searchKeyword" placeholder="Nhập từ khóa tìm kiếm" pattern="[A-Za-z0-9 ]*">
                             <button class="btn-search-input-filter"
                                 (click)="showUsers ? searchUsers(searchKeyword) : searchPost()">
                                 <i class="fa fa-search" aria-hidden="true"></i>
@@ -61,7 +61,6 @@
                                 <div class="user-post-info">
                                     <section class="user-post-info-1">
                                         <a class="user-avatat-post" href="">
-                                   
                                             <img [src]="post.urluser ? '/assets/images/' + post.urluser : '/assets/images/no-image.jpg'" alt="Ảnh đại diện người dùng">
                                         </a>
                                         <div class="user-info-detait-post">
@@ -80,46 +79,58 @@
                                     </div>
                                 </div>
 
-                                <div class="user-post-image">
+                                <div class="user-post-image" *ngIf="post.post_type === 'shared'">
+                                    <div class="user-post-single-image">
+                                        <a href=""><img src="./assets/images/{{post.urlpost}}" alt=""></a>
+                                    </div>
+                                    <div class="user-sharer-info">
+                                        <span>Được chia sẻ bởi: {{ post.sharer_name }}</span> <!-- Hiển thị tên người đã chia sẻ -->
+                                    </div>
+                                </div>
+                    
+                                <div class="user-post-image" *ngIf="post.post_type === 'original'">
                                     <div class="user-post-single-image">
                                         <a href=""><img src="./assets/images/{{post.urlpost}}" alt=""></a>
                                     </div>
                                 </div>
                                 <div class="qty-interact-post">
                                     <div class="qty-interact qty-likes">
-                                        <span>999</span>
+                                        <span>{{ post.total_likes ||0}}</span>
                                         <div class="list-interact-icon">
                                             <i style="z-index: 3;" class="icon-post-like fa-solid fa-thumbs-up"></i>
                                         </div>
                                     </div>
                                     <div class="qty-interact qty-cmt">
-                                        <span>999</span>
+                                        <span>{{ post.total_cmt ||0}}</span>
                                         <div class="list-interact-icon">
                                             <span>Bình luận</span>
                                         </div>
                                     </div>
                                     <div class="qty-interact qty-share">
-                                        <span>999</span>
+                                        <span>{{post.share_count}}</span>
                                         <div class="list-interact-icon">
                                             <span>Chia sẻ</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="range-interact-post">
-                                    <button class="btn-interact-post-like">
-                                        <i class="icon-post-like active fa-solid fa-thumbs-up"></i>
-                                        <i class="icon-post-like fa-regular fa-thumbs-up"></i>
-                                        <span>Thích</span>
+                                    <button class="btn-interact-post-like" (click)="likePostId(post.id)">
+                                      <i [ngClass]="{
+                                          'fa-solid ': post.liked,
+                                          'fa-regular ': !post.liked
+                                        }" class="icon-post-like active fa-thumbs-up"></i>
+                                      <span>{{ post.likesCount }} Likes</span>
                                     </button>
-                                    <button class="btn-interact-post-comment">
-                                        <i class="fa-regular fa-comment"></i>
-                                        <span>Bình luận</span>
+                          
+                                    <button class="btn-interact-post-comment" (click)="navigateToPostDetail(post.id)">
+                                      <i class="fa-regular fa-comment"></i>
+                                      <span>binh luan</span>
                                     </button>
-                                    <button class="btn-interact-post-share">
-                                        <i class="fa-regular fa-share-from-square"></i>
-                                        <span>Chia sẻ</span>
+                                    <button class="btn-interact-post-share" (click)="sharePost(post.post_id)">
+                                      <i class="fa-regular fa-share-from-square"></i>
+                                      <span>chia se</span>
                                     </button>
-                                </div>
+                                  </div>
                             </div>
                         </div>
                     </div>

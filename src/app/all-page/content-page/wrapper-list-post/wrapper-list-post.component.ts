@@ -49,23 +49,46 @@ export class WrapperListPostComponent implements OnInit {
     private thichbaivietService: ThichbaivietService,
     private authService: AuthService
   ) {
-    this.userId = Number(localStorage.getItem('id_user'));
-    this.authToken = String(localStorage.getItem('authToken'));
+    this.userId = Number(sessionStorage.getItem('id_user') || localStorage.getItem('id_user'));
+    this.authToken = String(sessionStorage.getItem('authToken') || localStorage.getItem('authToken'));
     if (!this.userId) {
-      localStorage.clear();
-      this.router.navigate(['/login']);
+      // localStorage.clear();
+      // this.router.navigate(['/login']);
     }
   }
-
   ngOnInit() {
     this.loadPosts(); // Tải bài viết ban đầu
     window.addEventListener('scroll', this.onScroll.bind(this)); // Lắng nghe sự kiện cuộn
-    this.checkAuth();
+    // window.addEventListener('beforeload', this.logout.bind(this));
   }
   ngOnDestroy() {
     window.removeEventListener('scroll', this.onScroll.bind(this));
     this.clearData;
+    window.addEventListener('beforeunload', this.clearData);
   }
+
+  logout(): void {
+    this.authService.logout().subscribe(
+      (response) => {
+        if (response.success) {
+          this.clearUserData(); // Gọi phương thức xóa thông tin người dùng
+          this.router.navigate(['/login']); // Điều hướng về trang đăng nhập
+        } else {
+          console.error('Logout error', response.message); // Xử lý lỗi khi đăng xuất không thành công
+        }
+      },
+      (error) => {
+        console.error('Logout error', error); // Xử lý lỗi khi có lỗi trong quá trình gọi API
+      }
+    );
+  }
+
+  clearUserData(): void {
+    localStorage.clear(); // Xóa tất cả dữ liệu trong localStorage
+    sessionStorage.clear(); // Xóa tất cả dữ liệu trong sessionStorage
+    localStorage.removeItem('id_user');
+  }
+
   clearData() {
     this.posts = [];
     this.lastPostId = 0;
