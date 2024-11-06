@@ -97,20 +97,20 @@ export class InfoPageComponent implements OnInit {
     this.loadPosts();
   }
   onLogout() {
-   this.auth.logout().subscribe(
-    (response)=>{
-      console.log(response)
-    }
-   )
+    this.auth.logout().subscribe((response) => {
+      console.log(response);
+    });
   }
-  // getPostsByUserId(idPost: number): void {
-  //   this.postService.postbyid(idPost).subscribe(
-  //     (data: any[]) => {
-  //       this.posts = data;
-  //       console.log('User posts:', this.posts);
+
+  // checkFriendshipStatus(friendId: number) {
+  //   const userIds = Number(localStorage.getItem('id_user'));
+  //   this.usersService.checkFriendshipStatus(userIds, friendId).subscribe(
+  //     (response: { isFriend: boolean }) => {
+  //       this.isFriend = response.isFriend; // Cập nhật trạng thái bạn bè
   //     },
   //     (error) => {
-  //       console.error('Error fetching user posts:', error);
+  //       this.errorMessage = 'Có lỗi xảy ra khi kiểm tra tình trạng bạn bè.';
+  //       console.error('Lỗi khi kiểm tra tình trạng bạn bè', error);
   //     }
   //   );
   // }
@@ -420,7 +420,7 @@ function nameValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const name = control.value;
     const regex =
-      /^(?=.*[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂ ưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ])(?! )(?!.* {2})[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂ ưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ0-9]+( [A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂ ưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ0-9]+)*(?<! )$/;
+      /^(?=.*[A-Za-zổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ])(?! )(?!.* {2})[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂ ưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ0-9]+( [A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂ ưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ0-9]+)*(?<! )$/;
 
     if (!name || name.trim() === '') {
       return { invalidInput: true };
