@@ -41,26 +41,26 @@ export class AppComponent implements OnInit {
     });
   }
 
-  @HostListener('window:beforeunload', ['$event'])
-  handleBeforeUnload(event: BeforeUnloadEvent) {
-    const token =
-      sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
+  // @HostListener('window:beforeunload', ['$event'])
+  // handleBeforeUnload(event: BeforeUnloadEvent) {
+  //   const token =
+  //     sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
 
-    if (token) {
-      const data = JSON.stringify({ token });
-      const blob = new Blob([data], { type: 'application/json' });
+  //   if (token) {
+  //     const data = JSON.stringify({ token });
+  //     const blob = new Blob([data], { type: 'application/json' });
 
-      console.log('Gửi yêu cầu đến server với token:', token);
+  //     console.log('Gửi yêu cầu đến server với token:', token);
 
-      const isSent = navigator.sendBeacon(
-        'http://localhost:8080/chat_api/quangApi/auth/updateStatus.php',
-        blob
-      );
+  //     const isSent = navigator.sendBeacon(
+  //       'http://localhost:8080/chat_api/quangApi/auth/updateStatus.php',
+  //       blob
+  //     );
 
-      console.log('Yêu cầu gửi thành công:', isSent);
+  //     console.log('Yêu cầu gửi thành công:', isSent);
 
-      // Thiết lập returnValue để trình duyệt biết rằng có một hành động đang xảy ra
-      event.returnValue = 'Are you sure you want to leave?';
-    }
-  }
+  //     // Thiết lập returnValue để trình duyệt biết rằng có một hành động đang xảy ra
+  //     event.returnValue = 'Are you sure you want to leave?';
+  //   }
+  // }
 }
