@@ -9,21 +9,23 @@ import {
 import { UserService } from '../service/quang/user.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Router } from '@angular/router'; // Đảm bảo nhập Router từ @angular/router
+import { Router, RouterLink } from '@angular/router'; // Đảm bảo nhập Router từ @angular/router
+import { AuthService } from '../service/quang/auth.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, HttpClientModule],
-  providers: [UserService],
+  imports: [ReactiveFormsModule, CommonModule, HttpClientModule, RouterLink],
+providers: [UserService, AuthService],
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   regis_success = false;
   regis_message = '';
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, private authService:AuthService) {
+    
     // Đảm bảo tiêm Router đúng cách
     this.registerForm = new FormGroup(
       {
@@ -59,7 +61,9 @@ export class RegisterComponent implements OnInit {
       : { mismatch: true };
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.checkAuth();
+  }
 
   register(event: Event) {
     event.preventDefault();
@@ -91,5 +95,12 @@ export class RegisterComponent implements OnInit {
 
   closeNotification() {
     this.regis_success = false;
+  }
+  checkAuth() {
+    this.authService.verifyToken().subscribe((response) => {
+      if (response.success == true) {
+        this.router.navigate(['/']);
+      }
+    });
   }
 }

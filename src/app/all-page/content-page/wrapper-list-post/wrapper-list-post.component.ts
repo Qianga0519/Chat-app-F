@@ -6,10 +6,13 @@ import { ModalEditPostComponent } from '../../modal-edit-post/modal-edit-post.co
 import { ModalCreatePostComponent } from '../../modal-create-post/modal-create-post.component';
 import { FooterComponent } from '../../footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
-import { PostService } from '../../../service/dat/post.service';
 import { DanhsachbaivietService } from '../../../service/dsbaiviet/danhsachbaiviet.service';
 import { CommonModule } from '@angular/common';
-
+import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { ThichbaivietService } from '../../../service/thichbaiviet/thichbaiviet.service';
+import { response } from 'express';
+import { AuthService } from '../../../service/quang/auth.service';
 @Component({
   selector: 'app-wrapper-list-post',
   standalone: true,
@@ -22,6 +25,7 @@ import { CommonModule } from '@angular/common';
     ModalCreatePostComponent,
     FooterComponent,
     CommonModule,
+    RouterModule,
   ],
   templateUrl: './wrapper-list-post.component.html',
   providers: [DanhsachbaivietService],
@@ -32,26 +36,98 @@ export class WrapperListPostComponent implements OnInit {
   limit = 5; // Số lượng bài viết mỗi lần tải
   isLoading = false;
   noPosts = false;
+  userId: number;
+  authToken: string;
+  userLikePosts: any[] = [];
 
   toggleSeeMore(post: any) {
     post.showFullContent = !post.showFullContent;
   }
-  constructor(private listPostService: DanhsachbaivietService) {}
-
+  constructor(
+    private listPostService: DanhsachbaivietService,
+    private router: Router,
+    private thichbaivietService: ThichbaivietService,
+    private authService: AuthService
+  ) {
+    this.userId = Number(sessionStorage.getItem('id_user') || localStorage.getItem('id_user'));
+    this.authToken = String(sessionStorage.getItem('authToken') || localStorage.getItem('authToken'));
+    if (!this.userId) {
+      // localStorage.clear();
+      // this.router.navigate(['/login']);
+    }
+  }
   ngOnInit() {
     this.loadPosts(); // Tải bài viết ban đầu
     window.addEventListener('scroll', this.onScroll.bind(this)); // Lắng nghe sự kiện cuộn
+    // window.addEventListener('beforeload', this.logout.bind(this));
   }
   ngOnDestroy() {
     window.removeEventListener('scroll', this.onScroll.bind(this));
+    this.clearData;
+    window.addEventListener('beforeunload', this.clearData);
+  }
+
+  logout(): void {
+    this.authService.logout().subscribe(
+      (response) => {
+        if (response.success) {
+          this.clearUserData(); // Gọi phương thức xóa thông tin người dùng
+          this.router.navigate(['/login']); // Điều hướng về trang đăng nhập
+        } else {
+          console.error('Logout error', response.message); // Xử lý lỗi khi đăng xuất không thành công
+        }
+      },
+      (error) => {
+        console.error('Logout error', error); // Xử lý lỗi khi có lỗi trong quá trình gọi API
+      }
+    );
+  }
+
+  clearUserData(): void {
+    localStorage.clear(); // Xóa tất cả dữ liệu trong localStorage
+    sessionStorage.clear(); // Xóa tất cả dữ liệu trong sessionStorage
+    localStorage.removeItem('id_user');
+  }
+
+  clearData() {
+    this.posts = [];
+    this.lastPostId = 0;
+    this.isLoading = false;
+    this.noPosts = false;
+    this.userLikePosts = [];
+    // Reset các biến dữ liệu khác nếu cần
   }
   loadPosts() {
+    this.checkAuth();
     if (!this.isLoading) {
       this.isLoading = true;
+
+      // Lấy danh sách các bài viết đã được like bởi người dùng
+      this.thichbaivietService
+        .getUserLikePost(this.userId)
+        .subscribe((response) => {
+          if (response.success == true) {
+            this.userLikePosts = response.data;
+          }
+        });
+
+      // Lấy danh sách bài viết
       this.listPostService.getPosts(this.lastPostId, this.limit).subscribe(
         (data: any[]) => {
-          console.log('Dữ liệu nhận được:', data); // Ghi lại dữ liệu nhận được
-          this.posts = [...this.posts, ...data];
+          // Cập nhật bài viết với trạng thái liked
+          const dataLike = this.userLikePosts.map((like) => like.post_id);
+          // console.log(dataLike);
+
+          const updatedPosts = data.map((post) => {
+            post.liked = dataLike.includes(post.id);
+            return post;
+          });
+
+          // console.log(updatedPosts);
+
+          // Cập nhật danh sách bài viết với các bài viết mới
+          this.posts = [...this.posts, ...updatedPosts];
+
           if (data.length > 0) {
             this.lastPostId = data[data.length - 1].id;
             this.noPosts = false;
@@ -68,6 +144,59 @@ export class WrapperListPostComponent implements OnInit {
     }
   }
 
+  likePostId(post_id: number) {
+    this.checkAuth();
+    const data: any = {
+      post_id: post_id,
+      user_id: this.userId,
+      authToken: this.authToken,
+    };
+    this.thichbaivietService.createPostLikeByPostId(data).subscribe(
+      (response) => {
+        if (response.success) {
+          // Cập nhật số lượng likes trực tiếp
+          const post = this.posts.find((p) => p.id === post_id);
+          if (post) {
+            if (response.like == 1) {
+              post.total_likes = (parseInt(post.total_likes) || 0) + 1;
+              this.updatePostLikedStatus(post_id, true);
+            } else {
+              post.total_likes = (parseInt(post.total_likes) || 0) - 1;
+
+              this.updatePostLikedStatus(post_id, false);
+            }
+          }
+          this.updateLikesCount(post_id);
+        }
+        // console.log(response);
+      },
+      (error) => {
+        console.error('Error liking post:', error);
+      }
+    );
+  }
+
+  updatePostLikedStatus(postId: number, liked: boolean) {
+    const post = this.posts.find((p) => p.id === postId);
+    if (post) {
+      post.liked = liked; // Cập nhật trạng thái liked
+    }
+  }
+  updateLikesCount(postId: number) {
+    this.thichbaivietService.getLikesCount(postId).subscribe((response) => {
+      if (response.success) {
+        const post = this.posts.find((p) => p.id === postId);
+        if (post) {
+          post.total_likes = response.data.like_count; // Cập nhật số lượng likes
+          // console.log(response)
+        }
+      }
+    });
+  }
+  navigateToPostDetail(postId: number) {
+    this.router.navigate(['/detail', postId]);
+  }
+
   onScroll() {
     // Kiểm tra nếu đang tải
     if (this.isLoading) return;
@@ -80,11 +209,18 @@ export class WrapperListPostComponent implements OnInit {
       this.loadPosts(); // Tải thêm bài viết
     }
   }
-
   formatDate(dateString: string): string {
     if (dateString === '0000-00-00 00:00:00') {
       return 'Không có thông tin'; // Hoặc giá trị mặc định khác
     }
     return new Date(dateString).toLocaleString(); // Hoặc sử dụng Pipe khác
+  }
+  checkAuth() {
+    this.authService.verifyToken().subscribe((response) => {
+      if (response.success != true) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    });
   }
 }

@@ -1,6 +1,8 @@
 <div class="notification-sys" *ngIf="login_success" id="notification-sys">
-    <button (click)="closeNotification()"><i class="fa-solid fa-xmark"></i></button>
-    <span>{{login_message}}</span>
+  <button (click)="closeNotification()">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+  <span>{{ login_message }}</span>
 </div>
 <section class="out-range-login">
   <section class="login-form-layout">
@@ -43,27 +45,45 @@
             required
             formControlName="password"
           />
-          <div *ngIf="(loginForm.get('password')?.touched || loginForm.get('password')?.dirty)">
-            <small class="text-danger" *ngIf="loginForm.get('password')?.errors">
-                <ng-container
-                    *ngIf="loginForm.get('password')?.errors?.['required'] || loginForm.get('password')?.errors?.['pattern']">
-                    Mật khẩu phải có chữ Hoa và thường và ký tự số.<br></ng-container>
-                <ng-container
-                    *ngIf="loginForm.get('password')?.errors?.['minlength'] || loginForm.get('password')?.errors?.['maxlength']">
-                    Độ dài password phải từ 6 đến 25 ký tự.</ng-container>
+          <div
+            *ngIf="
+              loginForm.get('password')?.touched ||
+              loginForm.get('password')?.dirty
+            "
+          >
+            <small
+              class="text-danger"
+              *ngIf="loginForm.get('password')?.errors"
+            >
+              <ng-container
+                *ngIf="loginForm.get('password')?.errors?.['required'] || loginForm.get('password')?.errors?.['pattern']"
+              >
+                Mật khẩu phải có chữ Hoa và thường và ký tự số.<br
+              /></ng-container>
+              <ng-container
+                *ngIf="loginForm.get('password')?.errors?.['minlength'] || loginForm.get('password')?.errors?.['maxlength']"
+              >
+                Độ dài password phải từ 6 đến 25 ký tự.</ng-container
+              >
             </small>
-        </div>
+          </div>
         </div>
         <div class="button-log-range">
           <button type="submit" class="btn-login">Login</button>
-          <button type="button" class="btn-register" >Register</button>
+          <button
+            type="button"
+            (click)="navigateToLogin()"
+            class="btn-register"
+          >
+            Register
+          </button>
         </div>
         <div class="forgot">
           <div class="remember-me">
-            <input type="checkbox" id="remember" name="remember" />
+            <input type="checkbox" id="remember" formControlName="rememberMe" />
             <label for="remember">Remember</label>
           </div>
-          <a href=""  >Forgot password?</a>
+          <a href="">Forgot password?</a>
         </div>
       </div>
     </form>

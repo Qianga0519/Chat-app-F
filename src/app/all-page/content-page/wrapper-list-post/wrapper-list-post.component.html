@@ -6,6 +6,7 @@
       <!-- TAB LEFT CONTENT  -->
       <app-wrapper-left></app-wrapper-left>
       <!-- END TAB LEFT CONTENT -->
+
       <div class="main-content active wrapper-list-post" (scroll)="onScroll()">
         <div class="user-up-post">
           <div class="user-avatat-up-post" href="">
@@ -77,7 +78,6 @@
                 </span>
               </div>
             </div>
-
             <div class="user-post-image">
               <div class="user-post-single-image">
                 <a href="" *ngIf="post.media_url; else noImage">
@@ -114,12 +114,24 @@
               </div>
             </div>
             <div class="range-interact-post">
-              <button class="btn-interact-post-like">
-                <i class="icon-post-like active fa-solid fa-thumbs-up"></i>
-                <i class="icon-post-like fa-regular fa-thumbs-up"></i>
-                <span>like</span>
+              <button
+                class="btn-interact-post-like"
+                (click)="likePostId(post.id)"
+              >
+                <i
+                  [ngClass]="{
+                    'fa-solid ': post.liked,
+                    'fa-regular ': !post.liked
+                  }"
+                  class="icon-post-like active fa-thumbs-up"
+                ></i>
+                <span>{{ post.likesCount }} Likes</span>
               </button>
-              <button class="btn-interact-post-comment">
+
+              <button
+                class="btn-interact-post-comment"
+                (click)="navigateToPostDetail(post.id)"
+              >
                 <i class="fa-regular fa-comment"></i>
                 <span>binh luan</span>
               </button>

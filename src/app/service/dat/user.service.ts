@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
 
@@ -71,7 +71,7 @@ export class UsersService {
     );
   }
   verifyToken(): Observable<any> {
-    const token = { token: localStorage.getItem('authToken') || null };
+    const token = { token: localStorage.getItem('authToken') || sessionStorage.getItem('authToken') };
     return this.http
       .post(
         `http://localhost:8080/chat_api/api_dat/auth/verifyToken.php`,
@@ -122,6 +122,27 @@ export class UsersService {
       `http://localhost:8080/chat_api/api_dat/users/make_friend.php?user_id=${userId}`,
       {
         headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  }
+  declineFriendRequest(userId: number, friendId: number): Observable<any> {
+    return this.http.post<any>(
+      `http://localhost:8080/chat_api/api_dat/users/declineFriendRequest.php`,
+      { user_id: userId, friend_id: friendId }
+    );
+  }
+  
+  searchUsers(keyword: string, offset: number = 0, limit: number = 10): Observable<any> {
+    const params = new HttpParams()
+      .set('keyword', keyword)
+      .set('offset', offset.toString())
+      .set('limit', limit.toString());
+    return this.http.get(`http://localhost:8080/chat_api/api_dat/users/search.php`, { params });
+  }
+  checkFriendshipStatus(userId:number, friendId:number) {
+    return this.http.get<any>(`http://localhost:8080/chat_api/api_dat/users/kttrabanbe.php?user_id=${userId}&friend_id=${friendId}`,
+      {
+        headers: { 'Content-Type': 'application/json' }, // Thiết lập header nếu cần
       }
     );
   }
