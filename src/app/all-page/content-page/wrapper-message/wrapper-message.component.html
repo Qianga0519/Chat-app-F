@@ -71,12 +71,12 @@
         </div>
         <div class="range-chat-content messages-container" #messagesContainer>
           <ng-container
-            *ngIf="selectedRoom?.messages?.length; else noMessages"
+            *ngIf="messages?.length; else noMessages"
             #chatContainer
             class="chat-container"
           >
             <div
-              *ngFor="let message of selectedRoom.messages"
+              *ngFor="let message of messages"
               [ngClass]="{
                 'content-user-chat': message.user_id == userId,
                 'content-friend-chat': message.user_id != userId

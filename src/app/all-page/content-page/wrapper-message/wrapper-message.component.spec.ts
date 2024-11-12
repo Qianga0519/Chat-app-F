@@ -8,9 +8,8 @@ describe('WrapperMessageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [WrapperMessageComponent]
-    })
-    .compileComponents();
+      imports: [WrapperMessageComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(WrapperMessageComponent);
     component = fixture.componentInstance;
