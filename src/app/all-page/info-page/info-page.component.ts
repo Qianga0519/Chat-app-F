@@ -122,11 +122,10 @@ export class InfoPageComponent implements OnInit {
     this.auth.logout().subscribe((response) => {
       console.log(response);
     });
-
   }
 
   checkFriendshipStatus(friendId: number) {
-    const userIds = Number(localStorage.getItem('id_user'));
+    const userIds = Number(localStorage.getItem('id_user')|| sessionStorage.getItem('id_user'));
     this.usersService.checkFriendshipStatus(userIds, friendId).subscribe(
       (response: { isFriend: boolean }) => {
         this.isFriend = response.isFriend; // Cập nhật trạng thái bạn bè
