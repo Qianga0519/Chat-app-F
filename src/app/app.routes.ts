@@ -13,7 +13,6 @@ import { AuthGuard } from './auth.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 import { WrapperListPostComponent } from './all-page/content-page/wrapper-list-post/wrapper-list-post.component';
-
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -43,7 +42,7 @@ export const routes: Routes = [
           },
         ],
       },
-      { path: '**', component: NotFoundComponent } 
+      { path: '**', component: NotFoundComponent },
     ],
   },
 ];
