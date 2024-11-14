@@ -3,9 +3,8 @@
   <section class="content-left-space">
     <div class="list-hint-user">
       <article>Goi y ban be</article>
-
       <div class="item-hint"*ngFor="let i of listHint">
-        <img class="item-hint-image"  [src]="i.avatar ? '/assets/images/' + i.avatar : '/assets/images/no-image.jpg'" alt="" />
+        <img class="item-hint-image"  [src]="i.avatar ? path_media + '/image/' + i.avatar : '/assets/images/no-image.jpg'" alt="" />
 
         <div class="item-hint-info">
           <span class="item-hint-info-name"> {{i.friend_name}} </span>
