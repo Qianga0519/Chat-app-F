@@ -15,6 +15,7 @@ export class WrapperLeftComponent implements OnInit {
   listHint: any = [];
   userId: number;
   authToken: string;
+  path_media = 'http://localhost:8080/chat_api/uploads';
   constructor(private goiybanbeService: GoiybanbeService) {
     this.userId = Number(
       localStorage.getItem('id_user') || sessionStorage.getItem('id_user')
@@ -32,7 +33,7 @@ export class WrapperLeftComponent implements OnInit {
       if (response.success) {
         this.listHint = response.data;
         console.log(this.listHint);
-        console.log("list hint",response)
+        console.log('list hint', response);
       }
     });
   }

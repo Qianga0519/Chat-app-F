@@ -2,7 +2,7 @@
 <main style="display: block" id="main-profile-user">
   <div class="background-profile" *ngFor="let avatars of avatar">
     <div class="profile-image" *ngIf="avatars.url; else noImage">
-      <img src="assets/images/{{ avatars.url }}" alt="" />
+      <img src="{{ path_meida }}/image/{{ avatars.url }}" alt="" />
     </div>
     <ng-template #noImage>
       <div class="profile-image">
@@ -225,7 +225,7 @@
               <img
                 class="user-post-image-link"
                 *ngIf="avatars.url; else noImage"
-                src="./assets/images/{{ avatars.url }}"
+                src="{{ path_meida }}/image/{{ avatars.url }}"
                 alt=""
               />
             </a>
@@ -267,7 +267,9 @@
         <div class="user-post-image" *ngIf="post.post_image_url; else noImage1">
           <div class="user-post-single-image">
             <a href=""
-              ><img src="./assets/images/{{ post.post_image_url }}" alt=""
+              ><img
+                src="{{ path_meida }}/image/{{ post.post_image_url }}"
+                alt=""
             /></a>
           </div>
         </div>

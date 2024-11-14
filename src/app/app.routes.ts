@@ -18,7 +18,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   {
     path: '',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     children: [
       { path: '', component: WrapperListPostComponent },
       { path: 'detail/:id', component: WrapperDetailPostComponent },

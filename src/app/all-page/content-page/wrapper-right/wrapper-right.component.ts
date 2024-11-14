@@ -22,6 +22,7 @@ export class WrapperRightComponent implements OnInit {
   userId: any = null; // Để lưu trữ userId
   isFriendsLoaded: boolean = false; // Biến kiểm soát trạng thái load danh sách bạn bè
   message: any;
+  path_media = 'http://localhost:8080/chat_api/uploads';
   authToken: string =
     localStorage.getItem('authToken') ||
     sessionStorage.getItem('authToken') ||
@@ -31,9 +32,7 @@ export class WrapperRightComponent implements OnInit {
     private authService: AuthService,
     private userService: UsersService,
     private blockUserService: BlockUserService
-  ) {
-
-  }
+  ) {}
 
   blockUser(friend_id: any) {
     this.blockUserService
@@ -44,7 +43,7 @@ export class WrapperRightComponent implements OnInit {
         } else {
           // alert(response.message);
         }
-        console.log(response)
+        console.log(response);
       });
   }
   // Hàm lấy token từ localStorage và xác thực
@@ -72,7 +71,7 @@ export class WrapperRightComponent implements OnInit {
           this.isFriendsLoaded = true; // Đánh dấu đã load danh sách bạn bè
           if (Array.isArray(data)) {
             this.friends = data;
-            console.log(data);
+            console.log('friend', data);
           } else {
             console.error('Dữ liệu trả về không phải là một mảng:', data);
             this.friends = []; // Gán giá trị rỗng để tránh lỗi *ngFor

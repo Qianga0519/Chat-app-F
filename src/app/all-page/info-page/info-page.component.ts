@@ -63,6 +63,7 @@ export class InfoPageComponent implements OnInit {
   isFriend: boolean = false;
   errorMessage: string = '';
    message: string = '';
+   path_meida = 'http://localhost:8080/chat_api/uploads'
   constructor(
     private route: ActivatedRoute,
     private usersService: UsersService,

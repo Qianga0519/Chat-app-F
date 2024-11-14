@@ -17,7 +17,7 @@
                             <a class="user-avatat-post" href="">
                                 <div class="user-post-single-image">
                                     <a href="" *ngIf="avatar_user_post; else noImage">
-                                        <img src="./assets/images/{{ avatar_user_post }}" alt="" />
+                                        <img src="{{path_media}}/image/{{ avatar_user_post }}" alt="" />
                                     </a>
                                     <ng-template #noImage>
                                         <a href="">
@@ -59,7 +59,7 @@
                     <div class="user-post-image">
                         <div class="user-post-single-image">
                             <a href="" *ngIf="post.url; else noImagePost">
-                                <img src="./assets/images/{{ post.url }}" alt="" />
+                                <img src="{{path_media}}/image/{{ post.url }}" alt="" />
                             </a>
                             <ng-template #noImagePost></ng-template>
                         </div>
@@ -121,9 +121,9 @@
                                             {{ item.content }}
                                         </article>
                                     </div>
-                               
+
                                     <form action="" (ngSubmit)="addReply(item.id)" >
-                                        <textarea placeholder="Viết trả lời của bạn" 
+                                        <textarea placeholder="Viết trả lời của bạn"
                                             (input)="adjustTextareaHeight($event)" [(ngModel)]="contentrep[item.id]" name="abc" required></textarea>
                                         <button><i class="fa-solid fa-paper-plane"></i></button>
                                         <button><i class="fa fa-trash"></i></button>
@@ -138,7 +138,7 @@
                                                 {{ rep.content }}
                                             </article>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>

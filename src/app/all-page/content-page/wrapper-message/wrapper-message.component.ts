@@ -43,6 +43,7 @@ export class WrapperMessageComponent implements OnInit {
   error: boolean = false;
   private intervalId: any;
   messages: any[] = [];
+  path_media = 'http://localhost:8080/chat_api/uploads';
   @ViewChild('messagesContainer') messagesContainer!: ElementRef;
   subscription: any;
   constructor(
