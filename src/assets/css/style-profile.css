@@ -4,6 +4,7 @@ main#main-profile-user {
     max-width: 1535px;
     margin: auto;
 
+
     .background-profile {
         width: 100%;
         background: rgba(var(--primary-color-black-rgb), .2);
@@ -52,46 +53,75 @@ main#main-profile-user {
 }
 
 .main-content-profile {
+
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
+
 
     article {
         font-size: 1.5rem;
+        font-weight: bold;
     }
 
+
     .profile-detail {
-        width: 70%;
+        width: 500px;
         padding: 20px;
+        max-width: 100%;
 
         form {
+            h5 {
+                width: 100%;
+                font-weight: bold;
+
+            }
+
             display: flex;
             flex-direction: column;
-            justify-content: end;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            margin: 20px 0px;
 
             .profile-detail-range {
-                margin: 10px 0;
+                /* margin: 10px 0; */
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
+                width: 100%;
+
+                label {
+                    font-size: .8rem;
+                    color: var(--text-color-gray);
+                }
 
                 .input-profile-range {
                     display: flex;
                     flex-direction: column;
                     justify-content: space-between;
-
-                    input {
+                    input, select {
                         padding: 5px 10px;
+                        border: none;
+                        outline: none;
+                        border-radius: 5px;
 
 
+                        &:focus {
+                            border: 1px solid var(--primary-color-blue);
+                        }
                     }
+                    
                 }
 
             }
 
             button {
+                width: 100%;
                 border: 1px solid var(--text-color-gray);
                 border-radius: 5px;
                 outline: none;
+                margin: 10px 0;
                 padding: 5px 20px;
                 color: var(--text-color-gray);
                 background: rgba(var(var(--primary-color-black-rgb), .5));
@@ -132,7 +162,8 @@ main#main-profile-user {
     }
 
     .profile-list-post {
-        overflow: hidden;
+        flex-grow: 1;
+        overflow-y: auto;
         padding: 20px 50px;
         display: flex;
         flex-direction: column;
@@ -145,7 +176,8 @@ main#main-profile-user {
             overflow: hidden;
             background: var(--primary-color-white);
             height: auto;
-            /* width: 500px; */
+            max-width: 100%;
+            width: 600px;
             word-wrap: break-word;
             text-align: justify;
 
@@ -372,10 +404,6 @@ main#main-profile-user {
                         color: var(--primary-color-blue);
                     }
                 }
-
-                .btn-interact-post-comment {}
-
-                .btn-interact-post-share {}
             }
         }
     }
@@ -396,7 +424,15 @@ Extra extra large	xxl	≥1400px */
 @media only screen and (min-width: 320px) and (max-width: 1199px) {
     main {
         .main-content-profile {
-            display: block;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+
+            .profile-detail {
+
+                max-width: 100%;
+                width: 100%;
+            }
         }
     }
 
@@ -415,7 +451,7 @@ Extra extra large	xxl	≥1400px */
 
             .profile-name {
                 article {
-                    font-size: .7rem;
+                    font-size: 1.4rem;
                 }
             }
 
@@ -444,7 +480,8 @@ Extra extra large	xxl	≥1400px */
                     }
                 }
             }
-            .profile-list-post{
+
+            .profile-list-post {
                 padding: 0;
             }
         }
@@ -464,7 +501,7 @@ Extra extra large	xxl	≥1400px */
 
             .profile-name {
                 article {
-                    font-size: 1.2rem;
+                    font-size: 2rem;
                 }
             }
 

@@ -16,9 +16,11 @@
             <div class="menu-nav-item" [routerLink]="['/search']"> <i class="fa fa-search" aria-hidden="true"></i></div>
         </section>
         <section class="info-nav width-33">
-            <div class="avatar-user-nav">
-                <a href="" [routerLink]="['/user']"><img src="/assets/images/no-image.jpg" alt=""></a>
+            <div class="avatar-user-nav" (click)="goToUserDetail()">
+              <a href="javascript:void(0)"
+                ><img src="/assets/images/no-image.jpg" alt=""
+              /></a>
             </div>
-        </section>
+          </section>
     </nav>
 </header>

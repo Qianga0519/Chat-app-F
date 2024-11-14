@@ -1,36 +1,81 @@
 @import url('root.css');
 
+.loading-indicator {
+    text-align: center;
+    padding: 20px;
+    font-size: 18px;
+    color: #007bff;
+    /* Màu xanh của Bootstrap */
+    font-weight: bold;
+}
+
+/* Hoặc bạn có thể thêm hiệu ứng loading bằng hình ảnh */
+.loading-indicator:before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    /* Kích thước của biểu tượng loading */
+    height: 24px;
+    border: 3px solid #007bff;
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+
 .notification-sys {
-    display: none;
     position: fixed;
     right: 20px;
     top: 20px;
+    display: block;
     background-color: var(--primary-color-blue);
     color: var(--primary-color-white);
-    padding: 15px;
+    padding: 5px 10px;
     border-radius: 5px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    z-index: 2000;
     animation: fadeIn 0.5s, fadeOut 0.5s 2s;
+
+    button {
+        border: none;
+        outline: none;
+        background: none;
+        padding: 10px;
+
+        i {
+            color: white;
+        }
+    }
 }
 
 @keyframes fadeIn {
     from {
-        opacity: 0;
+        display: none;
     }
 
     to {
-        opacity: 1;
+        display: block;
     }
 }
 
 @keyframes fadeOut {
     from {
-        opacity: 1;
+        display: block;
     }
 
     to {
-        opacity: 0;
+        display: none;
     }
 }
 
@@ -216,7 +261,8 @@ main {
         .left-space,
         .right-space {
             width: 100%;
-            height: 100vh;
+            /* fix body message */
+            height: 90vh;
             max-width: 325px;
             width: 325px;
             z-index: 2;
@@ -498,6 +544,7 @@ main {
         .main-content.wrapper-list-post {
             z-index: 1;
             padding: 0 50px;
+            width: 100%;
 
             .user-avatat-up-post {
                 border-radius: 10px;
@@ -541,6 +588,7 @@ main {
                 width: 100%;
 
                 .item-post {
+                    width: 100%;
                     border-radius: 10px;
                     overflow: hidden;
                     background: var(--primary-color-white);
@@ -796,15 +844,18 @@ main {
             z-index: 1;
             padding: 0 50px;
             padding-top: 20px;
-
+width: 100%;
             .view-post-detail {
                 border-radius: 10px;
                 overflow: hidden;
                 background: var(--primary-color-white);
                 height: auto;
-                /* width: 500px; */
+              
                 word-wrap: break-word;
                 text-align: justify;
+
+                max-width: 800px;
+                width: 100%;
                 padding: 5px 0;
 
                 .user-post-info {
@@ -1058,6 +1109,44 @@ main {
                         flex-direction: column;
                         gap: 15px;
 
+
+                        .form-put-your-cmt {
+                            display: flex;
+                            align-items: center;
+                            border: 1px solid var(--primary-color-white-light);
+                            border-radius: 18px;
+                            padding: 5px 10px;
+
+                            textarea {
+                                flex: 1;
+                                resize: none;
+                                border: none;
+                                outline: none;
+                                padding: 8px;
+                                border-radius: 10px;
+                                font-size: 14px;
+                                height: 38px;
+                                max-height: 120px;
+                                overflow-y: auto;
+                            }
+
+                            button {
+
+                                padding: 5px;
+                                font-size: 18px;
+                                width: 30px;
+                                height: 30px;
+                                border: none;
+                                outline: none;
+                                background: none;
+
+                                &:hover {
+                                    color: var(--primary-color-blue);
+                                }
+                            }
+                        }
+
+
                         .item-comment-post {
                             .main-comment-post {
                                 .content-cmt-user {
@@ -1079,23 +1168,31 @@ main {
 
                                 form {
                                     padding: 5px 2px;
-                                    width: 100%;
                                     margin-left: 50px;
-
-                                    input {
-                                        padding: 2px 5px;
+                                    border: 1px solid var(--primary-color-white-light);
+                                    display: flex;
+                                    align-items: center;
+                                    border: 1px solid var(--primary-color-white-light);
+                                    border-radius: 18px;
+                                    padding: 5px 10px;
+                                    margin-top: 5px;
+                                    textarea {
+                                        flex: 1;
+                                        resize: none;
                                         border: none;
                                         outline: none;
-                                        background: var(--primary-color-white-light);
-                                        border-radius: 3px;
-
-                                        &:focus {
-                                            border: none;
-                                            outline: none;
-                                        }
+                                        padding: 8px;
+                                        border-radius: 10px;
+                                        font-size: 14px;
+                                        height: 38px;
+                                        max-height: 120px;
+                                        overflow-y: auto;
                                     }
 
                                     button {
+
+                                        padding: 5px;
+                                        font-size: 18px;
                                         width: 30px;
                                         height: 30px;
                                         border: none;
@@ -1137,23 +1234,33 @@ main {
 
                                     form {
                                         padding: 5px 2px;
-                                        width: 100%;
                                         margin-left: 50px;
+                                        border: 1px solid var(--primary-color-white-light);
+                                        display: flex;
+                                        align-items: center;
+                                        border: 1px solid var(--primary-color-white-light);
+                                        border-radius: 18px;
+                                        padding: 5px 10px;
+                                        margin-top: 5px;
 
-                                        input {
-                                            padding: 2px 5px;
+                                        textarea {
+                                            border: 1px solid var(--primary-color-white-light);
+                                            flex: 1;
+                                            resize: none;
                                             border: none;
                                             outline: none;
-                                            background: var(--primary-color-white-light);
-                                            border-radius: 3px;
-
-                                            &:focus {
-                                                border: none;
-                                                outline: none;
-                                            }
+                                            padding: 8px;
+                                            border-radius: 10px;
+                                            font-size: 14px;
+                                            height: 38px;
+                                            max-height: 120px;
+                                            overflow-y: auto;
                                         }
 
                                         button {
+
+                                            padding: 5px;
+                                            font-size: 18px;
                                             width: 30px;
                                             height: 30px;
                                             border: none;
@@ -1186,14 +1293,16 @@ main {
 *********************************/
 main {
     .wrapper-posts.tab-menu {
-        .main-content.wrapper-chat {
-            z-index: 1;
+        .main-content.list-friend-chat {
+            position: relative;
             width: 100%;
-            padding: 0 10px;
 
+
+            h3 {
+                padding: 5px;
+            }
 
             .info-friend-chat {
-                position: fixed;
                 width: 100%;
 
                 .item-info-friend-chat {
@@ -1204,7 +1313,63 @@ main {
                     align-items: center;
                     box-sizing: unset;
                     padding: 10px 0;
-                    background: red;
+                    cursor: pointer;
+                    background: var(--primary-color-white-light);
+                    transition: .2s linear;
+
+                    .item-friend-image-chat {
+                        img {
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 50%;
+                            margin-left: 5px;
+                        }
+                    }
+
+                    &:hover {
+                        background-color: rgba(var(--primary-color-black-rgb), .1);
+                    }
+
+                    .item-friend-info-chat {
+                        font-size: .8rem;
+                        display: flex;
+                        flex-direction: column;
+                    }
+                }
+            }
+        }
+
+        .main-content.wrapper-chat {
+            z-index: 1;
+            width: 100%;
+            padding: 0 10px;
+
+            .info-friend-chat {
+                position: fixed;
+                max-width: 100%;
+                padding: 0 50px;
+                display: flex;
+                gap: 10px;
+                width: 100%;
+                align-items: center;
+                background: var(--primary-color-white-light);
+
+                button {
+                    border: none;
+                    outline: none;
+                    color: var(--primary-color-blue);
+                    font-size: 1.5rem;
+                }
+
+                .item-info-friend-chat {
+
+                    height: 50px;
+                    padding: 20px;
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+                    box-sizing: unset;
+                    padding: 10px 0;
                     background: var(--primary-color-white-light);
 
                     .item-friend-image-chat {
@@ -1216,6 +1381,7 @@ main {
                         }
                     }
 
+
                     .item-friend-info-chat {
                         font-size: .8rem;
                         display: flex;
@@ -1225,10 +1391,11 @@ main {
             }
 
             .range-chat-content {
-                margin-top: 10px;
+                padding-top: 10px;
                 overflow-y: auto;
-                height: 100vh;
+                height: 500px;
 
+                margin-top: 70px;
 
                 .content-friend-chat,
                 .content-user-chat {
@@ -1239,7 +1406,6 @@ main {
                     flex-direction: row;
                     padding: 0 5px;
 
-
                     img {
                         width: 50px;
                         height: 50px;
@@ -1248,11 +1414,17 @@ main {
                     }
 
                     article {
+
                         background: rgba(var(--primary-color-gray-rgb), .1);
                         padding: 5px;
                         border-radius: 5px;
                         text-align: start;
                         color: var(--text-color-black);
+
+                        max-width: 500px;
+                        word-wrap: break-word;
+
+
                     }
 
                 }
@@ -1280,41 +1452,51 @@ main {
                 form {
                     position: fixed;
                     bottom: 0;
-
                     padding: 10px;
                     width: 560px;
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     left: calc(50% - 280px);
+                    display: flex;
+                    align-items: center;
+                    margin-top: 10px;
 
-                    textarea {
-                        height: 40px;
-                        padding: 5px;
-                        border: none;
+                    .message-input {
+                        flex-grow: 1;
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                        padding: 10px 15px;
+                        resize: none;
                         outline: none;
-                        width: 90%;
-
-                        &:focus {
-                            border: none;
-                            outline: none;
-                        }
                     }
 
-                    button {
-                        border: none;
-                        outline: none;
-                        background: var(--primary-color-white);
+                    .message-input:focus {
+                        border-color: var(--primary-color-blue);
+                    }
 
-                        height: 40px;
-                        width: 10%;
-                        background: var(--primary-color-white);
-                        color: var(--primary-color-black);
+                    .send-button {
+                        background-color: var(--primary-color-blue);
+                        border: none;
+                        border-radius: 50%;
+                        color: var(--primary-color-white);
+                        padding: 10px;
+                        margin-left: 10px;
+                        cursor: pointer;
 
                         &:hover {
-                            color: var(--primary-color-blue);
+                            background-color: #0056b3;
+                            /* Tối màu khi hover */
+                            transition: background-color 0.3s ease;
+                            /* Hiệu ứng chuyển màu mượt mà */
                         }
                     }
+
+                    .send-button:disabled {
+                        background-color: #ccc;
+                        cursor: not-allowed;
+                    }
+
                 }
             }
         }

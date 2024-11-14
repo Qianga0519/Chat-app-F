@@ -1,27 +1,73 @@
-<!-- 2 -->
-<!-- PAGE REGISTER  -->
+<div class="notification-sys" *ngIf="regis_success" id="notification-sys">
+    <button (click)="closeNotification()"><i class="fa-solid fa-xmark"></i></button>
+    <span>{{regis_message}}</span>
+</div>
 <section class="out-range-register">
     <section class="register-form-layout">
         <h1>Register</h1>
-        <form class="register-form">
+        <form class="register-form" (ngSubmit)="register($event)" [formGroup]="registerForm">
             <div class="logo">
-                <a href=""><img src="assets/images/logo.png" alt=""></a>
+                <a href=""><img src="assets/images/logo.png" alt="Logo"></a>
             </div>
             <div class="range-input">
                 <div class="input-user">
-
-                    <input type="name" name="name" placeholder="Your Name" required>
-
-                    <input type="email" name="email" placeholder="Your email" required>
-
-                    <input type="password" name="password" placeholder="Your password" required>
+                    <!-- Tên đại diện -->
+                    <input type="text" name="name" formControlName="name" placeholder="Your Name">
+                    <div *ngIf="registerForm.get('name')?.touched || registerForm.get('name')?.dirty">
+                        <small class="text-danger" *ngIf="registerForm.get('name')?.errors">
+                            <ng-container
+                                *ngIf="registerForm.get('name')?.errors?.['required'] || registerForm.get('name')?.errors?.['pattern']">
+                                Name nhập không hợp lệ.<br>
+                            </ng-container>
+                            <ng-container
+                                *ngIf="registerForm.get('name')?.errors?.['minlength'] || registerForm.get('name')?.errors?.['maxlength']">
+                                Độ dài Name dài từ 6 đến 30 ký tự.
+                            </ng-container>
+                        </small>
+                    </div>
+                    <!-- Email -->
+                    <input type="email" name="email" formControlName="email" placeholder="Your email@gmail.com">
+                    <div *ngIf="(registerForm.get('email')?.touched || registerForm.get('email')?.dirty)">
+                        <small class="text-danger" *ngIf="registerForm.get('email')?.errors">
+                            <ng-container
+                                *ngIf="registerForm.get('email')?.errors?.['required'] || registerForm.get('email')?.errors?.['pattern']">
+                                Email nhập không hợp lệ. <br>
+                            </ng-container>
+                            <ng-container
+                                *ngIf="registerForm.get('email')?.errors?.['minlength'] || registerForm.get('email')?.errors?.['maxlength']">
+                                Độ dài Email dài từ 6 đến 30 ký tự.
+                            </ng-container>
+                        </small>
+                    </div>
+                    <!-- Mật khẩu -->
+                    <input type="password" name="password" formControlName="password" placeholder="Your password">
+                    <div *ngIf="(registerForm.get('password')?.touched || registerForm.get('password')?.dirty)">
+                        <small class="text-danger" *ngIf="registerForm.get('password')?.errors">
+                            <ng-container
+                                *ngIf="registerForm.get('password')?.errors?.['required'] || registerForm.get('password')?.errors?.['pattern']">
+                                Mật khẩu phải có chữ Hoa và thường và ký tự số.<br></ng-container>
+                            <ng-container
+                                *ngIf="registerForm.get('password')?.errors?.['minlength'] || registerForm.get('password')?.errors?.['maxlength']">
+                                Độ dài password phải từ 6 đến 25 ký tự.</ng-container>
+                        </small>
+                    </div>
+                    <!-- Nhập lại mật khẩu -->
+                    <input type="password" name="repassword" formControlName="rePassword" placeholder="Repassword">
+                    <div *ngIf="registerForm.get('rePassword')?.invalid && registerForm.get('rePassword')?.touched">
+                        <small class="text-danger" *ngIf="registerForm.get('rePassword')?.errors?.['required']">
+                            Trường Re-Password không được bỏ trống.
+                        </small>
+                    </div>
+                    <div *ngIf="registerForm.hasError('mismatch') && registerForm.get('rePassword')?.touched">
+                        <small class="text-danger">Mật khẩu nhập lại không khớp</small>
+                    </div>
                 </div>
+                <!-- Button Submit -->
                 <div class="button-log-range">
-                    <a href="" class="have-acc">Already have an account</a>
-                    <button type="button" class="btn-register">Submit</button>
+                    <a href="" [routerLink]="['/login']" routerLinkActive="router-link-active"  class="have-acc">Already have an account</a>
+                    <button type="submit" class="btn-register">Submit</button>
                 </div>
             </div>
         </form>
     </section>
 </section>
-<!-- END PAGE REGISTER  -->
