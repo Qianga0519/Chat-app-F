@@ -283,7 +283,9 @@ export class InfoPageComponent implements OnInit {
       (tokenResponse) => {
         if (tokenResponse.success) {
           const tokenUserId = tokenResponse.userId; // Giả sử server trả về userId từ token
-          if (tokenUserId === userId) {
+          console.log("tokenid",typeof tokenUserId);
+          console.log("userId",typeof userId);
+          if (tokenUserId == userId) {
             this.isOwner = true; // Token và userId khớp, người dùng có thể chỉnh sửa thông tin
           } else {
             this.isOwner = false; // Người dùng đang xem trang của người khác, ẩn chức năng chỉnh sửa
