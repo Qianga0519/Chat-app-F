@@ -28,31 +28,31 @@
     //   this.style.height = this.scrollHeight + 'px';
     // });
     //su kien nhan nut them bai viet va modal hien thi
-    const modalCreatePost = document.querySelector('#modal-created-post');
-    const btnSubmitCreat = modalCreatePost.querySelector('.btn-primary');
-    const formCreatePost = modalCreatePost.querySelector('form');
-    const modalInputPostContent = formCreatePost.querySelector('.modal-input-post-content')
-    modalCreatePost.addEventListener('shown.bs.modal', function () {
-      modalInputPostContent.focus()
-    })
+    // const modalCreatePost = document.querySelector('#modal-created-post');
+    // const btnSubmitCreat = modalCreatePost.querySelector('.btn-primary');
+    // const formCreatePost = modalCreatePost.querySelector('form');
+    // const modalInputPostContent = formCreatePost.querySelector('.modal-input-post-content')
+    // modalCreatePost.addEventListener('shown.bs.modal', function () {
+    //   modalInputPostContent.focus()
+    // })
     //su kien submit form them bai viet
     // formCreatePost.addEventListener('submit', (event) => {
     // });
-    window.onload = function () {
-      const chatContent = document.querySelector('.range-chat-content');
-      chatContent.scrollTop = chatContent.scrollHeight;
-    };
+    // window.onload = function () {
+    //   const chatContent = document.querySelector('.range-chat-content');
+    //   chatContent.scrollTop = chatContent.scrollHeight;
+    // };
 
     // sys notification
-    function showNotification() {
-      const notification = document.getElementById('notification-sys');
-      notification.style.display = 'block'; // Hiện thông báo
+    // function showNotification() {
+    //   const notification = document.getElementById('notification-sys');
+    //   notification.style.display = 'block'; // Hiện thông báo
 
-      // Tự động ẩn thông báo sau 3 giây
-      setTimeout(() => {
-        notification.style.display = 'none'; // Ẩn thông báo
-      }, 3000);
-    }
+    //   // Tự động ẩn thông báo sau 3 giây
+    //   setTimeout(() => {
+    //     notification.style.display = 'none'; // Ẩn thông báo
+    //   }, 3000);
+    // }
   </script>
   <script src="assets/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
 </body>
