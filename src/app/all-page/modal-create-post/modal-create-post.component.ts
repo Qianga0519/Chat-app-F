@@ -48,6 +48,7 @@ export class ModalCreatePostComponent {
   removeImage(): void {
     this.imageUrl = null;
     this.selectedFile = null; // Xóa tệp đã chọn
+    
   }
 
   // Hàm gửi bài viết
