@@ -31,17 +31,20 @@ export class WrapperRightComponent implements OnInit {
     private authService: AuthService,
     private userService: UsersService,
     private blockUserService: BlockUserService
-  ) {}
+  ) {
+
+  }
 
   blockUser(friend_id: any) {
     this.blockUserService
       .blockUserRequest(this.userId, friend_id, this.authToken)
       .subscribe((response) => {
         if (response) {
-          alert(response.message);
+          // alert(response.message);
         } else {
-          alert(response.message);
+          // alert(response.message);
         }
+        console.log(response)
       });
   }
   // Hàm lấy token từ localStorage và xác thực

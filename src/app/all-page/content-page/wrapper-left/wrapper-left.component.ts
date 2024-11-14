@@ -32,8 +32,8 @@ export class WrapperLeftComponent implements OnInit {
       if (response.success) {
         this.listHint = response.data;
         console.log(this.listHint);
+        console.log("list hint",response)
       }
     });
   }
-
 }
