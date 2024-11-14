@@ -61,6 +61,7 @@ export class InfoPageComponent implements OnInit {
   userIdRouu: any;
   isFriend: boolean = false;
   errorMessage: string = '';
+   message: string = '';
   constructor(
     private route: ActivatedRoute,
     private usersService: UsersService,
@@ -129,7 +130,35 @@ export class InfoPageComponent implements OnInit {
     );
   }
 
-
+  sendRequest() {
+    const friendId = this.route.snapshot.params['id'];
+    this.usersService.sendFriendRequest(this.userId, friendId).subscribe(
+      (response) => {
+        if (response.status === 'success') {
+          this.message = response.message;
+        } else {
+          this.message = response.message;
+        }
+      },
+      (error) => {
+        this.message = 'Có lỗi xảy ra, vui lòng thử lại.';
+      }
+    );
+  }
+  cancelFriendship() {
+    const friendId = this.route.snapshot.params['id'];
+    this.usersService.cancelFriendship(this.userId, friendId).subscribe(response => {
+      if (response.status === 'success') {
+        alert(response.message); // Thông báo thành công
+        window.location.reload();
+      } else {
+        alert(response.message); // Thông báo lỗi
+      }
+    }, error => {
+      console.error('Có lỗi xảy ra:', error);
+      alert('Có lỗi xảy ra khi hủy kết bạn');
+    });
+  }
   loadPosts() {
     this.checkAuth();
     if (!this.isLoading) {
