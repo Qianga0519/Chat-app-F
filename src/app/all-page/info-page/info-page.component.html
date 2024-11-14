@@ -13,12 +13,19 @@
       <article>{{ user.name }}</article>
     </div>
     <div class="feature-user-range" *ngIf="!isOwner">
-      <button *ngIf="!isFriend"><i class="fa-solid fa-user-plus"></i></button> <!-- Kết bạn -->
-      <button *ngIf="isFriend"><i class="fa-solid fa-user-minus"></i></button> <!-- Hủy kết bạn -->
-      <button><i class="fa-regular fa-comments"></i></button> <!-- Nhắn tin -->
-      <button><i class="fa-solid fa-ban"></i></button> <!-- Chặn -->
+      <button *ngIf="!isFriend" (click)="sendRequest()">
+        <i class="fa-solid fa-user-plus"></i>
+      </button>
+      <!-- Kết bạn -->
+      <button *ngIf="isFriend" (click)="cancelFriendship()">
+        <i class="fa-solid fa-user-minus"></i>
+      </button>
+      <!-- Hủy kết bạn -->
+      <button><i class="fa-regular fa-comments"></i></button>
+      <!-- Nhắn tin -->
+      <button><i class="fa-solid fa-ban"></i></button>
+      <!-- Chặn -->
     </div>
-    
   </div>
   <div class="main-content-profile">
     <!-- USER INFO  -->
@@ -29,33 +36,45 @@
           <div class="input-profile-range">
             <label for="">Name</label>
             <input type="text" formControlName="name" />
-            <div *ngIf="
+            <div
+              *ngIf="
                 profileForm.get('name')?.invalid &&
                 (profileForm.get('name')?.dirty ||
                   profileForm.get('name')?.touched)
-              ">
-              <small *ngIf="profileForm.get('name')?.errors?.['invalidInput']">Thông tin nhập vào không hợp lệ!</small>
-              <small *ngIf="profileForm.get('name')?.errors?.['specialChars']">Tên không được chứa ký tự đặc biệt hoặc
-                số!</small>
-              <small *ngIf="profileForm.get('name')?.errors?.['maxLength']">Vui lòng nhập thông tin dưới 30 ký
-                tự!</small>
-              <small *ngIf="profileForm.get('name')?.errors?.['invalidFormat']">Tên không được bắt đầu, kết thúc bằng
-                khoảng trắng và không có
-                2 khoảng trắng liên tiếp!</small>
+              "
+            >
+              <small *ngIf="profileForm.get('name')?.errors?.['invalidInput']"
+                >Thông tin nhập vào không hợp lệ!</small
+              >
+              <small *ngIf="profileForm.get('name')?.errors?.['specialChars']"
+                >Tên không được chứa ký tự đặc biệt hoặc số!</small
+              >
+              <small *ngIf="profileForm.get('name')?.errors?.['maxLength']"
+                >Vui lòng nhập thông tin dưới 30 ký tự!</small
+              >
+              <small *ngIf="profileForm.get('name')?.errors?.['invalidFormat']"
+                >Tên không được bắt đầu, kết thúc bằng khoảng trắng và không có
+                2 khoảng trắng liên tiếp!</small
+              >
             </div>
           </div>
 
           <div class="input-profile-range">
             <label for="">Age</label>
             <input type="number" formControlName="age" />
-            <div *ngIf="
+            <div
+              *ngIf="
                 profileForm.get('age')?.invalid &&
                 (profileForm.get('age')?.dirty ||
                   profileForm.get('age')?.touched)
-              ">
-              <small *ngIf="profileForm.get('age')?.errors?.['ageInvalid']">Số tuổi của bạn nhập phải từ 16 đến 100
-                tuổi!</small>
-              <small *ngIf="profileForm.get('age')?.errors?.['invalidInput']">Thông tin nhập vào không hợp lệ!</small>
+              "
+            >
+              <small *ngIf="profileForm.get('age')?.errors?.['ageInvalid']"
+                >Số tuổi của bạn nhập phải từ 16 đến 100 tuổi!</small
+              >
+              <small *ngIf="profileForm.get('age')?.errors?.['invalidInput']"
+                >Thông tin nhập vào không hợp lệ!</small
+              >
             </div>
           </div>
           <div class="input-profile-range">
@@ -71,11 +90,13 @@
               <option value="female">Female</option>
               <option value="other">Other</option>
             </select>
-            <div *ngIf="
+            <div
+              *ngIf="
                 profileForm.get('gender')?.invalid &&
                 (profileForm.get('gender')?.dirty ||
                   profileForm.get('gender')?.touched)
-              ">
+              "
+            >
               <small>Bạn chưa chọn giới tính.</small>
             </div>
           </div>
@@ -83,15 +104,22 @@
           <div class="input-profile-range">
             <label for="">Phone</label>
             <input type="text" formControlName="phone" />
-            <div *ngIf="
+            <div
+              *ngIf="
                 profileForm.get('phone')?.invalid &&
                 (profileForm.get('phone')?.dirty ||
                   profileForm.get('phone')?.touched)
-              ">
-              <small *ngIf="profileForm.get('phone')?.errors?.['invalidInput']">Thông tin nhập vào không hợp lệ!</small>
-              <small *ngIf="profileForm.get('phone')?.errors?.['phoneInvalid']">Độ dài của SDT không phù hợp!</small>
-              <small *ngIf="profileForm.get('phone')?.errors?.['phoneExists']">SDT này đã tồn tại, vui lòng nhập SDT
-                khác!</small>
+              "
+            >
+              <small *ngIf="profileForm.get('phone')?.errors?.['invalidInput']"
+                >Thông tin nhập vào không hợp lệ!</small
+              >
+              <small *ngIf="profileForm.get('phone')?.errors?.['phoneInvalid']"
+                >Độ dài của SDT không phù hợp!</small
+              >
+              <small *ngIf="profileForm.get('phone')?.errors?.['phoneExists']"
+                >SDT này đã tồn tại, vui lòng nhập SDT khác!</small
+              >
             </div>
           </div>
         </div>
@@ -103,20 +131,38 @@
         <div class="profile-detail-range">
           <div class="input-profile-range">
             <label for="oldPassword">Old Password</label>
-            <input id="oldPassword" [(ngModel)]="oldPassword" name="oldPassword" type="text" required />
+            <input
+              id="oldPassword"
+              [(ngModel)]="oldPassword"
+              name="oldPassword"
+              type="text"
+              required
+            />
           </div>
           <div class="input-profile-range">
             <label for="newPassword">New Password</label>
-            <input id="newPassword" [(ngModel)]="newPassword" name="newPassword" (input)="validateNewPassword()"
-              type="text" required />
+            <input
+              id="newPassword"
+              [(ngModel)]="newPassword"
+              name="newPassword"
+              (input)="validateNewPassword()"
+              type="text"
+              required
+            />
             <div *ngIf="newPasswordError" class="error">
               {{ newPasswordError }}
             </div>
           </div>
           <div class="input-profile-range">
             <label for="repeatNewPassword">Repeat New Password</label>
-            <input id="repeatNewPassword" [(ngModel)]="repeatNewPassword" name="repeatNewPassword"
-              (input)="validateRepeatPassword()" type="text" required />
+            <input
+              id="repeatNewPassword"
+              [(ngModel)]="repeatNewPassword"
+              name="repeatNewPassword"
+              (input)="validateRepeatPassword()"
+              type="text"
+              required
+            />
             <div *ngIf="repeatPasswordError" class="error">
               {{ repeatPasswordError }}
             </div>
@@ -161,33 +207,51 @@
     </div>
 
     <!--END USER INFO  -->
-    <div class="profile-list-post" *ngIf="posts && posts.length > 0; else noPosts">
+    <div
+      class="profile-list-post"
+      *ngIf="posts && posts.length > 0; else noPosts"
+    >
       <!-- ITEM POST -->
       <div class="item-post" *ngFor="let post of posts">
         <div class="user-post-image" *ngIf="post.post_type === 'shared'">
           <div class="user-sharer-info">
-              <span>Được chia sẻ bởi: {{ post.sharer_name }}</span> <!-- Hiển thị tên người đã chia sẻ -->
+            <span>Được chia sẻ bởi: {{ post.sharer_name }}</span>
+            <!-- Hiển thị tên người đã chia sẻ -->
           </div>
-      </div>
+        </div>
         <div class="user-post-info">
           <section class="user-post-info-1">
             <a class="user-avatat-post" href="" *ngFor="let avatars of avatar">
-              <img class="user-post-image-link" *ngIf="avatars.url; else noImage"
-                src="./assets/images/{{ avatars.url }}" alt="" />
+              <img
+                class="user-post-image-link"
+                *ngIf="avatars.url; else noImage"
+                src="./assets/images/{{ avatars.url }}"
+                alt=""
+              />
             </a>
             <ng-template #noImage>
               <a class="user-avatat-post" href="">
-                <img class="user-post-image-link" src="./assets/images/no-image.jpg" alt="" />
+                <img
+                  class="user-post-image-link"
+                  src="./assets/images/no-image.jpg"
+                  alt=""
+                />
               </a>
             </ng-template>
 
             <div class="user-info-detait-post">
               <a href="" class="user-name-post">{{ post.name }}</a>
-              <a href="" class="time-name-post">{{ formatDate(post.post_created_at) }}</a>
+              <a href="" class="time-name-post">{{
+                formatDate(post.post_created_at)
+              }}</a>
             </div>
           </section>
           <section class="user-post-info-2">
-            <button class="btn-close-post-detail" data-bs-target="#modal-edit-post" data-bs-toggle="modal">
+            <button
+              class="btn-close-post-detail"
+              data-bs-target="#modal-edit-post"
+              data-bs-toggle="modal"
+            >
               Edit
             </button>
             <button class="btn-close-post-detail">Delete</button>
@@ -202,7 +266,9 @@
 
         <div class="user-post-image" *ngIf="post.post_image_url; else noImage1">
           <div class="user-post-single-image">
-            <a href=""><img src="./assets/images/{{ post.post_image_url }}" alt="" /></a>
+            <a href=""
+              ><img src="./assets/images/{{ post.post_image_url }}" alt=""
+            /></a>
           </div>
         </div>
         <ng-template #noImage1>
@@ -215,9 +281,12 @@
 
         <div class="qty-interact-post">
           <div class="qty-interact qty-likes">
-            <span>{{ post.total_likes ||0}}</span>
+            <span>{{ post.total_likes || 0 }}</span>
             <div class="list-interact-icon">
-              <i style="z-index: 3" class="icon-post-like fa-solid fa-thumbs-up"></i>
+              <i
+                style="z-index: 3"
+                class="icon-post-like fa-solid fa-thumbs-up"
+              ></i>
             </div>
           </div>
           <div class="qty-interact qty-cmt">
@@ -235,18 +304,27 @@
         </div>
         <div class="range-interact-post">
           <button class="btn-interact-post-like" (click)="likePostId(post.id)">
-            <i [ngClass]="{
+            <i
+              [ngClass]="{
                 'fa-solid ': post.liked,
                 'fa-regular ': !post.liked
-              }" class="icon-post-like active fa-thumbs-up"></i>
-            <span>{{ post.likesCount}} Likes</span>
+              }"
+              class="icon-post-like active fa-thumbs-up"
+            ></i>
+            <span>{{ post.likesCount }} Likes</span>
           </button>
 
-          <button class="btn-interact-post-comment" (click)="navigateToPostDetail(post.id)">
+          <button
+            class="btn-interact-post-comment"
+            (click)="navigateToPostDetail(post.id)"
+          >
             <i class="fa-regular fa-comment"></i>
             <span>binh luan</span>
           </button>
-          <button class="btn-interact-post-share" (click)="sharePost(post.post_id)">
+          <button
+            class="btn-interact-post-share"
+            (click)="sharePost(post.post_id)"
+          >
             <i class="fa-regular fa-share-from-square"></i>
             <span>chia se</span>
           </button>
