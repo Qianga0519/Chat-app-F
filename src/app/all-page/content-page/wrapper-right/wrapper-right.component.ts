@@ -4,6 +4,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../service/dat/auth.service';
+import { BlockUserService } from '../../../service/block_user/block_user.service';
+import { Token } from '@angular/compiler';
+import { response } from 'express';
 
 @Component({
   selector: 'app-wrapper-right',
@@ -19,13 +22,31 @@ export class WrapperRightComponent implements OnInit {
   userId: any = null; // Để lưu trữ userId
   isFriendsLoaded: boolean = false; // Biến kiểm soát trạng thái load danh sách bạn bè
   message: any;
-
+  authToken: string =
+    localStorage.getItem('authToken') ||
+    sessionStorage.getItem('authToken') ||
+    '';
   constructor(
     private router: Router,
     private authService: AuthService,
-    private userService: UsersService
-  ) {}
+    private userService: UsersService,
+    private blockUserService: BlockUserService
+  ) {
 
+  }
+
+  blockUser(friend_id: any) {
+    this.blockUserService
+      .blockUserRequest(this.userId, friend_id, this.authToken)
+      .subscribe((response) => {
+        if (response) {
+          // alert(response.message);
+        } else {
+          // alert(response.message);
+        }
+        console.log(response)
+      });
+  }
   // Hàm lấy token từ localStorage và xác thực
   getUserIdFromToken() {
     this.authService.verifyToken().subscribe(
@@ -51,6 +72,7 @@ export class WrapperRightComponent implements OnInit {
           this.isFriendsLoaded = true; // Đánh dấu đã load danh sách bạn bè
           if (Array.isArray(data)) {
             this.friends = data;
+            console.log(data);
           } else {
             console.error('Dữ liệu trả về không phải là một mảng:', data);
             this.friends = []; // Gán giá trị rỗng để tránh lỗi *ngFor

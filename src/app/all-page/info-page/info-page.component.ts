@@ -87,6 +87,7 @@ export class InfoPageComponent implements OnInit {
     );
     if (!this.userId) {
       localStorage.clear();
+      sessionStorage.clear();
       this.router.navigate(['/login']);
     }
     this.userIdRouu = this.route.snapshot.params['id'];
@@ -122,11 +123,10 @@ export class InfoPageComponent implements OnInit {
     this.auth.logout().subscribe((response) => {
       console.log(response);
     });
-
   }
 
   checkFriendshipStatus(friendId: number) {
-    const userIds = Number(localStorage.getItem('id_user'));
+    const userIds = Number(localStorage.getItem('id_user')|| sessionStorage.getItem('id_user'));
     this.usersService.checkFriendshipStatus(userIds, friendId).subscribe(
       (response: { isFriend: boolean }) => {
         this.isFriend = response.isFriend; // Cập nhật trạng thái bạn bè
@@ -268,12 +268,12 @@ export class InfoPageComponent implements OnInit {
     this.authService.verifyToken().subscribe((response) => {
       if (response.success != true) {
         localStorage.clear();
+        sessionStorage.clear();
         this.router.navigate(['/login']);
       }
     });
   }
   navigateToPostDetail(postId: number) {
-
     this.router
       .navigate([`/detail/${postId}`])
       .catch((error) => console.error('Lỗi khi điều hướng:', error));
@@ -283,7 +283,9 @@ export class InfoPageComponent implements OnInit {
       (tokenResponse) => {
         if (tokenResponse.success) {
           const tokenUserId = tokenResponse.userId; // Giả sử server trả về userId từ token
-          if (tokenUserId === userId) {
+          console.log("tokenid",typeof tokenUserId);
+          console.log("userId",typeof userId);
+          if (tokenUserId == userId) {
             this.isOwner = true; // Token và userId khớp, người dùng có thể chỉnh sửa thông tin
           } else {
             this.isOwner = false; // Người dùng đang xem trang của người khác, ẩn chức năng chỉnh sửa

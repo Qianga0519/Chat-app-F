@@ -1,145 +1,202 @@
 <section class="all-content-page">
-    <app-header></app-header>
-    <main>
-        <div class="wrapper-posts tab-menu">
-            <app-wrapper-left></app-wrapper-left>
-            <div class="main-content active wrapper-search">
-                <div class="range-search-input filter-result">
-                    <div class="search-input">
-                        <div class="range-input-key">
-                            <input type="text" [(ngModel)]="searchKeyword" placeholder="Nhập từ khóa tìm kiếm" pattern="[A-Za-z0-9 ]*">
-                            <button class="btn-search-input-filter"
-                                (click)="showUsers ? searchUsers(searchKeyword) : searchPost()">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="tab-filter">
-                        <button class="fl-user" [class.active]="showUsers"
-                            (click)="showUsers = true; showPosts = false">
-                            Người dùng
-                        </button>
-                        <button class="fl-post" [class.active]="showPosts"
-                            (click)="showPosts = true; showUsers = false">
-                            Bài viết
-                        </button>
-                    </div>
-                    <div class="search-advance" *ngIf="showPosts">
-                        <div class="item-advance">
-                            <label for="">Ngày đăng</label>
-                            <select [(ngModel)]="selectedOrder" (change)="searchPost()">
-                                <option value="1">Mới nhất</option>
-                                <option value="2">Cũ nhất</option>
-                            </select>
-                        </div>
-                        <div class="item-advance">
-                            <label for="">Bài viết từ</label>
-                            <select [(ngModel)]="selectedFrom" (change)="searchPost()">
-                                <option value="1">Bạn bè</option>
-                                <option value="2">Người khác</option>
-                                <option value="3">Tất cả</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <section class="result-content">
-                    <div class="result-search-list-user" *ngIf="showUsers">
-                        <div class="result-list-user" *ngFor="let user of users">
-                            <a [href]="'/user/' + user.iduser" class="item-result-user">
-                                <img [src]="user.url ? '/assets/images/' + user.url : '/assets/images/no-image.jpg'" alt="Ảnh đại diện người dùng">
-                                <article>{{ user.name }}</article>
-                            </a>
-                        </div>
-                        <div *ngIf="noUsersFound" class="no-users-message">
-                            Không tìm thấy người dùng nào.
-                        </div>
-                    </div>
-
-                    <div class="result-search-list-post" *ngIf="showPosts">
-                        <div *ngIf="posts.length > 0" class="result-list-post">
-                            <div *ngFor="let post of posts" class="item-post">
-                                <div class="user-post-info">
-                                    <section class="user-post-info-1">
-                                        <a class="user-avatat-post" href="">
-                                            <img [src]="post.urluser ? '/assets/images/' + post.urluser : '/assets/images/no-image.jpg'" alt="Ảnh đại diện người dùng">
-                                        </a>
-                                        <div class="user-info-detait-post">
-                                            <a href="" class="user-name-post">{{ post.name }}</a>
-                                            <a href="" class="time-name-post">{{ post.created_at }}</a>
-                                        </div>
-                                    </section>
-                                    <section class="user-post-info-2">
-                                        <button class="btn-block-post"><i class="fa-solid fa-x"></i></button>
-                                    </section>
-                                </div>
-                                <div class="user-post-content">
-                                    <div class="user-post-all-content">
-                                        <span>{{ post.content }}</span>
-                                        <span class="user-post-see-more">...Xem thêm</span>
-                                    </div>
-                                </div>
-
-                                <div class="user-post-image" *ngIf="post.post_type === 'shared'">
-                                    <div class="user-post-single-image">
-                                        <a href=""><img src="./assets/images/{{post.urlpost}}" alt=""></a>
-                                    </div>
-                                    <div class="user-sharer-info">
-                                        <span>Được chia sẻ bởi: {{ post.sharer_name }}</span> <!-- Hiển thị tên người đã chia sẻ -->
-                                    </div>
-                                </div>
-                    
-                                <div class="user-post-image" *ngIf="post.post_type === 'original'">
-                                    <div class="user-post-single-image">
-                                        <a href=""><img src="./assets/images/{{post.urlpost}}" alt=""></a>
-                                    </div>
-                                </div>
-                                <div class="qty-interact-post">
-                                    <div class="qty-interact qty-likes">
-                                        <span>{{ post.total_likes ||0}}</span>
-                                        <div class="list-interact-icon">
-                                            <i style="z-index: 3;" class="icon-post-like fa-solid fa-thumbs-up"></i>
-                                        </div>
-                                    </div>
-                                    <div class="qty-interact qty-cmt">
-                                        <span>{{ post.total_cmt ||0}}</span>
-                                        <div class="list-interact-icon">
-                                            <span>Bình luận</span>
-                                        </div>
-                                    </div>
-                                    <div class="qty-interact qty-share">
-                                        <span>{{post.share_count}}</span>
-                                        <div class="list-interact-icon">
-                                            <span>Chia sẻ</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="range-interact-post">
-                                    <button class="btn-interact-post-like" (click)="likePostId(post.id)">
-                                      <i [ngClass]="{
-                                          'fa-solid ': post.liked,
-                                          'fa-regular ': !post.liked
-                                        }" class="icon-post-like active fa-thumbs-up"></i>
-                                      <span>{{ post.likesCount }} Likes</span>
-                                    </button>
-                          
-                                    <button class="btn-interact-post-comment" (click)="navigateToPostDetail(post.id)">
-                                      <i class="fa-regular fa-comment"></i>
-                                      <span>binh luan</span>
-                                    </button>
-                                    <button class="btn-interact-post-share" (click)="sharePost(post.id)">
-                                      <i class="fa-regular fa-share-from-square"></i>
-                                      <span>chia se</span>
-                                    </button>
-                                  </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+  <app-header></app-header>
+  <main>
+    <div class="wrapper-posts tab-menu">
+      <app-wrapper-left></app-wrapper-left>
+      <div class="main-content active wrapper-search">
+        <div class="range-search-input filter-result">
+          <div class="search-input">
+            <div class="range-input-key">
+              <input
+                type="text"
+                [(ngModel)]="searchKeyword"
+                placeholder="Nhập từ khóa tìm kiếm"
+                pattern="[A-Za-z0-9 ]*"
+              />
+              <button
+                class="btn-search-input-filter"
+                (click)="showUsers ? searchUsers(searchKeyword) : searchPost()"
+              >
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </button>
             </div>
-            <app-wrapper-right></app-wrapper-right>
+          </div>
+          <div class="tab-filter">
+            <button
+              class="fl-user"
+              [class.active]="showUsers"
+              (click)="showUsers = true; showPosts = false"
+            >
+              Người dùng
+            </button>
+            <button
+              class="fl-post"
+              [class.active]="showPosts"
+              (click)="showPosts = true; showUsers = false"
+            >
+              Bài viết
+            </button>
+          </div>
+          <div class="search-advance" *ngIf="showPosts">
+            <div class="item-advance">
+              <label for="">Ngày đăng</label>
+              <select [(ngModel)]="selectedOrder" (change)="searchPost()">
+                <option value="1">Mới nhất</option>
+                <option value="2">Cũ nhất</option>
+              </select>
+            </div>
+            <div class="item-advance">
+              <label for="">Bài viết từ</label>
+              <select [(ngModel)]="selectedFrom" (change)="searchPost()">
+                <option value="1">Bạn bè</option>
+                <option value="2">Người khác</option>
+                <option value="3">Tất cả</option>
+              </select>
+            </div>
+          </div>
         </div>
-    </main>
-    <app-footer></app-footer>
-    <app-modal-edit-post></app-modal-edit-post>
-    <app-modal-create-post></app-modal-create-post>
+        <section class="result-content">
+          <div class="result-search-list-user" *ngIf="showUsers">
+            <div class="result-list-user" *ngFor="let user of users">
+              <a [href]="'/user/' + user.iduser" class="item-result-user">
+                <img
+                  [src]="
+                    user.url
+                      ? '/assets/images/' + user.url
+                      : '/assets/images/no-image.jpg'
+                  "
+                  alt="Ảnh đại diện người dùng"
+                />
+                <article>{{ user.name }}</article>
+              </a>
+            </div>
+            <div *ngIf="noUsersFound" class="no-users-message">
+              Không tìm thấy người dùng nào.
+            </div>
+          </div>
+
+          <div class="result-search-list-post" *ngIf="showPosts">
+            <div *ngIf="posts.length > 0" class="result-list-post">
+              <div *ngFor="let post of posts" class="item-post">
+                <div class="user-post-info">
+                  <section class="user-post-info-1">
+                    <a class="user-avatat-post" href="">
+                      <img
+                        [src]="
+                          post.urluser
+                            ? '/assets/images/' + post.urluser
+                            : '/assets/images/no-image.jpg'
+                        "
+                        alt="Ảnh đại diện người dùng"
+                      />
+                    </a>
+                    <div class="user-info-detait-post">
+                      <a href="" class="user-name-post">{{ post.name }}</a>
+                      <a href="" class="time-name-post">{{
+                        post.created_at
+                      }}</a>
+                    </div>
+                  </section>
+                  <section class="user-post-info-2">
+                    <button class="btn-block-post">
+                      <i class="fa-solid fa-x"></i>
+                    </button>
+                  </section>
+                </div>
+                <div class="user-post-content">
+                  <div class="user-post-all-content">
+                    <span>{{ post.content }}</span>
+                    <span class="user-post-see-more">...Xem thêm</span>
+                  </div>
+                </div>
+
+                <div
+                  class="user-post-image"
+                  *ngIf="post.post_type === 'shared'"
+                >
+                  <div class="user-post-single-image">
+                    <a href=""
+                      ><img src="./assets/images/{{ post.urlpost }}" alt=""
+                    /></a>
+                  </div>
+                  <div class="user-sharer-info">
+                    <span>Được chia sẻ bởi: {{ post.sharer_name }}</span>
+                    <!-- Hiển thị tên người đã chia sẻ -->
+                  </div>
+                </div>
+
+                <div
+                  class="user-post-image"
+                  *ngIf="post.post_type === 'original'"
+                >
+                  <div class="user-post-single-image">
+                    <a href=""
+                      ><img src="./assets/images/{{ post.urlpost }}" alt=""
+                    /></a>
+                  </div>
+                </div>
+                <div class="qty-interact-post">
+                  <div class="qty-interact qty-likes">
+                    <span>{{ post.total_likes || 0 }}</span>
+                    <div class="list-interact-icon">
+                      <i
+                        style="z-index: 3"
+                        class="icon-post-like fa-solid fa-thumbs-up"
+                      ></i>
+                    </div>
+                  </div>
+                  <div class="qty-interact qty-cmt">
+                    <span>{{ post.total_cmt || 0 }}</span>
+                    <div class="list-interact-icon">
+                      <span>Bình luận</span>
+                    </div>
+                  </div>
+                  <div class="qty-interact qty-share">
+                    <span>{{ post.share_count }}</span>
+                    <div class="list-interact-icon">
+                      <span>Chia sẻ</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="range-interact-post">
+                  <button
+                    class="btn-interact-post-like"
+                    (click)="likePostId(post.id)"
+                  >
+                    <i
+                      [ngClass]="{
+                        'fa-solid ': post.liked,
+                        'fa-regular ': !post.liked
+                      }"
+                      class="icon-post-like active fa-thumbs-up"
+                    ></i>
+                    <span>{{ post.likesCount }} Likes</span>
+                  </button>
+
+                  <button
+                    class="btn-interact-post-comment"
+                    (click)="navigateToPostDetail(post.id)"
+                  >
+                    <i class="fa-regular fa-comment"></i>
+                    <span>binh luan</span>
+                  </button>
+                  <button
+                    class="btn-interact-post-share"
+                    (click)="sharePost(post.id)"
+                  >
+                    <i class="fa-regular fa-share-from-square"></i>
+                    <span>chia se</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <app-wrapper-right></app-wrapper-right>
+    </div>
+  </main>
+  <app-footer></app-footer>
+  <app-modal-edit-post></app-modal-edit-post>
+  <app-modal-create-post></app-modal-create-post>
 </section>

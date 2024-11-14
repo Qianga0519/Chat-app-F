@@ -14,7 +14,9 @@ export class AuthGuard implements CanActivate {
     // Kiểm tra sessionStorage và localStorage có khả dụng không
     let token: string | null = null;
     if (typeof window !== 'undefined') {
-      token = sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
+      token =
+        sessionStorage.getItem('authToken') ||
+        localStorage.getItem('authToken');
     }
 
     if (token) {
