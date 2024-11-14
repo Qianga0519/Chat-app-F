@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
 
@@ -145,5 +145,17 @@ export class UsersService {
         headers: { 'Content-Type': 'application/json' }, // Thiết lập header nếu cần
       }
     );
+  }
+  sendFriendRequest(userId: number, friendId: number): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    const body = `user_id=${userId}&friend_id=${friendId}`;
+    return this.http.post(`http://localhost:8080/chat_api/api_dat/users/sendFriendRequest.php`, body, { headers });
+  }
+  cancelFriendship(userId: number, friendId: number): Observable<any> {
+    const body = new FormData();
+    body.append('user_id', userId.toString());
+    body.append('friend_id', friendId.toString());
+
+    return this.http.post<any>(`http://localhost:8080/chat_api/api_dat/users/cancelFriendship.php`, body);
   }
 }
