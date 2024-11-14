@@ -87,6 +87,7 @@ export class InfoPageComponent implements OnInit {
     );
     if (!this.userId) {
       localStorage.clear();
+      sessionStorage.clear();
       this.router.navigate(['/login']);
     }
     this.userIdRouu = this.route.snapshot.params['id'];
@@ -267,12 +268,12 @@ export class InfoPageComponent implements OnInit {
     this.authService.verifyToken().subscribe((response) => {
       if (response.success != true) {
         localStorage.clear();
+        sessionStorage.clear();
         this.router.navigate(['/login']);
       }
     });
   }
   navigateToPostDetail(postId: number) {
-
     this.router
       .navigate([`/detail/${postId}`])
       .catch((error) => console.error('Lỗi khi điều hướng:', error));
