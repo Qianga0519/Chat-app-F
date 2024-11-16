@@ -39,7 +39,7 @@ export class WrapperListPostComponent implements OnInit {
   userId: number;
   authToken: string;
   userLikePosts: any[] = [];
-
+  path_media = 'http://localhost:8080/chat_api/uploads';
   toggleSeeMore(post: any) {
     post.showFullContent = !post.showFullContent;
   }
@@ -49,8 +49,12 @@ export class WrapperListPostComponent implements OnInit {
     private thichbaivietService: ThichbaivietService,
     private authService: AuthService
   ) {
-    this.userId = Number(sessionStorage.getItem('id_user') || localStorage.getItem('id_user'));
-    this.authToken = String(sessionStorage.getItem('authToken') || localStorage.getItem('authToken'));
+    this.userId = Number(
+      sessionStorage.getItem('id_user') || localStorage.getItem('id_user')
+    );
+    this.authToken = String(
+      sessionStorage.getItem('authToken') || localStorage.getItem('authToken')
+    );
     if (!this.userId) {
       // localStorage.clear();
       // this.router.navigate(['/login']);
@@ -127,6 +131,7 @@ export class WrapperListPostComponent implements OnInit {
 
           // Cập nhật danh sách bài viết với các bài viết mới
           this.posts = [...this.posts, ...updatedPosts];
+          console.log("list post",this.posts)
 
           if (data.length > 0) {
             this.lastPostId = data[data.length - 1].id;

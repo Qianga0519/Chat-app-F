@@ -27,7 +27,7 @@
             <div class="item-friend-image-chat">
               <img
                 *ngIf="room.user2_avatar; else noAvatar"
-                src="/assets/images/{{ room.user2_avatar }}"
+                src="{{path_media}}/image/{{ room.user2_avatar }}"
                 alt="User Avatar"
               />
             </div>
@@ -57,7 +57,7 @@
           </button>
           <div class="item-info-friend-chat">
             <div class="item-friend-image-chat">
-              <img src="/assets/images/{{ avatar_user2 }}" alt="Friend Image" />
+              <img src="{{path_media}}/image/{{ avatar_user2 }}" alt="Friend Image" />
             </div>
             <div class="item-friend-info-chat">
               <span>{{ name_user2 }}</span>
@@ -71,12 +71,12 @@
         </div>
         <div class="range-chat-content messages-container" #messagesContainer>
           <ng-container
-            *ngIf="selectedRoom?.messages?.length; else noMessages"
+            *ngIf="messages?.length; else noMessages"
             #chatContainer
             class="chat-container"
           >
             <div
-              *ngFor="let message of selectedRoom.messages"
+              *ngFor="let message of messages"
               [ngClass]="{
                 'content-user-chat': message.user_id == userId,
                 'content-friend-chat': message.user_id != userId
@@ -85,7 +85,7 @@
               <div class="item-friend-image-chat">
                 <img
                   *ngIf="message.user_avatar; else noAvatarMes"
-                  src="/assets/images/{{ message.user_avatar }}"
+                  src="{{path_media}}/image/{{ message.user_avatar }}"
                   alt="User Avatar"
                 />
               </div>

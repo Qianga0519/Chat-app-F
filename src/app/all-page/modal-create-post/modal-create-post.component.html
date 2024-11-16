@@ -1,44 +1,49 @@
-   <!-- 3.5 -->
-   <div class="modal fade" s id="modal-created-post" tabindex="-1" aria-hidden="true">
-    <form action="" method="get" class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Create post</h5>
-            </div>
-            <div class="modal-body">
-                <div class="modal-user-post-info">
-                    <section class="modal-user-post-info-1">
-                        <a class="modal-user-avatat-post" href="">
-                            <img class="modal-user-post-image-link" src="./assets/images/no-image.jpg" alt="">
-                        </a>
-                        <div class="modal-user-info-detait-post">
-                            <article class="modal-user-name-post">Tran Thanh Quang</article>
-                            <select>
-                                <option value="assets">assets</option>
-                                <option value="private">private</option>
-                            </select>
-                        </div>
-                    </section>
-                </div>
-                <div class="modal-input-post">
-                    <div class="input-post-image-review">
-                        <div class="btn-delete-image-review"><i class="fa-solid fa-xmark"></i></div>
-                        <img id="imagePreview" src="">
-                    </div>
-                    <div class="modal-input-custom-file-upload">
-                        <label for="name-image-post">
-                            <i class="fa-regular fa-image"></i>
-                        </label>
-                        <input id="name-image-post" class="modal-input-post-image" type="file" accept="image/*">
-                    </div>
-                    <textarea class="modal-input-post-content" placeholder="Nhập nội dung ở đây..."></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </form>
+<!-- Modal: Create Post -->
+<div class="modal fade" id="modal-created-post" tabindex="-1" aria-hidden="true">
+  <form (ngSubmit)="createPost()" #postForm="ngForm" enctype="multipart/form-data" class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Create Post</h5>
+          </div>
+          <div class="modal-body">
+              <!-- User Info and Privacy Settings -->
+              <div class="modal-user-post-info">
+                  <section class="modal-user-post-info-1">
+                      <a class="modal-user-avatar-post" href="#">
+                          <img class="modal-user-post-image-link" src="./assets/images/no-image.jpg" alt="User Avatar">
+                      </a>
+                      <div class="modal-user-info-detail-post">
+                          <article class="modal-user-name-post">Tran Thanh Quang</article>
+                          <select class="form-select" [(ngModel)]="privacy" name="privacy" required>
+                              <option value="assets">Assets</option>
+                              <option value="private">Private</option>
+                          </select>
+                      </div>
+                  </section>
+              </div>
+              
+              <!-- Post Content and Image -->
+              <div class="modal-input-post">
+                  <div class="input-post-image-review" *ngIf="imageUrl">
+                      <div class="btn-delete-image-review" (click)="removeImage()">
+                          <i class="fa-solid fa-xmark"></i>
+                      </div>
+                      <img [src]="imageUrl" alt="Image Preview" id="imagePreview" class="image-preview">
+                  </div>
+                 <input id="name-image-post" class="modal-input-post-image" type="file" accept="image/*" (change)="onImageSelected($event)">
+                 <!--   <div class="modal-input-custom-file-upload">
+                      <label for="name-image-post">
+                          <i class="fa-regular fa-image"></i> Choose Image
+                      </label>
+                      
+                  </div> -->
+                  <textarea class="modal-input-post-content" placeholder="Enter content here..." [(ngModel)]="postContent" name="content" required></textarea>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" [disabled]="!postForm.valid">Save Post</button>
+          </div>
+      </div>
+  </form>
 </div>
-

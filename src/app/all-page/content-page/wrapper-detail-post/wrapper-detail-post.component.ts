@@ -36,6 +36,7 @@ export class WrapperDetailPostComponent implements OnInit, OnDestroy {
   post: any = {};
   post_like: any;
   post_share: any;
+  path_media = 'http://localhost:8080/chat_api/uploads';
   post_comment: any;
   private subscription: Subscription | undefined;
   avatar_user_post: string = '';

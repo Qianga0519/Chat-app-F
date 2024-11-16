@@ -55,8 +55,12 @@ export class WrapperSearchComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userId = Number(localStorage.getItem('id_user'));
-    this.authToken = String(localStorage.getItem('authToken'));
+    this.userId = Number(
+      localStorage.getItem('id_user') || sessionStorage.getItem('id_user')
+    );
+    this.authToken = String(
+      localStorage.getItem('authToken') || sessionStorage.getItem('authToken')
+    );
     if (!this.userId) {
       localStorage.clear();
       this.router.navigate(['/login']);
