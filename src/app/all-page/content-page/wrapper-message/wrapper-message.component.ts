@@ -52,7 +52,7 @@ export class WrapperMessageComponent implements OnInit {
     private authService: AuthService,
     private socketService: WebSocketService
   ) {
-    this.socketService.connect('ws://localhost:8081');
+
     this.userId = Number(
       localStorage.getItem('id_user') || sessionStorage.getItem('id_user')
     );
@@ -70,6 +70,7 @@ export class WrapperMessageComponent implements OnInit {
       });
   }
   ngOnInit(): void {
+    this.socketService.connect();
     this.getChatRooms();
     // Đăng ký nhận tin nhắn qua WebSocket
     this.socketService.messages.subscribe((message) => {

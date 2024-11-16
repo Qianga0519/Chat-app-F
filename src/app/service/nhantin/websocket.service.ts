@@ -12,14 +12,14 @@ export class WebSocketService {
   constructor() {}
 
   // Mở kết nối WebSocket
-  connect(url: string): void {
-    this.socket = new WebSocket(url);
-
+  connect(): void {
+    this.socket = new WebSocket('ws://localhost:8081');
     // Lắng nghe dữ liệu từ server WebSocket
     this.socket.onmessage = (event) => {
       try {
-        const message = JSON.parse(event.data); // Giả sử tin nhắn trả về là JSON
-        this.messagesSubject.next(message);
+        var message = JSON.parse(event.data); // Giả sử tin nhắn trả về là JSON
+
+        this.messagesSubject.next(message.data);
       } catch (error) {
         console.error('Error parsing WebSocket message:', error);
       }
