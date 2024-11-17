@@ -52,7 +52,7 @@ export class WrapperMessageComponent implements OnInit {
     private authService: AuthService,
     private socketService: WebSocketService
   ) {
-
+    this.socketService.connect();
     this.userId = Number(
       localStorage.getItem('id_user') || sessionStorage.getItem('id_user')
     );

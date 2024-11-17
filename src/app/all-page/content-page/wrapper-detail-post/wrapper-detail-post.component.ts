@@ -59,7 +59,7 @@ export class WrapperDetailPostComponent implements OnInit, OnDestroy {
     private commentService: PostService,
     private socketService: WebSocketService
   ) {
-
+    this.socketService.connect();
     this.userId = Number(
       sessionStorage.getItem('id_user') || localStorage.getItem('id_user')
     );
