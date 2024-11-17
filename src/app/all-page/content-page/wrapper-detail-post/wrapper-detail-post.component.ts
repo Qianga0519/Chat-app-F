@@ -14,12 +14,14 @@ import { WrapperRightComponent } from '../wrapper-right/wrapper-right.component'
 import { ThichbaivietService } from '../../../service/thichbaiviet/thichbaiviet.service';
 import { PostService } from '../../../service/dat/post.service';
 import { WebSocketService } from '../../../service/nhantin/websocket.service';
+import { take } from 'rxjs/operators';
 @Component({
   selector: 'app-wrapper-detail-post',
   standalone: true,
   templateUrl: './wrapper-detail-post.component.html',
   imports: [
-    HttpClientModule,
+
+  HttpClientModule,
     HeaderComponent,
     WrapperRightComponent,
     WrapperLeftComponent,
@@ -91,6 +93,7 @@ export class WrapperDetailPostComponent implements OnInit, OnDestroy {
         this.list_comment_post.push(response); // Cập nhật dữ liệu khi nhận được tin nhắn mới
         console.log('list cmt', this.list_comment_post);
       }
+      console.log("socket", response)
     });
   }
 

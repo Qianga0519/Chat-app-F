@@ -15,7 +15,7 @@
       <!-- Danh sách phòng chat -->
       <div class="main-content active list-friend-chat" *ngIf="!selectedRoom">
         <h3>Tin nhắn của bạn</h3>
-        <section *ngIf="!is_list_chat" else loadListChat>
+        <section *ngIf="is_list_chat" else loadListChat>
           <div
             class="info-friend-chat"
             *ngIf="chatRooms.length > 0; else noChatRooms"
