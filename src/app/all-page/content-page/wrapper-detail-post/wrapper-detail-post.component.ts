@@ -11,9 +11,9 @@ import { ModalCreatePostComponent } from '../../modal-create-post/modal-create-p
 import { ModalEditPostComponent } from '../../modal-edit-post/modal-edit-post.component';
 import { WrapperLeftComponent } from '../wrapper-left/wrapper-left.component';
 import { WrapperRightComponent } from '../wrapper-right/wrapper-right.component';
-import { response } from 'express';
 import { ThichbaivietService } from '../../../service/thichbaiviet/thichbaiviet.service';
 import { PostService } from '../../../service/dat/post.service';
+import { WebSocketService } from '../../../service/nhantin/websocket.service';
 @Component({
   selector: 'app-wrapper-detail-post',
   standalone: true,
@@ -49,17 +49,23 @@ export class WrapperDetailPostComponent implements OnInit, OnDestroy {
   order: number = 1;
   message: string = '';
   postId: any;
-
   contentrep: { [key: number]: string } = {};
+
   constructor(
     private ativeRoute: ActivatedRoute,
     private router: Router,
     private baivietBinhluanService: BvBlService,
     private thichbaivietService: ThichbaivietService,
-    private commentService: PostService
+    private commentService: PostService,
+    private socketService: WebSocketService
   ) {
-    this.userId = Number(sessionStorage.getItem('id_user') || localStorage.getItem('id_user'));
-    this.authToken = String(sessionStorage.getItem('authToken') || localStorage.getItem('authToken'));
+    this.socketService.connect();
+    this.userId = Number(
+      sessionStorage.getItem('id_user') || localStorage.getItem('id_user')
+    );
+    this.authToken = String(
+      sessionStorage.getItem('authToken') || localStorage.getItem('authToken')
+    );
     if (!this.userId) {
       localStorage.clear();
       this.router.navigate(['/login']);
@@ -67,6 +73,7 @@ export class WrapperDetailPostComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.socketService.connect();
     // Theo dõi sự thay đổi của paramMap
     this.subscription = this.ativeRoute.paramMap.subscribe((paramMap) => {
       const newPostId = paramMap.get('id');
@@ -77,6 +84,14 @@ export class WrapperDetailPostComponent implements OnInit, OnDestroy {
       this.checkUserLike(newPostId);
     });
     this.postId = this.ativeRoute.snapshot.params['id'];
+    //cập nhật du liệu khi có nội dung mới
+    this.socketService.messages.subscribe((response) => {
+      if (response) {
+        console.log('New message:', response);
+        this.list_comment_post.push(response); // Cập nhật dữ liệu khi nhận được tin nhắn mới
+        console.log('list cmt', this.list_comment_post);
+      }
+    });
   }
 
   loadPost(): void {
@@ -178,6 +193,7 @@ export class WrapperDetailPostComponent implements OnInit, OnDestroy {
           // Xử lý phản hồi từ server
           console.log('Bình luận đã được gửi!', response);
           this.content = ''; // Reset textarea sau khi gửi bình luận
+          this.socketService.sendMessage(response.data);
         },
         (error) => {
           console.error('Có lỗi xảy ra khi gửi bình luận', error);
@@ -211,6 +227,7 @@ export class WrapperDetailPostComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe(); // Sử dụng optional chaining
+    this.socketService.disconnect();
   }
 
   formatDate(dateString: string): string {
