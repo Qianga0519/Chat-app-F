@@ -122,7 +122,9 @@ export class InfoPageComponent implements OnInit {
 
   onLogout() {
     this.auth.logout().subscribe((response) => {
-      console.log(response);
+      if(response.success){
+        this.router.navigate(['/loing'])
+      }
     });
   }
 

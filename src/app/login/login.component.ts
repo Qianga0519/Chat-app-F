@@ -53,6 +53,7 @@ export class LoginComponent implements OnInit {
   // component.ts
   logout(): void {
     this.authService.logout();
+    this.router.navigate(['/login'])
   }
   clearUserData(): void {
     localStorage.clear();
