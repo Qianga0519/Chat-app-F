@@ -43,6 +43,7 @@ export class WrapperMessageComponent implements OnInit {
   error: boolean = false;
   private intervalId: any;
   messages: any[] = [];
+  path_media = 'http://localhost:8080/chat_api/uploads';
   @ViewChild('messagesContainer') messagesContainer!: ElementRef;
   subscription: any;
   constructor(
@@ -51,7 +52,7 @@ export class WrapperMessageComponent implements OnInit {
     private authService: AuthService,
     private socketService: WebSocketService
   ) {
-    this.socketService.connect('ws://localhost:8081');
+    this.socketService.connect();
     this.userId = Number(
       localStorage.getItem('id_user') || sessionStorage.getItem('id_user')
     );
@@ -69,6 +70,7 @@ export class WrapperMessageComponent implements OnInit {
       });
   }
   ngOnInit(): void {
+    this.socketService.connect();
     this.getChatRooms();
     // Đăng ký nhận tin nhắn qua WebSocket
     this.socketService.messages.subscribe((message) => {

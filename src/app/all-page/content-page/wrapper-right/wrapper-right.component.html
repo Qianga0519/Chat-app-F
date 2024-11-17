@@ -13,7 +13,7 @@
         <div class="list-friend-active" *ngFor="let friend of friends">
           <div class="item-friend" *ngIf="friend.url; else noImage">
             <div class="item-friend-image">
-              <img src="/assets/images/{{ friend.url }}" alt="" />
+              <img src="{{path_media}}/image/{{ friend.url }}" alt="" />
             </div>
             <div class="item-friend-info">
               <span>{{ friend.name }}</span>
@@ -48,46 +48,51 @@
 
     <!-- Kiểm tra nếu có yêu cầu kết bạn -->
     <article>Request</article>
-<div *ngIf="makeFriend && makeFriend.length > 0; else noPendingRequests">
-  <div class="wrapper-request" *ngFor="let makeFriends of makeFriend">
-    <div class="item-request">
-      <!-- Kiểm tra nếu người dùng có ảnh đại diện -->
-      <img
-        class="item-request-image"
-        *ngIf="makeFriends.url; else noImage"
-        src="/assets/images/{{ makeFriends.url}}"
-        alt=""
-      />
-      <!-- Template khi người dùng không có ảnh đại diện -->
-      <ng-template #noImage>
-        <img
-          class="item-request-image"
-          src="/assets/images/no-image.jpg"
-          alt=""
-        />
-      </ng-template>
+    <div *ngIf="makeFriend && makeFriend.length > 0; else noPendingRequests">
+      <div class="wrapper-request" *ngFor="let makeFriends of makeFriend">
+        <div class="item-request">
+          <!-- Kiểm tra nếu người dùng có ảnh đại diện -->
+          <img
+            class="item-request-image"
+            *ngIf="makeFriends.url; else noImage"
+            src="{{path_media}}/image/{{ makeFriends.url }}"
+            alt=""
+          />
+          <!-- Template khi người dùng không có ảnh đại diện -->
+          <ng-template #noImage>
+            <img
+              class="item-request-image"
+              src="/assets/images/no-image.jpg"
+              alt=""
+            />
+          </ng-template>
 
-      <div class="item-request-info">
-        <span class="item-request-info-name">
-          {{ makeFriends.name }}
-        </span>
-      </div>
-      <div class="item-respon-request" >
-        <button class="item-respon-confirm" (click)="acceptFriend(makeFriends.id)">
-          <i class="fa-solid fa-check"> </i>
-        </button>
-        <button class="item-respon-delete" (click)="declineFriend(makeFriends.id)">
-          <i class="fa-solid fa-trash"></i>
-        </button>
+          <div class="item-request-info">
+            <span class="item-request-info-name">
+              {{ makeFriends.name }}
+            </span>
+          </div>
+          <div class="item-respon-request">
+            <button
+              class="item-respon-confirm"
+              (click)="acceptFriend(makeFriends.id)"
+            >
+              <i class="fa-solid fa-check"></i>
+            </button>
+            <button
+              class="item-respon-delete"
+              (click)="declineFriend(makeFriends.id)"
+            >
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- Template khi không có yêu cầu kết bạn nào trong trạng thái "pending" -->
-<ng-template #noPendingRequests>
-  <p>Không có yêu cầu kết bạn đang chờ xử lý.</p>
-</ng-template>
-
+    <!-- Template khi không có yêu cầu kết bạn nào trong trạng thái "pending" -->
+    <ng-template #noPendingRequests>
+      <p>Không có yêu cầu kết bạn đang chờ xử lý.</p>
+    </ng-template>
   </section>
 </div>

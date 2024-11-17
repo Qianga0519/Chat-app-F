@@ -6,7 +6,6 @@
       <!-- TAB LEFT CONTENT  -->
       <app-wrapper-left></app-wrapper-left>
       <!-- END TAB LEFT CONTENT -->
-
       <div class="main-content active wrapper-list-post" (scroll)="onScroll()">
         <div class="user-up-post">
           <div class="user-avatat-up-post" href="">
@@ -81,7 +80,12 @@
             <div class="user-post-image">
               <div class="user-post-single-image">
                 <a href="" *ngIf="post.media_url; else noImage">
-                  <img src="./assets/images/{{ post.media_url }}" alt="" />
+                  <img
+                    src="{{ path_media }}/{{ post.media_type }}/{{
+                      post.media_url
+                    }}"
+                    alt=""
+                  />
                 </a>
                 <ng-template #noImage></ng-template>
               </div>
