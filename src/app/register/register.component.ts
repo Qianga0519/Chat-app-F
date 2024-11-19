@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit {
   regis_message = '';
 
   constructor(private userService: UserService, private router: Router, private authService:AuthService) {
-    
+
     // Đảm bảo tiêm Router đúng cách
     this.registerForm = new FormGroup(
       {
@@ -62,7 +62,6 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.checkAuth();
   }
 
   register(event: Event) {
@@ -96,11 +95,5 @@ export class RegisterComponent implements OnInit {
   closeNotification() {
     this.regis_success = false;
   }
-  checkAuth() {
-    this.authService.verifyToken().subscribe((response) => {
-      if (response.success == true) {
-        this.router.navigate(['/']);
-      }
-    });
-  }
+
 }

@@ -32,8 +32,8 @@ export class WrapperLeftComponent implements OnInit {
     this.goiybanbeService.getListHint(userId).subscribe((response: any) => {
       if (response.success) {
         this.listHint = response.data;
-        console.log(this.listHint);
-        console.log('list hint', response);
+        // console.log(this.listHint);
+        // console.log('list hint', response);
       }
     });
   }

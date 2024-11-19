@@ -157,7 +157,7 @@ export class WrapperSearchComponent implements OnInit {
         if (response.success) {
           this.currentUserId = response.userId; // Lấy userId từ phản hồi
 
-          console.log('User ID xác thực:', this.currentUserId); // In ra để kiểm tra
+          // console.log('User ID xác thực:', this.currentUserId); // In ra để kiểm tra
 
           if (!this.searchKeyword) {
             alert('Vui lòng nhập từ khóa tìm kiếm.');
@@ -182,7 +182,7 @@ export class WrapperSearchComponent implements OnInit {
                   this.noUsersFound = true;
                 }
 
-                console.log('Kết quả tìm kiếm:', this.posts); // Log dữ liệu bài viết
+                // console.log('Kết quả tìm kiếm:', this.posts); // Log dữ liệu bài viết
               },
               (error) => {
                 console.error('Có lỗi xảy ra khi tìm kiếm bài viết:', error);
@@ -204,9 +204,9 @@ export class WrapperSearchComponent implements OnInit {
   sharePost(postId: number) {
     this.postService.sharePost(postId, this.userId).subscribe(
       (shareResponse) => {
-        console.log(this.userId);
+        // console.log(this.userId);
         if (shareResponse.success) {
-          console.log('Chia sẻ bài viết thành công!');
+          // console.log('Chia sẻ bài viết thành công!');
           //alert("Chia sẻ bài viết thành công!");
           this.loadPosts1();
         } else {
@@ -228,7 +228,6 @@ export class WrapperSearchComponent implements OnInit {
   }
 
   loadPosts() {
-    this.checkAuth();
     if (!this.isLoading) {
       this.isLoading = true;
 
@@ -246,7 +245,7 @@ export class WrapperSearchComponent implements OnInit {
         (data: any[]) => {
           // Cập nhật bài viết với trạng thái liked
           const dataLike = this.userLikePosts.map((like) => like.post_id);
-          console.log(dataLike);
+          // console.log(dataLike);
 
           const updatedPosts = data.map((post) => {
             post.liked = dataLike.includes(post.id);
@@ -272,7 +271,6 @@ export class WrapperSearchComponent implements OnInit {
   }
 
   likePostId(post_id: number) {
-    this.checkAuth();
     const data: any = {
       post_id: post_id,
       user_id: this.userId,
@@ -295,7 +293,7 @@ export class WrapperSearchComponent implements OnInit {
           }
           this.updateLikesCount(post_id);
         }
-        console.log(response);
+        // console.log(response);
       },
       (error) => {
         console.error('Error liking post:', error);
@@ -322,14 +320,7 @@ export class WrapperSearchComponent implements OnInit {
   cleanInput(input: string): string {
     return input.replace(/[<>/"'&]/g, ''); // Loại bỏ các ký tự đặc biệt
   }
-  checkAuth() {
-    this.authService.verifyToken().subscribe((response) => {
-      if (response.success != true) {
-        localStorage.clear();
-        this.router.navigate(['/login']);
-      }
-    });
-  }
+
   navigateToPostDetail(postId: number) {
     const userIdRouu = this.route.snapshot.params['id'];
 

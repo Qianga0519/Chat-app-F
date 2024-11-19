@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.checkAuth();
   }
   ngOnDestroy(): void {}
 
@@ -67,11 +66,11 @@ export class LoginComponent implements OnInit {
         (response) => {
           if (response.success) {
             // Kiểm tra phản hồi
-            console.log('Token:', response.token);
+            // console.log('Token:', response.token);
             this.isLogin = true; // Đặt trạng thái đăng nhập
             // Điều hướng đến trang chính (nếu cần)
             this.showNotification('Đăng nhập thành công!');
-            console.log(response.user['email']);
+            // console.log(response.user['email']);
             if (rememberMe) {
               localStorage.setItem('authToken', response.token); // Lưu vào localStorage
               localStorage.setItem('id_user', response.user['id']); // Lưu vào localStorage
@@ -109,12 +108,5 @@ export class LoginComponent implements OnInit {
   }
   navigateToLogin() {
     this.router.navigate(['/register']);
-  }
-  checkAuth() {
-    this.authService.verifyToken().subscribe((response) => {
-      if (response.success == true) {
-        this.router.navigate(['/']);
-      }
-    });
   }
 }

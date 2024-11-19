@@ -13,12 +13,17 @@ import { AuthGuard } from './auth.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 import { WrapperListPostComponent } from './all-page/content-page/wrapper-list-post/wrapper-list-post.component';
+import { GuestAuthGuard } from './auth.guest.guard';
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'login', canActivate: [GuestAuthGuard], component: LoginComponent },
+  {
+    path: 'register',
+    canActivate: [GuestAuthGuard],
+    component: RegisterComponent,
+  },
   {
     path: '',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     children: [
       { path: '', component: WrapperListPostComponent },
       { path: 'detail/:id', component: WrapperDetailPostComponent },
@@ -26,7 +31,11 @@ export const routes: Routes = [
         path: 'user/:userId/detail/:postId',
         component: WrapperDetailPostComponent,
       },
-      { path: 'message', component: WrapperMessageComponent },
+      {
+        path: 'message',
+        component: WrapperMessageComponent,
+        children: [{ path: 'room/:id', component: WrapperMessageComponent }],
+      },
       { path: 'search', component: WrapperSearchComponent },
       { path: 'notifications', component: WrapperNotificationsComponent },
       { path: '404', component: NotFoundComponent },

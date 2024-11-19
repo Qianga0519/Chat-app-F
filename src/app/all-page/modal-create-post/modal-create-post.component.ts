@@ -48,7 +48,7 @@ export class ModalCreatePostComponent {
   removeImage(): void {
     this.imageUrl = null;
     this.selectedFile = null; // Xóa tệp đã chọn
-    
+
   }
 
   // Hàm gửi bài viết
@@ -61,7 +61,7 @@ export class ModalCreatePostComponent {
           (response) => {
             if (response.success) {
             }
-            console.log(response)
+            // console.log(response)
           },
           (error) => {
             console.error('Error creating post:', error);
