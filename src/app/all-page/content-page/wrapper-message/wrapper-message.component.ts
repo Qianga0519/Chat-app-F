@@ -31,6 +31,7 @@ import { WebSocketService } from '../../../service/nhantin/websocket.service';
 export class WrapperMessageComponent implements OnInit {
   chatRooms: any[] = [];
   errorMessage: string | null = null;
+  is_list_chat = true;
   selectedRoom: any;
   userId: number;
   authToken: string;
@@ -120,8 +121,7 @@ export class WrapperMessageComponent implements OnInit {
             }
           }
         }
-
-        // console.log('Updated list with avatars', this.chatRooms);
+        console.log('Updated list with avatars', this.chatRooms);
       } else {
         this.errorMessage = response.error;
       }
@@ -145,6 +145,7 @@ export class WrapperMessageComponent implements OnInit {
           this.socketService.sendMessage(messageData);
         } else {
           console.log(response.error);
+          alert(response.error);
         }
       },
       (error) => {
@@ -173,11 +174,13 @@ export class WrapperMessageComponent implements OnInit {
           // console.log('danh sach tin nhan', this.messages);
         } else {
           this.errorMessage = response.error; // Lưu thông báo lỗi
+          alert(this.errorMessage);
         }
       },
       (error) => {
         console.error('Error loading messages:', error);
         this.errorMessage = 'Lỗi khi tải tin nhắn.'; // Thông báo lỗi
+        this.goBack();
       }
     );
   }

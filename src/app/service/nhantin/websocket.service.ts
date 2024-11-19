@@ -18,7 +18,6 @@ export class WebSocketService {
     this.socket.onmessage = (event) => {
       try {
         var message = JSON.parse(event.data); // Giả sử tin nhắn trả về là JSON
-
         this.messagesSubject.next(message.data);
       } catch (error) {
         console.error('Error parsing WebSocket message:', error);
