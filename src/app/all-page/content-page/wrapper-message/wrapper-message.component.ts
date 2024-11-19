@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../service/quang/auth.service';
 import { WebSocketService } from '../../../service/nhantin/websocket.service';
-
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-wrapper-message',
   standalone: true,
@@ -51,7 +51,8 @@ export class WrapperMessageComponent implements OnInit {
     private nhantinService: NhantinService,
     private router: Router,
     private authService: AuthService,
-    private socketService: WebSocketService
+    private socketService: WebSocketService,
+    private route: ActivatedRoute
   ) {
     this.socketService.connect();
     this.userId = Number(
@@ -155,8 +156,9 @@ export class WrapperMessageComponent implements OnInit {
   }
   openChat(room: any): void {
     this.selectedRoom = room;
-    this.loadMessages(room);
 
+    this.loadMessages(room);
+    this.router.navigate(['message/room/', room.id]);
     this.nhantinService
       .getUserById(this.selectedRoom.user_id_2)
       .subscribe((response) => {
@@ -169,12 +171,13 @@ export class WrapperMessageComponent implements OnInit {
   loadMessages(room: any): void {
     this.nhantinService.getMessagesByRoomId(room.id).subscribe(
       (response) => {
+        this.messages = [];
         if (response.success) {
           this.messages = response.data;
           // console.log('danh sach tin nhan', this.messages);
         } else {
-          this.errorMessage = response.error; // Lưu thông báo lỗi
-          alert(this.errorMessage);
+          this.goBack();
+          alert(response.message);
         }
       },
       (error) => {
@@ -187,6 +190,7 @@ export class WrapperMessageComponent implements OnInit {
 
   goBack(): void {
     this.selectedRoom = null; // Trở lại danh sách phòng chat
+    this.router.navigate(['/message']);
   }
   scrollToBottom(): void {
     setTimeout(() => {
