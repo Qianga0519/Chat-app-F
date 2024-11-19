@@ -15,38 +15,42 @@
       <!-- Danh sách phòng chat -->
       <div class="main-content active list-friend-chat" *ngIf="!selectedRoom">
         <h3>Tin nhắn của bạn</h3>
-        <div
-          class="info-friend-chat"
-          *ngIf="chatRooms.length > 0; else noChatRooms"
-        >
+        <section *ngIf="is_list_chat" else loadListChat>
           <div
-            *ngFor="let room of chatRooms"
-            class="item-info-friend-chat"
-            (click)="openChat(room)"
+            class="info-friend-chat"
+            *ngIf="chatRooms.length > 0; else noChatRooms"
           >
-            <div class="item-friend-image-chat">
-              <img
-                *ngIf="room.user2_avatar; else noAvatar"
-                src="{{path_media}}/image/{{ room.user2_avatar }}"
-                alt="User Avatar"
-              />
-            </div>
-            <ng-template #noAvatar>
+            <div
+              *ngFor="let room of chatRooms"
+              class="item-info-friend-chat"
+              (click)="openChat(room)"
+            >
               <div class="item-friend-image-chat">
-                <img src="/assets/images/no-image.jpg" alt="No Avatar" />
+                <img
+                  *ngIf="room.user2_avatar; else noAvatar"
+                  src="{{ path_media }}/image/{{ room.user2_avatar }}"
+                  alt="User Avatar"
+                />
               </div>
-            </ng-template>
-            <div class="item-friend-info-chat">
-              <span>{{ room.name }}</span>
-              <span>{{
-                room.status == 1 ? "Đang hoạt động" : "Không hoạt động"
-              }}</span>
+              <ng-template #noAvatar>
+                <div class="item-friend-image-chat">
+                  <img src="/assets/images/no-image.jpg" alt="No Avatar" />
+                </div>
+              </ng-template>
+              <div class="item-friend-info-chat">
+                <span>{{ room.name }}</span>
+                <span>{{
+                  room.status == 1 ? "Đang hoạt động" : "Không hoạt động"
+                }}</span>
+              </div>
             </div>
           </div>
-        </div>
-        <ng-template #noChatRooms>
-          <p>Không có phòng chat nào.</p>
-        </ng-template>
+          <ng-template #noChatRooms>
+            <p>Không có phòng chat nào.</p>
+          </ng-template>
+        </section>
+        <ng-template #loadListChat> Dang load list chat </ng-template>
+
         <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
       </div>
       <!-- Nội dung chat -->
@@ -57,7 +61,10 @@
           </button>
           <div class="item-info-friend-chat">
             <div class="item-friend-image-chat">
-              <img src="{{path_media}}/image/{{ avatar_user2 }}" alt="Friend Image" />
+              <img
+                src="{{ path_media }}/image/{{ avatar_user2 }}"
+                alt="Friend Image"
+              />
             </div>
             <div class="item-friend-info-chat">
               <span>{{ name_user2 }}</span>
@@ -85,7 +92,7 @@
               <div class="item-friend-image-chat">
                 <img
                   *ngIf="message.user_avatar; else noAvatarMes"
-                  src="{{path_media}}/image/{{ message.user_avatar }}"
+                  src="{{ path_media }}/image/{{ message.user_avatar }}"
                   alt="User Avatar"
                 />
               </div>
