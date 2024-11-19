@@ -100,11 +100,10 @@ export class InfoPageComponent implements OnInit {
 
     const id = this.route.snapshot.params['id']; // Lấy ID từ route
     this.AvatarByUser(id);
-    this.checkAuth();
     this.loadPosts();
 
     const ids = Number(this.route.snapshot.paramMap.get('id'));
-    console.log(ids);
+    // console.log(ids);
     this.postService.kiemTraID(ids).subscribe(
       (response) => {
         if (response.success) {
@@ -123,7 +122,7 @@ export class InfoPageComponent implements OnInit {
   onLogout() {
     this.auth.logout().subscribe((response) => {
       if(response.success){
-        this.router.navigate(['/loing'])
+        this.router.navigate(['/login'])
       }
     });
   }
@@ -171,7 +170,6 @@ export class InfoPageComponent implements OnInit {
     });
   }
   loadPosts() {
-    this.checkAuth();
     if (!this.isLoading) {
       this.isLoading = true;
 
@@ -189,14 +187,14 @@ export class InfoPageComponent implements OnInit {
         (data: any[]) => {
           // Cập nhật bài viết với trạng thái liked
           const dataLike = this.userLikePosts.map((like) => like.post_id);
-          console.log(dataLike);
+          // console.log(dataLike);
 
           const updatedPosts = data.map((post) => {
             post.liked = dataLike.includes(post.id);
             return post;
           });
 
-          console.log(updatedPosts);
+          // console.log(updatedPosts);
 
           // Cập nhật danh sách bài viết với các bài viết mới
           this.posts = [...this.posts, ...updatedPosts];
@@ -218,7 +216,6 @@ export class InfoPageComponent implements OnInit {
   }
 
   likePostId(post_id: number) {
-    this.checkAuth();
     const data: any = {
       post_id: post_id,
       user_id: this.userId,
@@ -240,9 +237,9 @@ export class InfoPageComponent implements OnInit {
             }
           }
           this.updateLikesCount(post_id);
-          console.log(this.updateLikesCount(post_id));
+          // console.log(this.updateLikesCount(post_id));
         }
-        console.log(response);
+        // console.log(response);
       },
       (error) => {
         console.error('Error liking post:', error);
@@ -267,15 +264,7 @@ export class InfoPageComponent implements OnInit {
     });
   }
 
-  checkAuth() {
-    this.authService.verifyToken().subscribe((response) => {
-      if (response.success != true) {
-        localStorage.clear();
-        sessionStorage.clear();
-        this.router.navigate(['/login']);
-      }
-    });
-  }
+
   navigateToPostDetail(postId: number) {
     this.router
       .navigate([`/detail/${postId}`])
@@ -286,8 +275,8 @@ export class InfoPageComponent implements OnInit {
       (tokenResponse) => {
         if (tokenResponse.success) {
           const tokenUserId = tokenResponse.userId; // Giả sử server trả về userId từ token
-          console.log("tokenid",typeof tokenUserId);
-          console.log("userId",typeof userId);
+          // console.log("tokenid",typeof tokenUserId);
+          // console.log("userId",typeof userId);
           if (tokenUserId == userId) {
             this.isOwner = true; // Token và userId khớp, người dùng có thể chỉnh sửa thông tin
           } else {
@@ -318,7 +307,7 @@ export class InfoPageComponent implements OnInit {
   sharePost(postId: number) {
     this.postService.sharePost(postId, this.userId).subscribe(
       (shareResponse) => {
-        console.log(this.userId);
+        // console.log(this.userId);
         if (shareResponse.success) {
           console.log('Chia sẻ bài viết thành công!');
           //alert("Chia sẻ bài viết thành công!");

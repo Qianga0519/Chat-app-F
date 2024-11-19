@@ -76,9 +76,9 @@ export class WrapperMessageComponent implements OnInit {
     this.socketService.messages.subscribe((message) => {
       if (message) {
         this.scrollToBottom();
-        console.log('New message:', message);
+        // console.log('New message:', message);
         this.messages.push(message); // Cập nhật dữ liệu khi nhận được tin nhắn mới
-        console.log(this.messages);
+        // console.log(this.messages);
       }
     });
   }
@@ -88,7 +88,6 @@ export class WrapperMessageComponent implements OnInit {
     this.socketService.disconnect();
   }
   async getChatRooms(): Promise<void> {
-    this.checkAuth();
     try {
       // Lấy dữ liệu phòng chat từ API
       const response = await this.nhantinService
@@ -97,7 +96,7 @@ export class WrapperMessageComponent implements OnInit {
 
       if (response.success) {
         this.chatRooms = response.data;
-        console.log('List room', this.chatRooms);
+        // console.log('List room', this.chatRooms);
 
         for (let item of this.chatRooms) {
           if (item.user_id_2 === this.userId) {
@@ -114,7 +113,7 @@ export class WrapperMessageComponent implements OnInit {
                 .toPromise();
               // Cập nhật thông tin avatar vào item
               item.user2_avatar = avatarResponse.data[0].url;
-              console.log('Avatar for user 2:', avatarResponse.data[0].url);
+              // console.log('Avatar for user 2:', avatarResponse.data[0].url);
             } catch (avatarError) {
               console.error('Error fetching avatar:', avatarError);
               item.user2_avatar = ''; // Nếu có lỗi, có thể gán giá trị mặc định
@@ -122,7 +121,7 @@ export class WrapperMessageComponent implements OnInit {
           }
         }
 
-        console.log('Updated list with avatars', this.chatRooms);
+        // console.log('Updated list with avatars', this.chatRooms);
       } else {
         this.errorMessage = response.error;
       }
@@ -154,7 +153,6 @@ export class WrapperMessageComponent implements OnInit {
     );
   }
   openChat(room: any): void {
-    this.checkAuth();
     this.selectedRoom = room;
     this.loadMessages(room);
 
@@ -163,17 +161,16 @@ export class WrapperMessageComponent implements OnInit {
       .subscribe((response) => {
         this.name_user2 = response.name;
         this.avatar_user2 = response.url;
-        console.log(response);
+        // console.log(response);
       });
   }
 
   loadMessages(room: any): void {
-    this.checkAuth();
     this.nhantinService.getMessagesByRoomId(room.id).subscribe(
       (response) => {
         if (response.success) {
           this.messages = response.data;
-          console.log('danh sach tin nhan', this.messages);
+          // console.log('danh sach tin nhan', this.messages);
         } else {
           this.errorMessage = response.error; // Lưu thông báo lỗi
         }
@@ -184,14 +181,7 @@ export class WrapperMessageComponent implements OnInit {
       }
     );
   }
-  checkAuth() {
-    this.authService.verifyToken().subscribe((response) => {
-      if (response.success != true) {
-        localStorage.clear();
-        this.router.navigate(['/login']);
-      }
-    });
-  }
+
   goBack(): void {
     this.selectedRoom = null; // Trở lại danh sách phòng chat
   }

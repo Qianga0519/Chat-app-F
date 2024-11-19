@@ -102,7 +102,6 @@ export class WrapperListPostComponent implements OnInit {
     // Reset các biến dữ liệu khác nếu cần
   }
   loadPosts() {
-    this.checkAuth();
     if (!this.isLoading) {
       this.isLoading = true;
 
@@ -131,7 +130,7 @@ export class WrapperListPostComponent implements OnInit {
 
           // Cập nhật danh sách bài viết với các bài viết mới
           this.posts = [...this.posts, ...updatedPosts];
-          console.log("list post",this.posts)
+          // console.log("list post",this.posts)
 
           if (data.length > 0) {
             this.lastPostId = data[data.length - 1].id;
@@ -150,7 +149,6 @@ export class WrapperListPostComponent implements OnInit {
   }
 
   likePostId(post_id: number) {
-    this.checkAuth();
     const data: any = {
       post_id: post_id,
       user_id: this.userId,
@@ -220,12 +218,5 @@ export class WrapperListPostComponent implements OnInit {
     }
     return new Date(dateString).toLocaleString(); // Hoặc sử dụng Pipe khác
   }
-  checkAuth() {
-    this.authService.verifyToken().subscribe((response) => {
-      if (response.success != true) {
-        localStorage.clear();
-        this.router.navigate(['/login']);
-      }
-    });
-  }
+
 }

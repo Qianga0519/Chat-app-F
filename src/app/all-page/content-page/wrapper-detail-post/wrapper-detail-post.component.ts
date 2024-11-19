@@ -87,9 +87,9 @@ export class WrapperDetailPostComponent implements OnInit, OnDestroy {
     //cập nhật du liệu khi có nội dung mới
     this.socketService.messages.subscribe((response) => {
       if (response) {
-        console.log('New message:', response);
+        // console.log('New message:', response);
         this.list_comment_post.push(response); // Cập nhật dữ liệu khi nhận được tin nhắn mới
-        console.log('list cmt', this.list_comment_post);
+        // console.log('list cmt', this.list_comment_post);
       }
     });
   }
@@ -191,7 +191,7 @@ export class WrapperDetailPostComponent implements OnInit, OnDestroy {
       .subscribe(
         (response) => {
           // Xử lý phản hồi từ server
-          console.log('Bình luận đã được gửi!', response);
+          // console.log('Bình luận đã được gửi!', response);
           this.content = ''; // Reset textarea sau khi gửi bình luận
           this.socketService.sendMessage(response.data);
         },
@@ -250,7 +250,7 @@ export class WrapperDetailPostComponent implements OnInit, OnDestroy {
 
   submitComment(): void {
     if (this.commentText.trim()) {
-      console.log('Nội dung bình luận:', this.commentText);
+      // console.log('Nội dung bình luận:', this.commentText);
       this.commentText = '';
     }
   }

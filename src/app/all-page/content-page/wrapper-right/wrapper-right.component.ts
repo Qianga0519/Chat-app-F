@@ -43,7 +43,7 @@ export class WrapperRightComponent implements OnInit {
         } else {
           // alert(response.message);
         }
-        console.log(response);
+        // console.log(response);
       });
   }
   // Hàm lấy token từ localStorage và xác thực
@@ -71,7 +71,7 @@ export class WrapperRightComponent implements OnInit {
           this.isFriendsLoaded = true; // Đánh dấu đã load danh sách bạn bè
           if (Array.isArray(data)) {
             this.friends = data;
-            console.log('friend', data);
+            // console.log('friend', data);
           } else {
             console.error('Dữ liệu trả về không phải là một mảng:', data);
             this.friends = []; // Gán giá trị rỗng để tránh lỗi *ngFor
