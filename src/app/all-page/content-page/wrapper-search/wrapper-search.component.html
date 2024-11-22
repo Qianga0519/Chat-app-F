@@ -62,10 +62,9 @@
                 <img
                   [src]="
                     user.url
-                      ? '/assets/images/' + user.url
+                      ? path_media + '/image/' + user.url
                       : '/assets/images/no-image.jpg'
                   "
-                  alt="Ảnh đại diện người dùng"
                 />
                 <article>{{ user.name }}</article>
               </a>
@@ -84,7 +83,7 @@
                       <img
                         [src]="
                           post.urluser
-                            ? '/assets/images/' + post.urluser
+                            ? path_media + '/image/' + post.urluser
                             : '/assets/images/no-image.jpg'
                         "
                         alt="Ảnh đại diện người dùng"
@@ -131,7 +130,7 @@
                 >
                   <div class="user-post-single-image">
                     <a href=""
-                      ><img src="./assets/images/{{ post.urlpost }}" alt=""
+                      ><img src="{{path_media}}/image/{{ post.urlpost }}" alt=""
                     /></a>
                   </div>
                 </div>

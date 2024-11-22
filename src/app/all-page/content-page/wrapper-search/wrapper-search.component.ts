@@ -44,7 +44,7 @@ export class WrapperSearchComponent implements OnInit {
   userLikePosts: any[] = [];
   userIdRouu: any;
   lastPostId = 0;
-
+  path_media = 'http://localhost:8080/chat_api/uploads';
   constructor(
     private route: ActivatedRoute,
     private router: Router,
