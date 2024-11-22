@@ -59,7 +59,7 @@
                     <div class="user-post-image">
                         <div class="user-post-single-image">
                             <a href="" *ngIf="post.url; else noImagePost">
-                                <img src="" alt="" />
+                                <img src="./assets/images/{{ post.url }}" alt="" />
                             </a>
                             <ng-template #noImagePost></ng-template>
                         </div>
