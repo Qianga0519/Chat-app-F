@@ -206,9 +206,9 @@ export class WrapperSearchComponent implements OnInit {
       (shareResponse) => {
         // console.log(this.userId);
         if (shareResponse.success) {
-          // console.log('Chia sẻ bài viết thành công!');
-          //alert("Chia sẻ bài viết thành công!");
-          this.loadPosts1();
+          //console.log('Chia sẻ bài viết thành công!');
+          alert("Chia sẻ bài viết thành công!");
+        
         } else {
           console.error('Lỗi chia sẻ bài viết:', shareResponse.message);
           alert('Có lỗi xảy ra khi chia sẻ bài viết.');
