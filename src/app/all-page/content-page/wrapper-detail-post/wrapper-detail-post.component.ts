@@ -20,8 +20,7 @@ import { take } from 'rxjs/operators';
   standalone: true,
   templateUrl: './wrapper-detail-post.component.html',
   imports: [
-
-  HttpClientModule,
+    HttpClientModule,
     HeaderComponent,
     WrapperRightComponent,
     WrapperLeftComponent,
@@ -89,12 +88,23 @@ export class WrapperDetailPostComponent implements OnInit, OnDestroy {
     //cập nhật du liệu khi có nội dung mới
     this.socketService.messages.subscribe((response) => {
       if (response) {
-        // console.log('New message:', response);
-        this.list_comment_post.push(response); // Cập nhật dữ liệu khi nhận được tin nhắn mới
-        // console.log('list cmt', this.list_comment_post);
+        if (!response.cmt_id) {
+          // Nếu không có cmt_id, đây là bình luận mới
+          this.list_comment_post.push(response);
+        } else {
+          // Nếu có cmt_id, đây là phản hồi cho một bình luận cha
+          // const parentComment = this.list_comment_post.find(comment => comment.id === response.cmt_id);
+          // if (parentComment) {
+          //   // Khởi tạo mảng replies nếu chưa có
+          //   if (!parentComment.replies) {
+          //     parentComment.replies = [];
+          //   }
+          //   parentComment.replies.push(response); // Thêm phản hồi vào bình luận cha
+          // }
+        }
       }
-      console.log("socket", response)
     });
+
   }
 
   loadPost(): void {
@@ -209,7 +219,6 @@ export class WrapperDetailPostComponent implements OnInit, OnDestroy {
       alert('Vui lòng nhập nội dung phản hồi.');
       return;
     }
-
     this.commentService
       .addReply(commentId, this.userId, this.contentrep[commentId], this.order)
       .subscribe(
@@ -218,6 +227,7 @@ export class WrapperDetailPostComponent implements OnInit, OnDestroy {
             alert(response.message);
             this.contentrep[commentId] = ''; // Xóa nội dung sau khi thêm thành công
             // Cập nhật lại danh sách phản hồi ở đây nếu cần
+            this.socketService.sendMessage(response.data);
           } else {
             alert(response.message);
           }
